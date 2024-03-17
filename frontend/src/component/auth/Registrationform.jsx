@@ -10,17 +10,43 @@ function Registrationform() {
     confirmPassword: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     setErrorMessage("");
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       setErrorMessage("Password does not match");
       return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/register", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userName: formData.userName,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+      let data = response.json();
+
+      if (response.ok) {
+        setSuccessMessage(data.message);
+      } else {
+        setErrorMessage(data.error);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setErrorMessage("An error occurred. Please try again later.");
     }
   };
   return (
@@ -36,7 +62,7 @@ function Registrationform() {
               />
             </div>
             <div className="w-full lg:w-[40%] lg:py-10 py-1 px-12 lg:ml-6">
-              <h2 className="text-3xl mb-4">Register</h2>
+              <h2 className="text-3xl mb-4 font-semibold">Register</h2>
               <p className="mb-4">
                 Create your account. It’s free and only take a minute
               </p>
