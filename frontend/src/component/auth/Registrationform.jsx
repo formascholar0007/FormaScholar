@@ -13,7 +13,7 @@ function Registrationform() {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [token, setToken] = useState("");
-  const [errorVisible, setErrorVisible] = useState(false); // State to toggle error message visibility
+  const [errorVisible, setErrorVisible] = useState(false); 
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -26,7 +26,7 @@ function Registrationform() {
 
     if (formData.password !== formData.confirmPassword) {
       setErrorMessage("Password does not match");
-      setErrorVisible(true); // Show error message
+      setErrorVisible(true); 
       return;
     }
 
@@ -61,17 +61,17 @@ function Registrationform() {
         });
       } else {
         setErrorMessage(registerResponse.data.error);
-        setErrorVisible(true); // Show error message
+        setErrorVisible(true); 
       }
     } catch (error) {
       console.log("Error:", error);
       setErrorMessage("An error occurred. Please try again later.");
-      setErrorVisible(true); // Show error message
+      setErrorVisible(true); 
     }
   };
 
   const handleCloseError = () => {
-    setErrorVisible(false); // Close error message
+    setErrorVisible(false);
   };
 
   return (
