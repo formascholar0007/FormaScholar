@@ -19,14 +19,14 @@ function Registrationform() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("helllllo")
+    console.log("helllllo");
     if (formData.password !== formData.confirmPassword) {
       setErrorMessage("Password does not match");
       return;
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/auth/register', {
+      const response = await fetch("http://localhost:3000/api/auth/register", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -38,10 +38,18 @@ function Registrationform() {
           password: formData.password,
         }),
       });
-      let data = response.json();
+      let data =  await response.json();
+
+      console.warn('tocken', data);
 
       if (response.ok) {
         setSuccessMessage(data.message);
+        setFormData({
+          userName: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
       } else {
         setErrorMessage(data.error);
       }
@@ -54,7 +62,7 @@ function Registrationform() {
     <>
       <section className="lg:max-h-screen max-h-[1240px] lg:p-24">
         <div className="container mx-auto">
-          <div className="flex flex-col lg:flex-row w-full bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
+          <div className="flex flex-col lg:flex-row w-full bg-white rounded-xl mx-auto lg:shadow-lg overflow-hidden">
             <div className="w-full  lg:w-[45%] flex flex-col items-center justify-center p-12 bg-no-repeat bg-cover bg-center">
               <img
                 src={loginImage}
