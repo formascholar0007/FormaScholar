@@ -1,5 +1,4 @@
 const { StatusCodes } = require('http-status-codes');
-
 const registerValidateSchema = (Schema) =>(req,res,next)=>{
 
     const{error} = Schema.validate(req.body)
@@ -8,5 +7,4 @@ const registerValidateSchema = (Schema) =>(req,res,next)=>{
     }
     next();
 }
-
 module.exports = registerValidateSchema;
