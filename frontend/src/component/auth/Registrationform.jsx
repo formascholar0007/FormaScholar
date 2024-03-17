@@ -19,13 +19,14 @@ function Registrationform() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("helllllo")
     if (formData.password !== formData.confirmPassword) {
       setErrorMessage("Password does not match");
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/register", {
+      const response = await fetch('http://localhost:3000/api/auth/register', {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -45,7 +46,7 @@ function Registrationform() {
         setErrorMessage(data.error);
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.log("Error:", error);
       setErrorMessage("An error occurred. Please try again later.");
     }
   };
