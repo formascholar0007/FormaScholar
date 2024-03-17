@@ -8,6 +8,8 @@ const register = async (req, res) => {
 
     const { userName, email, password } = req.body;
 
+    console.log("from frontend : ",req.body);
+
     if (!userName && !email && !password) {
         return res.globalResponse(StatusCodes.PRECONDITION_FAILED, false, 'Missing fields', null);
     }
