@@ -18,22 +18,17 @@ function LoginForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your login validation logic here, e.g., API call to authenticate user
-
-    // For demonstration purposes, check if the username and password are provided
     if (!formData.username || !formData.password) {
       setErrorMessage('Please provide both username and password');
       return;
     }
-
-    // If validation passes, you can proceed with further actions (e.g., API call)
   };
 
   return (
     <>
       <section className="lg:max-h-screen max-h-[1240px] lg:p-24">
         <div className="container mx-auto">
-          <div className="flex flex-col lg:flex-row w-full bg-white rounded-xl mx-auto lg:shadow-lg overflow-hidden">
+          <div className="flex flex-col lg:flex-row w-full bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
             <div className="w-full lg:w-[45%] flex flex-col items-center justify-center p-12 bg-no-repeat bg-cover bg-center">
               <img src={loginImage} alt="Login" className="w-[26rem] h-full object-contain" />
             </div>

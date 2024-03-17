@@ -4,7 +4,7 @@ import Registrationform from "./component/auth/Registrationform"
 function App() {
   return (
     <>
-        <Registrationform />
+        <LoginForm />
     </>
   )
 }
