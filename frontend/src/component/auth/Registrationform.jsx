@@ -3,14 +3,17 @@ import loginImage from "../assets/Registration.jpg";
 import Button from "../Common/Button";
 
 function Registrationform() {
+
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [token, setToken] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -19,7 +22,7 @@ function Registrationform() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("helllllo");
+
     if (formData.password !== formData.confirmPassword) {
       setErrorMessage("Password does not match");
       return;
@@ -29,7 +32,8 @@ function Registrationform() {
       const response = await fetch("http://localhost:3000/api/auth/register", {
         method: "POST",
         headers: {
-          Accept: "application/json",
+          Authorization: `Bearer ${token}` ,
+          'Accept': "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -38,20 +42,24 @@ function Registrationform() {
           password: formData.password,
         }),
       });
-      let data =  await response.json();
+      let registerResponse =  await response.json();
 
-      console.warn('tocken', data);
+      console.warn('All Data', registerResponse);
+      
+      const newToken = registerResponse.data;
+      setToken(newToken);
 
       if (response.ok) {
-        setSuccessMessage(data.message);
+        setSuccessMessage(registerResponse.message);
         setFormData({
           userName: "",
           email: "",
           password: "",
           confirmPassword: "",
         });
+       
       } else {
-        setErrorMessage(data.error);
+        setErrorMessage(registerResponse.error);
       }
     } catch (error) {
       console.log("Error:", error);
