@@ -1,46 +1,49 @@
-import React, { useState } from 'react';
-import loginImage from '../assets/testing.jpg';
-import Button from '../Common/Button';
+import React, { useState } from "react";
+import loginImage from "../assets/Registration.jpg";
+import Button from "../Common/Button";
 
 function Registrationform() {
   const [formData, setFormData] = useState({
-    userName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    userName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
-
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setErrorMessage(''); // Clear error message here when input changes
+    setErrorMessage("");
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
-      setErrorMessage('Password does not match');
+      setErrorMessage("Password does not match");
       return;
     }
-    // Add your form submission logic here
   };
-
   return (
     <>
       <section className="lg:max-h-screen max-h-[1240px] lg:p-24">
         <div className="container mx-auto">
           <div className="flex flex-col lg:flex-row w-full bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
             <div className="w-full  lg:w-[45%] flex flex-col items-center justify-center p-12 bg-no-repeat bg-cover bg-center">
-              <img src={loginImage} alt="Login" className="w-[28rem] h-full object-contain" />
+              <img
+                src={loginImage}
+                alt="Login"
+                className="w-[28rem] h-full object-contain"
+              />
             </div>
-
-            <div className="w-full lg:w-[40%] lg:py-10 py-2 px-12 lg:ml-6">
+            <div className="w-full lg:w-[40%] lg:py-10 py-1 px-12 lg:ml-6">
               <h2 className="text-3xl mb-4">Register</h2>
-              <p className="mb-4">Create your account. It’s free and only take a minute</p>
-
-              <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-1 gap-5">
+              <p className="mb-4">
+                Create your account. It’s free and only take a minute
+              </p>
+              <form
+                onSubmit={handleSubmit}
+                className="grid grid-cols-1 lg:grid-cols-1 gap-5"
+              >
                 <div className="flex flex-col">
                   <input
                     type="text"
@@ -78,8 +81,10 @@ function Registrationform() {
                     name="confirmPassword"
                     required
                   />
-                  <div className=' h-4'>
-                    {errorMessage && <p className="text-red-500 font-bold">{errorMessage}</p>}
+                  <div className=" h-4">
+                    {errorMessage && (
+                      <p className="text-red-500 font-bold">{errorMessage}</p>
+                    )}
                   </div>
                 </div>
                 <div className="flex flex-col justify-end lg:justify-start">
@@ -88,20 +93,20 @@ function Registrationform() {
                       type="checkbox"
                       className="border border-gray-400"
                       required
-                    /> {' '}
+                    />{" "}
                     <span>
-                      I accept the{' '}
+                      I accept the{" "}
                       <a href="#" className="text-[#009c86] font-semibold">
                         Terms of Use
-                      </a>{' '}
-                      &amp;{' '}
+                      </a>{" "}
+                      &amp;{" "}
                       <a href="#" className="text-[#009c86] font-semibold">
                         Privacy Policy
                       </a>
                     </span>
                   </div>
                   <div className="mt-5">
-                    <Button text={'Register Now'} type={'submit'} />
+                    <Button text={"Register Now"} type={"submit"} />
                   </div>
                 </div>
               </form>
