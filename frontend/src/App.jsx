@@ -6,6 +6,10 @@ import Navbar from "./component/Navbar";
 import Home from "./pages/Home";
 
 function App() {
+  window.addEventListener('beforeunload', (e)=>{
+    let message = "Are you sure want to leave?";
+    e.returnValue = message;
+  });   
   return (
     <>
       <Router>
