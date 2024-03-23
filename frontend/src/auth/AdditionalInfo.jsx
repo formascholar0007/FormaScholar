@@ -1,11 +1,11 @@
 import React, { useState } from "react";
+import { BiUpload } from "react-icons/bi";
 
 function AdditionalInfo() {
   const [file, setFile] = useState(null);
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
-
     if (file) {
       setFile({
         name: file.name,
@@ -25,11 +25,16 @@ function AdditionalInfo() {
     formData.append("className", event.target.className.value);
 
     try {
-      const response = await fetch('http://localhost:3000/api/auth/additionalInfo', {
+      const response = await fetch("http://localhost:3000/api/auth/additionalInfo", {
         method: "POST",
+        headers:{
+          'Content-Type' : 'multipart/form-data',
+        },
         body: formData,
       });
-      console.warn(response);
+      if(!response){
+        console.warn("no no no");
+      }
       const data = await response.json();
       console.log(data);
     } catch (error) {
@@ -55,7 +60,7 @@ function AdditionalInfo() {
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-4">
                 <label
-                  htmlFor="fullName"
+                  htmlFor="username"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Full Name
@@ -165,7 +170,7 @@ function AdditionalInfo() {
             </div>
             <div className="sm:col-span-3">
               <label
-                htmlFor="Gender"
+                htmlFor="country"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Gender
@@ -186,7 +191,7 @@ function AdditionalInfo() {
             </div>
             <div className="sm:col-span-3">
               <label
-                htmlFor="ClassName"
+                htmlFor="country"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 You're in class *
