@@ -53,6 +53,7 @@ function Registrationform() {
       const newToken = registerResponse.data;
       setToken(newToken);
 
+
       const statusCode = response.status;
       const statusText = HttpStatus.getStatusText(statusCode);
 
