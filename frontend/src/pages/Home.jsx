@@ -35,8 +35,14 @@ const Home = () => {
   const subjects9 = ["Math", "Science"];
   const subjects10 = ["Math", "Science", "History"];
   const subjects11 = ["Math", "Physics", "chemistry"];
-  const subjects12 = ["Math", "Physics", "chemistry" ,"Bio" ," English" ,"Computer"];
-
+  const subjects12 = [
+    "Math",
+    "Physics",
+    "chemistry",
+    "Bio",
+    " English",
+    "Computer",
+  ];
   return (
     <>
       <div className="lg:min-h-screen min-h-screen font-Alice overflow-hidden">
@@ -84,11 +90,14 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-wrap justify-center lg:justify-start lg:px-8 lg:py-4">
-          <SubjectCard heading="Class 9" subjects={subjects9}/>
-          <SubjectCard heading="Class 10" subjects={subjects10}/>
-          <SubjectCard heading="Class 11" subjects={subjects11}/>
-          <SubjectCard heading="Class 12" subjects={subjects12}/>
+        <div>
+          <h1 className="px-14 pt-12 text-4xl font-semibold">Browse Your Classes</h1>
+          <div className="flex flex-wrap justify-center lg:justify-start lg:px-8 lg:py-4">
+            <SubjectCard heading="Class 9" subjects={subjects9} />
+            <SubjectCard heading="Class 10" subjects={subjects10} />
+            <SubjectCard heading="Class 11" subjects={subjects11} />
+            <SubjectCard heading="Class 12" subjects={subjects12} />
+          </div>
         </div>
       </div>
     </>
