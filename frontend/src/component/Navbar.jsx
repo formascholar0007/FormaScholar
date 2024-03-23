@@ -69,7 +69,7 @@ const Navbar = () => {
     //   </ul>
     // </div>
 
-    <nav className="bg-white  shadow-lg flex justify-between items-center h-24 max-w-full mx-auto px-4 text-black font-Alice text-xl">
+    <nav className="bg-white  shadow-lg flex justify-between items-center h-[80px] max-w-full mx-auto px-4 text-black font-Alice text-xl">
       <NavLink to="/">
         <img
           className="h-10 w-auto"
@@ -87,7 +87,7 @@ const Navbar = () => {
         </li>
         <li className="hidden md:block">
           <NavLink 
-            to="/registrationform"
+            to="/registration"
             className="block py-3 px-3 text-2xl text-white hover:text-black bg-[#49dbc8] hover:bg-[#06c4ab] rounded-md">
             Register Now
           </NavLink>

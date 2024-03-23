@@ -4,7 +4,8 @@ import Homepageimg1 from "../assets/Image1.svg";
 import Homepageimg2 from "../assets/Image2.svg";
 import Homepageimg3 from "../assets/Image4.svg";
 import Vector from "../assets/Image1.svg";
-import SubjectCard from "../component/SubjectCard";
+import ClassCard from "../component/ClassCard";
+import AdditionalInfo from "../auth/AdditionalInfo";
 
 const ImageList = [
   { id: 1, img: Homepageimg1 },
@@ -61,7 +62,7 @@ const Home = () => {
               </p>
 
               <button className="bg-[#009c86] hover:bg-[#17776a] hover:text-black w-[180px] text-white py-3 px-6 rounded-lg text-2xl transition duration-300 ease-in-out">
-                <NavLink to="/registrationform">Get Started</NavLink>
+                <NavLink to="/registration">Get Started</NavLink>
               </button>
             </div>
             <div className="relative flex md:justify-start justify-center items-center lg:items-start">
@@ -91,14 +92,21 @@ const Home = () => {
           </div>
         </div>
         <div>
-          <h1 className="px-14 pt-12 text-4xl font-semibold">Browse Your Classes</h1>
+          <h1 className="px-14 pt-8 text-2xl md:text-4xl font-semibold">Browse Your Classes</h1>
           <div className="flex flex-wrap justify-center lg:justify-start lg:px-8 lg:py-4">
-            <SubjectCard heading="Class 9" subjects={subjects9} />
-            <SubjectCard heading="Class 10" subjects={subjects10} />
-            <SubjectCard heading="Class 11" subjects={subjects11} />
-            <SubjectCard heading="Class 12" subjects={subjects12} />
+            <ClassCard heading="Class 9" subjects={subjects9} />
+            <ClassCard heading="Class 10" subjects={subjects10} />
+            <ClassCard heading="Class 11" subjects={subjects11} />
+            <ClassCard heading="Class 12" subjects={subjects12} />
           </div>
         </div>
+
+        <div>
+          <div className="flex flex-wrap justify-center lg:justify-start lg:px-8 lg:py-4">
+            
+          </div>
+        </div>
+
       </div>
     </>
   );
