@@ -33,6 +33,8 @@ const UserAdditionalSchema = mongoose.Schema({
         required: [true, 'Class name is required']
     }
 
+},{
+    timestamps: true
 })
 
 const UserAdditionalModel = mongoose.model('UserInfo',UserAdditionalSchema);
