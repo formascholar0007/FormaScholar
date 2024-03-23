@@ -30,7 +30,6 @@ function AdditionalInfo() {
       const response = await fetch('http://localhost:3000/api/auth/additionalInfo', {
         method: "POST",
         headers: {
-          // Authorization:`Bearer ${JSON.parse(localStorage.getItem('token'))}`,
           Authorization: `Bearer ${token}`,
         },
         body: formData,
@@ -186,9 +185,9 @@ function AdditionalInfo() {
                   className="block w-full focus-within:ring-[#009c86] outline-none rounded-md border-0 lg:py-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-[#009c86]sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option>Select Gender</option>
-                  <option>Male</option>
-                  <option>Female</option>
-                  <option>Others</option>
+                  <option>male</option>
+                  <option>female</option>
+                  <option>others</option>
                 </select>
               </div>
             </div>
