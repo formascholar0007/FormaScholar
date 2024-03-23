@@ -79,7 +79,7 @@ const login = async (req, res) => {
 }
 
 const userAdditionalInfo = async (req, res) => {
-
+    console.log("ffjlfkjflsjfs")
     const { fullName, about , phoneNumber, gender, className } = req.body;
     
     if (!(fullName && gender && className )) {
@@ -90,9 +90,9 @@ const userAdditionalInfo = async (req, res) => {
 
     try {
 
-        let image = ''; 
         if (req.file && req.file.path) {
             image = req.file.path;
+            console.log(image)
         }
 
       const userInfo = await UserInfo.create({

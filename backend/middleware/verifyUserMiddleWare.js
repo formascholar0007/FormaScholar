@@ -3,8 +3,9 @@ const { StatusCodes } = require('http-status-codes');
 const jwt = require('jsonwebtoken');
 
 const verifyUserMiddleWare = (req, res, next) => {
-
+     
     const token = req.headers.authorization?.split(' ')[1];
+    console.log("verify : ",token)
     if (!token) {
         return res.globalResponse(StatusCodes.BAD_REQUEST, false, 'Token Not Found in Headers', null);
     }
