@@ -77,23 +77,23 @@ function Registrationform() {
 
   return (
     <>
-      <section className="flex min-h-full flex-col justify-center px-6 md:py-8 py-2 lg:px-8 font-Alice">
+      <section className="flex max-h-full flex-col justify-center px-6 md:py-8 py-2 lg:px-8 font-Alice">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="mx-auto h-10 w-auto"
             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
             alt="FormaScholar"
           />
-          <h2 className="mt-6 md:mt-10 text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h2 className="mt-2 md:mt-10 lg:text-2xl text-xl  font-bold leading-9 tracking-tight text-gray-900">
             Registration Form
           </h2>
-          <p className="mt-1 text-md text-gray-500">
+          <p className="mt-1 lg:text-md text-sm text-gray-500">
             Create your account. It’s free and only takes a minute.
           </p>
         </div>
 
         <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-3 lg:space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-3 lg:space-y-5" onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="userName"
@@ -137,7 +137,7 @@ function Registrationform() {
               </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-6">
-              <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <div className="w-full md:w-1/2 px-3 mb-3 md:mb-0">
                 <label
                   htmlFor="password"
                   className="block text-sm font-medium leading-6 text-gray-900"
