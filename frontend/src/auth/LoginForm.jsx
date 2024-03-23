@@ -143,7 +143,7 @@ function LoginForm() {
           <p className="mt-6 text-center text-sm text-gray-500">
             Don't have an account?{" "}
             <NavLink
-              to="/registrationform"
+              to="/registration"
               className="font-bold leading-6 text-[#009c86] hover:text-[#49dbc8]"
             >
               Register Now

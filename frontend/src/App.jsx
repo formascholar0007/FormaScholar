@@ -12,7 +12,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" exact="true" element={<Home />} />
-          <Route path="/registrationform" element={<Registrationform />} />
+          <Route path="/registration" element={<Registrationform />} />
           <Route path="/loginform" element={<LoginForm />} />
           <Route path="/additionalInfo" element={<AdditionalInfo />} />
         </Routes>

@@ -1,52 +1,25 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React from "react";
 
-function SubjectCard({ heading, subjects }) {
-  const [showOptions, setShowOptions] = useState(false);
-
-  const handleMouseEnter = () => {
-    setShowOptions(true);
-  };
-
-  const handleMouseLeave = () => {
-    setShowOptions(false);
-  };
-
+function SubjectCard() {
   return (
-    <div
-      className="lg:w-[30%] md:w-[35%] w-[70%] h-full m-6 bg-white shadow-lg p-2 md:p-4 rounded-lg border border-gray-200 transform hover:scale-105 overflow-hidden"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      style={{ transition: "transform 0.6s ease-in-out" }}
-    >
-      <span className="relative flex h-4 w-4">
-        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#009c86] opacity-75"></span>
-        <span className="relative inline-flex rounded-full h-3 w-3 bg-[#009c86]"></span>
-      </span>
-
-      <h2 className="text-xl md:text-2xl font-semibold mb-2 text-center">
-        {heading}
-      </h2>
-      <p>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque, labore.
-      </p>
-      <div
-        className={`flex justify-evenly md:justify-start flex-wrap ${
-          showOptions ? "opacity-100" : "opacity-0"
-        } transition-opacity duration-700 delay-100`}
-      >
-        {subjects.map((subject, index) => (
-          <NavLink
-            key={index}
-            to="#"
-            className="py-1 px-3 lg:mr-3 md:py-2 md:px-4 mt-4 border-2 border-[#009c86] hover:bg-[#009c86] hover:text-white text-black font-bold rounded-md md:text-lg text-md transition-opacity duration-500 ease-in-out"
-            style={{
-              transitionDelay: `${showOptions ? index * 100 : 0}ms`,
-            }}
-          >
-            {subject}
-          </NavLink>
-        ))}
+    <div className="container mt-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="bg-gray-100 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+          <div className="p-4 text-center">
+            <img
+              src="https://delan5sxrj8jj.cloudfront.net/custom-static-1/home-page-test/maths.png"
+              alt="Learn Maths from Teachoo"
+              loading="lazy"
+              className="w-full h-auto mx-auto"
+            />
+            <a
+              href="#"
+              className="block mt-4 text-lg font-semibold text-blue-500 hover:text-blue-700"
+            >
+              Maths
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );
