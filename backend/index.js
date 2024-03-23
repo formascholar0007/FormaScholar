@@ -5,11 +5,16 @@ const authRoute = require('./routes/authroute');
 const globalResponse = require('./middleware/globalResponse');
 require('./config/database');
 
+
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(globalResponse);
 app.use(cors());
-app.use('/api/auth', authRoute);
+
+
+
+
+app.use('/api/auth',  authRoute);
 
 
 const PORT = process.env.PORT || 3000;
