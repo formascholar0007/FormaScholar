@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import loginImage from "../assets/Registration.jpg";
+import HttpStatus from "http-status-codes";
 import Button from "../Common/Button";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function Registrationform() {
   const [formData, setFormData] = useState({
@@ -15,6 +15,7 @@ function Registrationform() {
   const [successMessage, setSuccessMessage] = useState("");
   const [token, setToken] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -52,16 +53,24 @@ function Registrationform() {
       const newToken = registerResponse.data;
       setToken(newToken);
 
+      const statusCode = response.status;
+      const statusText = HttpStatus.getStatusText(statusCode);
+
       if (response.ok) {
-        setSuccessMessage(registerResponse.message);
+        setErrorMessage("");
         setFormData({
           userName: "",
           email: "",
           password: "",
           confirmPassword: "",
         });
+        navigate("/additionalInfo");
       } else {
-        setErrorMessage(registerResponse.data.error);
+        if (statusCode === HttpStatus.CONFLICT) {
+          setErrorMessage("username or email is not valid!!");
+        } else {
+          setErrorMessage(response.data.error);
+        }
         setErrorVisible(true);
       }
     } catch (error) {

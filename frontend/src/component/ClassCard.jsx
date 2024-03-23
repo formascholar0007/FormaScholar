@@ -14,7 +14,7 @@ function ClassCard({ heading, subjects }) {
 
   return (
     <section
-      className="lg:w-[30%] md:w-[35%] w-[70%] h-full m-6 bg-white shadow-lg p-2 md:p-4 rounded-lg border border-gray-200 transform hover:scale-105 overflow-hidden"
+      className="lg:w-[30%] md:w-[35%] w-[70%] h-64 m-6 bg-white shadow-lg p-2 md:p-4 rounded-lg border border-gray-200 transform hover:scale-105 overflow-hidden"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{ transition: "transform 0.6s ease-in-out" }}
@@ -39,7 +39,7 @@ function ClassCard({ heading, subjects }) {
           <NavLink
             key={index}
             to="#"
-            className="py-1 px-3 lg:mr-3 md:py-2 md:px-4 mt-4 border-2 border-[#009c86] hover:bg-[#009c86] hover:text-white text-black font-bold rounded-md md:text-lg text-md transition-opacity duration-500 ease-in-out"
+            className="py-1 px-3 lg:mr-3 md:py-2 md:px-4 mt-3 border-2 border-[#009c86] hover:bg-[#009c86] hover:text-white text-black font-bold rounded-md md:text-lg text-md transition-opacity duration-500 ease-in-out"
             style={{
               transitionDelay: `${showOptions ? index * 100 : 0}ms`,
             }}

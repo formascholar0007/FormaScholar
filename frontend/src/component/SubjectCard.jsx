@@ -1,27 +1,27 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
-function SubjectCard() {
+function SubjectCard(props) {
   return (
-    <div className="container mt-5">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        <div className="bg-gray-100 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-          <div className="p-4 text-center">
-            <img
-              src="https://delan5sxrj8jj.cloudfront.net/custom-static-1/home-page-test/maths.png"
-              alt="Learn Maths from Teachoo"
-              loading="lazy"
-              className="w-full h-auto mx-auto"
-            />
-            <a
-              href="#"
-              className="block mt-4 text-lg font-semibold text-blue-500 hover:text-blue-700"
-            >
-              Maths
-            </a>
-          </div>
-        </div>
+    <section
+      className="lg:w-[16%] w-[55%] h-full m-6 bg-gradient-to-b from-gray-900 to-gray-900 shadow-lg md:p-4 rounded-lg border border-gray-200 transform hover:scale-105 overflow-hidden"
+      style={{ transition: "transform 0.6s ease-in-out" }}
+    >
+      <div className="p-2 text-center">
+        <img
+          src={props.subjectIcon}
+          alt="Learn Maths from FormaScholar"
+          loading="lazy"
+          className="w-32 h-auto mx-auto"
+        />
+        <NavLink
+          to="/"
+          className="block mt-4 text-lg font-semibold text-[#009c86] hover:text-[#17776a]"
+        >
+          {props.subjectName}
+        </NavLink>
       </div>
-    </div>
+    </section>
   );
 }
 
