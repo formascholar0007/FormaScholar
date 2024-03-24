@@ -79,22 +79,27 @@ const login = async (req, res) => {
 }
 
 const userAdditionalInfo = async (req, res) => {
-    console.log("ffjlfkjflsjfs")
     const { fullName, about , phoneNumber, gender, className } = req.body;
     
     if (!(fullName && gender && className )) {
         return res.globalResponse(StatusCodes.PRECONDITION_FAILED, false, 'Missing fields', null);
     }
-
+    console.log("req: ",req.body)
     const userId = req.decodedToken.userId;
-
+    console.log(userId)
     try {
-
+        let image;
+       
         if (req.file && req.file.path) {
+            // If the file is uploaded directly
             image = req.file.path;
-            console.log(image)
+        } else if (req.body.image && req.body.image.url) {
+            // If the file is sent as a URL from the frontend
+            image = req.body.image.url;
         }
-
+      
+        console.log(image)
+        
       const userInfo = await UserInfo.create({
         userId,
         fullName,
