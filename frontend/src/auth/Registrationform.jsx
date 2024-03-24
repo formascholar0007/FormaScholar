@@ -13,7 +13,6 @@ function Registrationform() {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [token, setToken] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
   const navigate = useNavigate();
 
@@ -36,7 +35,7 @@ function Registrationform() {
       const response = await fetch("http://localhost:3000/api/auth/register", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: JSON.parse(localStorage.getItem('token')),
           Accept: "application/json",
           "Content-Type": "application/json",
         },
@@ -47,15 +46,12 @@ function Registrationform() {
         }),
       });
       let registerResponse = await response.json();
-
       console.warn("All Data", registerResponse);
-
-      const newToken = registerResponse.data;
-      setToken(newToken);
+      localStorage.setItem("token", JSON.stringify(registerResponse.data))
 
       const statusCode = response.status;
       const statusText = HttpStatus.getStatusText(statusCode);
-
+      
       if (response.ok) {
         setErrorMessage("");
         setFormData({

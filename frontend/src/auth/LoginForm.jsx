@@ -8,8 +8,6 @@ function LoginForm() {
     email: "",
     password: "",
   });
-
-  const [loginToken, setLoginToken] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
@@ -32,7 +30,7 @@ function LoginForm() {
       const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${loginToken}`,
+          Authorization: JSON.parse(localStorage.getItem('token')),
           Accept: "application/json",
           "Content-Type": "application/json",
         },
@@ -44,8 +42,7 @@ function LoginForm() {
       let loginResponse = await response.json();
       console.warn("Data : ", loginResponse);
 
-      const token = response.data;
-      setLoginToken(token);
+      localStorage.setItem("token", JSON.stringify(registerResponse.data))
 
       if (response.ok) {
         setSuccessMessage(loginResponse.message);
