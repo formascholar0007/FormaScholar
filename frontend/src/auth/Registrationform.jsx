@@ -49,6 +49,7 @@ function Registrationform() {
       console.warn("All Data", registerResponse);
       localStorage.setItem("token", JSON.stringify(registerResponse.data))
 
+
       const statusCode = response.status;
       const statusText = HttpStatus.getStatusText(statusCode);
       

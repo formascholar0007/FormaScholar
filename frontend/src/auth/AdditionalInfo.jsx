@@ -5,7 +5,6 @@ function AdditionalInfo() {
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
-
     if (file) {
       setFile({
         name: file.name,
@@ -24,9 +23,15 @@ function AdditionalInfo() {
     formData.append("gender", event.target.gender.value);
     formData.append("className", event.target.className.value);
 
+
     try {
+      const token = JSON.parse(localStorage.getItem("token"));
       const response = await fetch('http://localhost:3000/api/auth/additionalInfo', {
         method: "POST",
+        headers: {
+          // Authorization:`Bearer ${JSON.parse(localStorage.getItem('token'))}`,
+          Authorization: `Bearer ${token}`,
+        },
         body: formData,
       });
       console.warn(response);
