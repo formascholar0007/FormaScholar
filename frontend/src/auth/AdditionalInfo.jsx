@@ -3,7 +3,7 @@ import { BiUpload } from "react-icons/bi";
 
 function AdditionalInfo() {
   const [file, setFile] = useState(null);
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState('');
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -13,8 +13,7 @@ function AdditionalInfo() {
         name: file.name,
         url: URL.createObjectURL(file),
       });
-
-      setImageUrl(file.name);
+      setImageUrl(file);
     }
   };
   const handleSubmit = async (event) => {
