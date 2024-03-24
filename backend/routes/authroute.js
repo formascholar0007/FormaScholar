@@ -20,6 +20,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({storage:storage});
+console.log("upload ; ",upload);
 
 route.post('/register',registerValidateSchema(registerSchema), authController.register);
 route.post('/login' ,loginValidatorSchema(loginSchema),authController.login);
