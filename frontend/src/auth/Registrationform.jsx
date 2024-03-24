@@ -35,7 +35,7 @@ function Registrationform() {
       const response = await fetch("http://localhost:3000/api/auth/register", {
         method: "POST",
         headers: {
-          Authorization: JSON.parse(localStorage.getItem('token')),
+          Authorization:`Bearer ${JSON.parse(localStorage.getItem('token'))}`,
           Accept: "application/json",
           "Content-Type": "application/json",
         },
