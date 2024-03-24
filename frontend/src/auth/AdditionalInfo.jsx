@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { BiUpload } from "react-icons/bi";
 
 function AdditionalInfo() {
-  const [uploadedFile, setUploadedFile] = useState(null);
+  const [file, setFile] = useState(null);
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setUploadedFile({
+      setFile({
         name: file.name,
         url: URL.createObjectURL(file),
       });
@@ -19,18 +19,22 @@ function AdditionalInfo() {
     const formData = new FormData();
     formData.append("fullName", event.target.fullName.value);
     formData.append("about", event.target.about.value);
-    formData.append("profilePicture", uploadedFile);
-    formData.append("phone", event.target.phone.value);
+    formData.append("image", file);
+    formData.append("phoneNumber", event.target.phoneNumber.value);
     formData.append("gender", event.target.gender.value);
-    formData.append("class", event.target.class.value);
-    formData.append("country", event.target.country.value);
-    formData.append("region", event.target.region.value);
+    formData.append("className", event.target.className.value);
 
     try {
-      const response = await fetch("api", {
+      const response = await fetch("http://localhost:3000/api/auth/additionalInfo", {
         method: "POST",
+        headers:{
+          'Content-Type' : 'multipart/form-data',
+        },
         body: formData,
       });
+      if(!response){
+        console.warn("no no no");
+      }
       const data = await response.json();
       console.log(data);
     } catch (error) {
@@ -109,34 +113,34 @@ function AdditionalInfo() {
                 <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                   <div className="text-center">
                     <label
-                      htmlFor="file-upload"
+                      htmlFor="image"
                       className="relative cursor-pointer rounded-md bg-white font-semibold text-[#009c86] focus-within:outline-none focus-within:ring-2 focus-within:ring-[#009c86] focus-within:ring-offset-2 hover:text-[#174943]"
                     >
                       <span>
-                        {uploadedFile
+                        {file
                           ? "Change Profile Picutre"
                           : "Upload a file"}
                       </span>
                       <input
-                        id="file-upload"
-                        name="file-upload"
+                        id="image"
+                        name="image"
                         type="file"
                         className="sr-only focus-within:ring-[#1dae9b] outline-none"
                         onChange={handleFileUpload}
                       />
                     </label>
 
-                    {uploadedFile && (
+                    {file && (
                       <img
-                        src={uploadedFile.url}
-                        alt={uploadedFile.name}
+                        src={file.url}
+                        alt={file.name}
                         className="mt-4 mx-auto rounded-full w-32 h-32 border-2 border-[#1dae9be7] object-cover"
                       />
                     )}
 
                     <p className="flex justify-center mt-2 text-xl ">
-                      {uploadedFile
-                        ? uploadedFile.name
+                      {file
+                        ? file.name
                         : "PNG, JPG, GIF up to 10MB"}
                     </p>
                   </div>
@@ -149,15 +153,15 @@ function AdditionalInfo() {
           <div className="mt-1 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-4">
               <label
-                htmlFor="phone"
+                htmlFor="phoneNumber"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Phone Number (Optional)
+                phoneNumber Number (Optional)
               </label>
               <div className="mt-2">
                 <input
-                  id="phone"
-                  name="phone"
+                  id="phoneNumber"
+                  name="phoneNumber"
                   type="number"
                   autoComplete="off"
                   className="block lg:w-[74%] w-full px-2 rounded-md focus-within:ring-[#009c86] outline-none border-0 lg:py-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#009c86]sm:text-sm sm:leading-6"
@@ -194,12 +198,12 @@ function AdditionalInfo() {
               </label>
               <div className="mt-2">
                 <select
-                  id="class"
-                  name="class"
+                  id="className"
+                  name="className"
                   autoComplete="off"
                   className="block w-full focus-within:ring-[#009c86] outline-none rounded-md border-0 lg:py-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-[#009c86]sm:max-w-xs sm:text-sm sm:leading-6"
                 >
-                  <option>Select Class</option>
+                  <option>Select class</option>
                   <option>9</option>
                   <option>10</option>
                   <option>11</option>

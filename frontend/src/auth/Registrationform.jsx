@@ -65,7 +65,8 @@ function Registrationform() {
           confirmPassword: "",
         });
         navigate("/additionalInfo");
-      } else {
+      } 
+      else {
         if (statusCode === HttpStatus.CONFLICT) {
           setErrorMessage("username or email is not valid!!");
         } else {
