@@ -93,9 +93,9 @@ const userAdditionalInfo = async (req, res) => {
         if (req.file && req.file.path) {
             // If the file is uploaded directly
             image = req.file.path;
-        } else if (req.body.image && req.body.image.url) {
+        } else if (req.body.image) {
             // If the file is sent as a URL from the frontend
-            image = req.body.image.url;
+            image = req.body.image;
         }
       
         console.log(image)
