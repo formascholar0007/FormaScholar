@@ -12,6 +12,7 @@ function AdditionalInfo() {
         name: file.name,
         url: URL.createObjectURL(file),
       });
+
     }
   };
   const handleSubmit = async (event) => {
@@ -24,6 +25,7 @@ function AdditionalInfo() {
     formData.append("phoneNumber", event.target.phoneNumber.value);
     formData.append("gender", event.target.gender.value);
     formData.append("className", event.target.className.value);
+    console.log(file)
 
     try {
       const token = JSON.parse(localStorage.getItem("token"));
