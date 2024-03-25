@@ -4,6 +4,7 @@ const { StatusCodes } = require('http-status-codes');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const UserInfo = require('../model/UserAdditionalInfo');
+const nodemailer = require('nodemailer');
 
 const register = async (req, res) => {
 
@@ -111,5 +112,87 @@ const userAdditionalInfo = async (req, res) => {
     }
 }
 
-module.exports = { register, login, userAdditionalInfo };
+const forgotPassword = async (req, res) => {
+    const { email } = req.body;
+
+    try {
+        const user = await UserModel.findOne({ email });
+        if (!user) {
+            return res.globalResponse(StatusCodes.OK, false, 'Email Not Found', null);
+        }
+
+        const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '30d' });
+        const link = `http://localhost:3000/api/auth/resetPassword/${user._id}/${token}`;
+
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.APP_GMAIL,
+                pass: process.env.APP_PASSWORD,
+            }
+        });
+
+        var mailOptions = {
+            from: process.env.APP_GMAIL,
+            to: email, 
+            subject: 'Password Reset',
+            text: `Reset your password by clicking the following link: ${link}` 
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+                return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Error sending email', null);
+            } else {
+                console.log('Email sent: ' + info.response);
+                return res.globalResponse(StatusCodes.OK, true, 'Email sent successfully', null);
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Error processing request', null);
+    }
+};
+
+
+const resetPassword = async (req, res) => {
+    const { userId, token } = req.params;
+    const { password } = req.body;
+
+    try {
+        const verifyValidUser = await UserModel.findOne({ _id: userId });
+        if (!verifyValidUser) {
+            return res.globalResponse(StatusCodes.OK, false, 'User Not Exists', null);
+        }
+
+        try {
+            const verify = jwt.verify(token, process.env.JWT_SECRET);
+            const encryptPassword = await bcrypt.hash(password, 10);
+
+            const updateResult = await UserModel.updateOne(
+                { _id: userId },
+                { $set: { password: encryptPassword } }
+            );
+
+            if (updateResult.nModified === 0) {
+                return res.globalResponse(StatusCodes.OK, false, 'Password not updated', null);
+            }
+
+            return res.globalResponse(StatusCodes.OK, true, 'Password Updated', null);
+
+        } catch (err) {
+            if (err.name === 'TokenExpiredError') {
+                return res.globalResponse(StatusCodes.BAD_REQUEST, false, 'Token expired', null);
+            } else {
+                return res.globalResponse(StatusCodes.BAD_REQUEST, false, 'Invalid token', null);
+            }
+        }
+    } catch (error) {
+        console.error(error);
+        return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Error processing request', null);
+    }
+};
+
+
+module.exports = { register, login, userAdditionalInfo , forgotPassword , resetPassword };
 
