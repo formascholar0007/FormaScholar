@@ -1,76 +1,95 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
-function ForgetPassword() {
-  const [resetEmail, setResetEmail] = useState("");
+function ResetPassword() {
+  const [password, setpassword] = useState("");
+  const [confirmPassword, setconfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [resetSuccess, setResetSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+//   const [resetSuccess, setResetSuccess] = useState(false);
+//   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(resetEmail)) {
-      setErrorMessage("Please enter a valid email address.");
-      return;
+    if (password !== confirmPassword) {
+    //   setErrorMessage("Password does not match");
+    //   setErrorVisible(true);
+    //   return;
+    alert("Password not match!")
+    return;
     }
 
     setIsLoading(true);
-    setErrorMessage("");
+    // setErrorMessage("");
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/auth/forgotPassword",
+        "http://localhost:3000/api/auth/resetPassword/:userId/:token",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email: resetEmail }),
+          body: JSON.stringify({ password }),
         }
       );
 
-      const data = await response.json();
+    //   const data = await response.json();
 
       if (response.ok) {
-        setResetSuccess(true);
-        setTimeout(() => {
-          navigate("/loginform"); // Navigate to the login page after 4 seconds
-          setResetSuccess(false);
-        }, 4000);
+        // setResetSuccess(true);
+        navigate("/loginform"); // Navigate to the login page after 4 seconds
+
+        // setTimeout(() => {
+        //   navigate("/loginform"); // Navigate to the login page after 4 seconds
+        //   setResetSuccess(false);
+        // }, 4000);
       } else {
-        setErrorMessage(data.message || "Something went wrong.");
+        // setErrorMessage(data.message || "Something went wrong.");
+        console.log(data.message);
       }
     } catch (error) {
       console.error("Error resetting password:", error);
-      setErrorMessage("An error occurred while resetting password.");
+    //   setErrorMessage("An error occurred while resetting password.");
     }
     setIsLoading(false);
-  }
-  const handleCloseError = () => {
-    setErrorMessage("");
+//   }
+//   const handleCloseError = () => {
+//     setErrorMessage("");
   };
+
   return (
     <section className="max-w-lg mx-auto my-10 bg-white p-6 md:p-8 rounded-xl shadow-lg shadow-slate-300 font-Alice">
-      <h1 className="lg:text-3xl text-2xl font-medium">Forgot Password</h1>
+      <h1 className="lg:text-3xl text-2xl font-medium">Reset Password</h1>
       <p className="text-slate-500 mt-2">
-        Please complete the form to reset your password.
+        Your new password must be different from previous used passwords.
       </p>
 
       <form className="my-8" onSubmit={handleSubmit}>
-        <div className="flex flex-col space-y-5">
-          <label htmlFor="resetEmail">
-            <p className="font-medium text-slate-700 pb-2">Email address</p>
+        <div className="flex flex-col space-y-4">
+          <label htmlFor="password">
+            <p className="font-medium text-slate-700 pb-2">Password</p>
             <input
-              id="resetEmail"
-              name="resetEmail"
-              type="email"
-              value={resetEmail}
-              onChange={(e) => setResetEmail(e.target.value)}
+              id="Password"
+              name="password"
+              type="password"
+              value={password}
+              onChange={(e) => setpassword(e.target.value)}
               className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
-              placeholder="Enter email address"
+              placeholder="Enter Password"
+            />
+          </label>
+          <label htmlFor="confirmPassword">
+            <p className="font-medium text-slate-700 pb-2">Confirm Password</p>
+            <input
+              id="Confirm Password"
+              name="confirmPassword"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setconfirmPassword(e.target.value)}
+              className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
+              placeholder="Enter Confirm Password"
             />
           </label>
 
@@ -124,7 +143,7 @@ function ForgetPassword() {
             </NavLink>
           </p>
         </div>
-        <div className={`$${errorMessage ? " " : "opacity-0"}`}>
+        {/* <div className={`$${errorMessage ? " " : "opacity-0"}`}>
           {errorMessage && (
             <div
               className="animate-pulse bg-red-200 border-2 border-red-700 text-black px-4 py-3 rounded relative top-[10px] lg:relative lg:top-[10px]"
@@ -148,17 +167,17 @@ function ForgetPassword() {
               </span>
             </div>
           )}
-          {/* Success box */}
+
           {resetSuccess && (
             <div className="bg-teal-100 border-l-4 border-teal-500 text-teal-900 shadow-lg p-4 mt-1 md:mt-4">
-              <p className="font-bold">Reset Email sent successfully!</p>
-              <p>Check your email for reset password link.</p>
+              <p className="font-bold">Password Reset Successfully!</p>
+              <p>Now you can login to your Account!.</p>
             </div>
           )}
-        </div>
+           */}
       </form>
     </section>
   );
 }
 
-export default ForgetPassword;
+export default ResetPassword;

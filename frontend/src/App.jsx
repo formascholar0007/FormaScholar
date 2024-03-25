@@ -5,6 +5,7 @@ import Registrationform from "./auth/Registrationform";
 import ForgetPassword from "./auth/ForgetPassword";
 import Navbar from "./component/Navbar";
 import Home from "./pages/Home";
+import ResetPassword from "./auth/ResetPassword";
 
 function App() {
   window.addEventListener('beforeunload', (e)=>{
@@ -21,7 +22,7 @@ function App() {
           <Route path="/loginform" element={<LoginForm />} />
           <Route path="/additionalInfo" element={<AdditionalInfo />} />
           <Route path="/forgetPassword" element={<ForgetPassword />} />
-          <Route path="/resetPassword" element={<ForgetPassword />} />
+          <Route path="/resetPassword" element={<ResetPassword />} />
         </Routes>
       </Router>
     </>
