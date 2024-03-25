@@ -122,7 +122,7 @@ const forgotPassword = async (req, res) => {
         }
 
         const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '30d' });
-        const link = `http://localhost:3000/api/auth/resetPassword/${user._id}/${token}`;
+        const link = `http://localhost:5173/resetPassword/${user._id}/${token}`;
 
         var transporter = nodemailer.createTransport({
             service: 'gmail',
