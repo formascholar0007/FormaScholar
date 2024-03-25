@@ -2,30 +2,28 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 function ResetPassword() {
-  const [password, setpassword] = useState("");
-  const [confirmPassword, setconfirmPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-//   const [resetSuccess, setResetSuccess] = useState(false);
-//   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-    //   setErrorMessage("Password does not match");
-    //   setErrorVisible(true);
-    //   return;
-    alert("Password not match!")
-    return;
+      alert("Password does not match!");
+      return;
     }
 
     setIsLoading(true);
-    // setErrorMessage("");
+
+    const params = new URLSearchParams(window.location.search);
+    const userId = params.get("userId");
+    const token = params.get("token");
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/auth/resetPassword/:userId/:token",
+        `http://localhost:3000/api/auth/resetPassword/${userId}/${token}`,
         {
           method: "POST",
           headers: {
@@ -35,35 +33,26 @@ function ResetPassword() {
         }
       );
 
-    //   const data = await response.json();
-
       if (response.ok) {
-        // setResetSuccess(true);
-        navigate("/loginform"); // Navigate to the login page after 4 seconds
-
-        // setTimeout(() => {
-        //   navigate("/loginform"); // Navigate to the login page after 4 seconds
-        //   setResetSuccess(false);
-        // }, 4000);
+        console.log(response);
+        navigate("/loginform");
       } else {
-        // setErrorMessage(data.message || "Something went wrong.");
-        console.log(data.message);
+        const data = await response.json();
+        alert(data.message || "Something went wrong.");
       }
     } catch (error) {
       console.error("Error resetting password:", error);
-    //   setErrorMessage("An error occurred while resetting password.");
+      alert("An error occurred while resetting password.");
     }
+
     setIsLoading(false);
-//   }
-//   const handleCloseError = () => {
-//     setErrorMessage("");
-  };
+  }
 
   return (
     <section className="max-w-lg mx-auto my-10 bg-white p-6 md:p-8 rounded-xl shadow-lg shadow-slate-300 font-Alice">
       <h1 className="lg:text-3xl text-2xl font-medium">Reset Password</h1>
       <p className="text-slate-500 mt-2">
-        Your new password must be different from previous used passwords.
+        Your new password must be different from previously used passwords.
       </p>
 
       <form className="my-8" onSubmit={handleSubmit}>
@@ -71,11 +60,11 @@ function ResetPassword() {
           <label htmlFor="password">
             <p className="font-medium text-slate-700 pb-2">Password</p>
             <input
-              id="Password"
+              id="password"
               name="password"
               type="password"
               value={password}
-              onChange={(e) => setpassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="Enter Password"
             />
@@ -83,13 +72,13 @@ function ResetPassword() {
           <label htmlFor="confirmPassword">
             <p className="font-medium text-slate-700 pb-2">Confirm Password</p>
             <input
-              id="Confirm Password"
+              id="confirmPassword"
               name="confirmPassword"
               type="password"
               value={confirmPassword}
-              onChange={(e) => setconfirmPassword(e.target.value)}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
-              placeholder="Enter Confirm Password"
+              placeholder="Confirm Password"
             />
           </label>
 
@@ -143,38 +132,6 @@ function ResetPassword() {
             </NavLink>
           </p>
         </div>
-        {/* <div className={`$${errorMessage ? " " : "opacity-0"}`}>
-          {errorMessage && (
-            <div
-              className="animate-pulse bg-red-200 border-2 border-red-700 text-black px-4 py-3 rounded relative top-[10px] lg:relative lg:top-[10px]"
-              role="alert"
-            >
-              <strong className="font-bold">OPPS!: </strong>
-              <span className="block sm:inline">{errorMessage}</span>
-              <span
-                className="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer"
-                onClick={handleCloseError}
-              >
-                <svg
-                  className="fill-current h-6 w-6 text-red-500"
-                  role="button"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  <title>Close</title>
-                  <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
-                </svg>
-              </span>
-            </div>
-          )}
-
-          {resetSuccess && (
-            <div className="bg-teal-100 border-l-4 border-teal-500 text-teal-900 shadow-lg p-4 mt-1 md:mt-4">
-              <p className="font-bold">Password Reset Successfully!</p>
-              <p>Now you can login to your Account!.</p>
-            </div>
-          )}
-           */}
       </form>
     </section>
   );

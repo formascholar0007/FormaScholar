@@ -22,7 +22,7 @@ function App() {
           <Route path="/loginform" element={<LoginForm />} />
           <Route path="/additionalInfo" element={<AdditionalInfo />} />
           <Route path="/forgetPassword" element={<ForgetPassword />} />
-          <Route path="/resetPassword" element={<ResetPassword />} />
+          <Route path="/resetPassword/:userId/:token" element={<ResetPassword />} />
         </Routes>
       </Router>
     </>
