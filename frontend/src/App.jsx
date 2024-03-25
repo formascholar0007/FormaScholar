@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdditionalInfo from "./auth/AdditionalInfo";
 import LoginForm from "./auth/LoginForm";
 import Registrationform from "./auth/Registrationform";
+import ForgetPassword from "./auth/ForgetPassword";
 import Navbar from "./component/Navbar";
 import Home from "./pages/Home";
 
@@ -19,6 +20,8 @@ function App() {
           <Route path="/registration" element={<Registrationform />} />
           <Route path="/loginform" element={<LoginForm />} />
           <Route path="/additionalInfo" element={<AdditionalInfo />} />
+          <Route path="/forgetPassword" element={<ForgetPassword />} />
+          <Route path="/resetPassword" element={<ForgetPassword />} />
         </Routes>
       </Router>
     </>

@@ -113,7 +113,7 @@ function LoginForm() {
                 </label>
                 <div className="text-sm">
                   <NavLink
-                    to="#"
+                    to="/forgetPassword"
                     className="font-semibold text-[#009c86] hover: hover:text-[#49dbc8]"
                   >
                     Forgot Password?
