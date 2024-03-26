@@ -161,7 +161,7 @@ function AdditionalInfo() {
                 htmlFor="phoneNumber"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                phoneNumber Number (Optional)
+                Phone Number (Optional)
               </label>
               <div className="mt-2">
                 <input
