@@ -1,11 +1,19 @@
 import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 
 function ResetPassword() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+    // const params = new URLSearchParams(window.location.search);
+    // const userId = params.get("userId");
+    // const token = params.get("token")
+    const { userId, token } = useParams();
+
+    console.warn(userId);
+    console.warn(token);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -17,31 +25,27 @@ function ResetPassword() {
 
     setIsLoading(true);
 
-    const params = new URLSearchParams(window.location.search);
-    const userId = params.get("userId");
-    const token = params.get("token");
-
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/auth/resetPassword/${userId}/${token}`,
+      const response = await fetch(`http://localhost:5173/my-custom-api/auth/resetPassword/${userId}/${token}`,
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ password }),
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ password }),
         }
-      );
+    );
+
+      const data = await response.json();
 
       if (response.ok) {
         console.log(response);
         navigate("/loginform");
       } else {
-        const data = await response.json();
         alert(data.message || "Something went wrong.");
       }
     } catch (error) {
-      console.error("Error resetting password:", error);
+      console.log("Error resetting password:", error);
       alert("An error occurred while resetting password.");
     }
 
@@ -49,16 +53,16 @@ function ResetPassword() {
   }
 
   return (
-    <section className="max-w-lg mx-auto my-10 bg-white p-6 md:p-8 rounded-xl shadow-lg shadow-slate-300 font-Alice">
+    <section className="max-w-lg mx-auto my-6 bg-white p-6 md:p-8 rounded-xl shadow-lg shadow-slate-300 font-Alice">
       <h1 className="lg:text-3xl text-2xl font-medium">Reset Password</h1>
       <p className="text-slate-500 mt-2">
         Your new password must be different from previously used passwords.
       </p>
 
-      <form className="my-8" onSubmit={handleSubmit}>
+      <form className="my-4" onSubmit={handleSubmit}>
         <div className="flex flex-col space-y-4">
           <label htmlFor="password">
-            <p className="font-medium text-slate-700 pb-2">Password</p>
+            <p className="font-medium text-slate-700 pb-1">Password</p>
             <input
               id="password"
               name="password"
@@ -70,7 +74,7 @@ function ResetPassword() {
             />
           </label>
           <label htmlFor="confirmPassword">
-            <p className="font-medium text-slate-700 pb-2">Confirm Password</p>
+            <p className="font-medium text-slate-700 pb-1">Confirm Password</p>
             <input
               id="confirmPassword"
               name="confirmPassword"

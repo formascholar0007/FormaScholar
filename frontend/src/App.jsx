@@ -6,12 +6,13 @@ import ForgetPassword from "./auth/ForgetPassword";
 import Navbar from "./component/Navbar";
 import Home from "./pages/Home";
 import ResetPassword from "./auth/ResetPassword";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
-  window.addEventListener('beforeunload', (e)=>{
-    let message = "Are you sure want to leave?";
-    e.returnValue = message;
-  });   
+  // window.addEventListener('beforeunload', (e)=>{
+  //   let message = "Are you sure want to leave?";
+  //   e.returnValue = message;
+  // });   
   return (
     <>
       <Router>
@@ -23,6 +24,7 @@ function App() {
           <Route path="/additionalInfo" element={<AdditionalInfo />} />
           <Route path="/forgetPassword" element={<ForgetPassword />} />
           <Route path="/resetPassword/:userId/:token" element={<ResetPassword />} />
+          <Route path="/userProfile" element={<UserProfile />} />
         </Routes>
       </Router>
     </>
