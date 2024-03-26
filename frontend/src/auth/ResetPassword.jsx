@@ -20,12 +20,12 @@ function ResetPassword() {
     const params = new URLSearchParams(window.location.search);
     const userId = params.get("userId");
     const token = params.get("token");
-
+     console.log(userId , "   " , token);
     try {
       const response = await fetch(
         `http://localhost:3000/api/auth/resetPassword/${userId}/${token}`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
