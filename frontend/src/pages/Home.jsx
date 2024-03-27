@@ -36,19 +36,17 @@ const Home = () => {
   }, [currentIndex]);
 
   const subjects = {
-    8: ["Math", "Science"],
-    9: ["Math", "Science"],
-    10: ["Math", "Science", "History"],
-    11: ["Math", "Physics", "Chemistry"],
-    12: ["Math", "Physics", "Chemistry", "Bio", "English", "Computer"],
+    8: ["Maths", "Science"],
+    9: ["Maths", "Science"],
+    10: ["Maths", "Science", "History"],
+    11: ["Maths", "Physics", "Chemistry"],
+    12: ["Maths", "Physics", "Chemistry", "Bio", "English", "Computer"],
   };
-  const uniqueSubjects = new Set([
-    ...subjects[8],
-    ...subjects[9],
-    ...subjects[10],
-    ...subjects[11],
-    ...subjects[12],
-  ]);
+
+  const uniqueSubjects = Array.from(
+    new Set([].concat(...Object.values(subjects)))
+  );
+
   return (
     <section className="lg:min-h-screen min-h-screen font-Alice overflow-hidden">
       <div className="max-w-full container mx-auto md:px-8 md:py-10 py-12 px-6 overflow-hidden bg-gradient-to-b from-gray-900 to-gray-900  text-white">
@@ -99,6 +97,7 @@ const Home = () => {
           {[8, 9, 10, 11, 12].map((grade) => (
             <ClassCard
               key={grade}
+              grade={grade}
               heading={`Class ${grade}`}
               subjects={subjects[grade]}
             />
@@ -110,7 +109,7 @@ const Home = () => {
           Browse Your Subjects
         </h1>
         <div className="flex lg:justify-start justify-center flex-wrap px-8 py-4">
-          {[...uniqueSubjects].map((subject) => (
+          {uniqueSubjects.map((subject) => (
             <SubjectCard
               key={subject}
               subjectName={subject}
