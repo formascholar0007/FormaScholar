@@ -26,10 +26,12 @@ function ResetPassword() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`http://localhost:5173/my-custom-api/auth/resetPassword/${userId}/${token}`,
+      const response = await fetch(
+        `http://localhost:5173/my-custom-api/auth/resetPassword/${userId}/${token}`,
         {
             method: "PUT",
             headers: {
+                Accept:'application/json',
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ password }),
