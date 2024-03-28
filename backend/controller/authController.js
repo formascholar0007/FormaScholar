@@ -161,6 +161,11 @@ const resetPassword = async (req, res) => {
     const { password } = req.body;
     console.log(password)
 
+    if(password.length < 6){
+        return res.globalResponse(StatusCodes.OK, false, 'Password must be 6 letters', null);
+    
+    }
+
     try {
         const verifyValidUser = await UserModel.findOne({ _id: userId });
         console.log(verifyValidUser)
