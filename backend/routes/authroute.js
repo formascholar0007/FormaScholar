@@ -26,9 +26,7 @@ route.post('/register',registerValidateSchema(registerSchema), authController.re
 route.post('/login' ,loginValidatorSchema(loginSchema),authController.login);
 route.post('/additionalInfo',verifyUserMiddleWare , upload.single('image'), userInfoValidatorSchema(userAdditionalSchemaJoi), authController.userAdditionalInfo);
 route.post('/forgotPassword' , authController.forgotPassword);
-<<<<<<< HEAD
-route.put('/resetPassword/:userId/:token' , authController.resetPassword);
-=======
+
 route.post('/resetPassword/:userId/:token' , authController.resetPassword);
->>>>>>> origin/main
+
 module.exports = route;

@@ -157,12 +157,13 @@ const forgotPassword = async (req, res) => {
 
 const resetPassword = async (req, res) => {
     const { userId, token } = req.params;
-    console.log("fkldjdklgjdljdlgjdlgjd");
     console.log(req.params);
     const { password } = req.body;
+    console.log(password)
 
     try {
         const verifyValidUser = await UserModel.findOne({ _id: userId });
+        console.log(verifyValidUser)
         if (!verifyValidUser) {
             return res.globalResponse(StatusCodes.OK, false, 'User Not Exists', null);
         }
@@ -170,13 +171,13 @@ const resetPassword = async (req, res) => {
         try {
             const verify = jwt.verify(token, process.env.JWT_SECRET);
             const encryptPassword = await bcrypt.hash(password, 10);
-
+               
             const updateResult = await UserModel.updateOne(
                 { _id: userId },
                 { $set: { password: encryptPassword } }
             );
-
-            if (updateResult.nModified === 0) {
+              console.log("this is updated one",updateResult)
+            if (updateResult.acknowledged === false) {
                 return res.globalResponse(StatusCodes.OK, false, 'Password not updated', null);
             }
 
