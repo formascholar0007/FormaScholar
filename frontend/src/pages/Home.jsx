@@ -105,7 +105,7 @@ const Home = () => {
             <ClassCard
               key={grade}
               grade={grade}
-              heading={`${grade}`}
+              heading={`Class ${grade}`}
               subjects={subjects[grade]}
             />
           ))}
