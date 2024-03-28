@@ -6,13 +6,15 @@ function ResetPassword() {
   const [password, setPassword] = useState();
   const navigate = useNavigate()
   const {userId, token} = useParams()
-
+ console.log(userId)
+ console.log(token)
   axios.defaults.withCredentials = true;
   const handleSubmit = (e) => {
       e.preventDefault()
-      axios.post(`http://localhost:5173/api/auth/resetPassword/${userId}/${token}`, {password})
+      axios.post(`http://localhost:3000/api/auth/resetPassword/${userId}/${token}`, {password})
       .then(res => {
-          if(res.ok) {
+         console.log(res)
+          if(res.status === 200) {
               navigate('/loginform')
           }
       }).catch(err => console.log(err))
