@@ -118,7 +118,7 @@ const forgotPassword = async (req, res) => {
     try {
         const user = await UserModel.findOne({ email });
         if (!user) {
-            return res.globalResponse(StatusCodes.OK, false, 'Email Not Found', null);
+            return res.globalResponse(StatusCodes.NOT_FOUND, false, 'Email Not Found', null);
         }
 
         const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '30d' });
@@ -162,15 +162,14 @@ const resetPassword = async (req, res) => {
     console.log(password)
 
     if(password.length < 6){
-        return res.globalResponse(StatusCodes.OK, false, 'Password must be 6 letters', null);
-    
+        return res.globalResponse(StatusCodes.PRECONDITION_REQUIRED, false, 'Password must be 6 letters', null);
     }
 
     try {
         const verifyValidUser = await UserModel.findOne({ _id: userId });
         console.log(verifyValidUser)
         if (!verifyValidUser) {
-            return res.globalResponse(StatusCodes.OK, false, 'User Not Exists', null);
+            return res.globalResponse(StatusCodes.NOT_FOUND, false, 'User Not Exists', null);
         }
 
         try {
@@ -183,7 +182,7 @@ const resetPassword = async (req, res) => {
             );
               console.log("this is updated one",updateResult)
             if (updateResult.acknowledged === false) {
-                return res.globalResponse(StatusCodes.OK, false, 'Password not updated', null);
+                return res.globalResponse(StatusCodes.FORBIDDEN, false, 'Password not updated', null);
             }
 
             return res.globalResponse(StatusCodes.OK, true, 'Password Updated', null);
