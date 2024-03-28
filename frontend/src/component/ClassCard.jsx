@@ -14,7 +14,7 @@ function ClassCard({  heading, subjects, grade }) {
   };
 
   const handleSubjectClick = (subject) => {
-    navigate(`/subjectSyllabus/${subject}-${grade}/${subject}`);
+    navigate(`/subjectSyllabus/${grade}/${subject}`);
   };
 
 

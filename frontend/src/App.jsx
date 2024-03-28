@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import ResetPassword from "./auth/ResetPassword";
 import UserProfile from "./pages/UserProfile";
 import SubjectSyllabus from "./pages/SubjectSyllabus";
+import Chapters from "./pages/Chapters";
 
 function App() {
   // window.addEventListener('beforeunload', (e)=>{
@@ -27,6 +28,7 @@ function App() {
           <Route path="/resetPassword/:userId/:token" element={<ResetPassword />} />
           <Route path="/userProfile" element={<UserProfile />} />
           <Route path="/subjectSyllabus/:grade/:subject" element={<SubjectSyllabus />} />
+          <Route path="/chapters/:subject/:chapter" element={<Chapters />} />
         </Routes>
       </Router>
     </>
