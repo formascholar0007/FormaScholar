@@ -42,9 +42,10 @@ function LoginForm() {
       let loginResponse = await response.json();
       console.warn("Data : ", loginResponse);
 
-      localStorage.setItem("token", JSON.stringify(registerResponse.data))
-
-      if (response.ok) {
+      
+      if (response.status === 200) {
+        console.log("logined in ")
+        localStorage.setItem("token", JSON.stringify(registerResponse.data))
         setSuccessMessage(loginResponse.message);
         setLoginFormData({
           email: "",
