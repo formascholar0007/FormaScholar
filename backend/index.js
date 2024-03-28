@@ -7,7 +7,7 @@ require('./config/database');
 
 
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({extended:false}));
 app.use(globalResponse);
 app.use(cors());
 
