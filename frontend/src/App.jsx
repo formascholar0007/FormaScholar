@@ -28,7 +28,7 @@ function App() {
           <Route path="/resetPassword/:userId/:token" element={<ResetPassword />} />
           <Route path="/userProfile" element={<UserProfile />} />
           <Route path="/subjectSyllabus/:grade/:subject" element={<SubjectSyllabus />} />
-          <Route path="/chapters/:subject/:chapter" element={<Chapters />} />
+          <Route path="/chapters/:grade/:subject/:chapter" element={<Chapters />} />
         </Routes>
       </Router>
     </>

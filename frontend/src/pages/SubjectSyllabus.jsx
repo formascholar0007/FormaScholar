@@ -53,7 +53,7 @@ const SubjectSyllabus = () => {
         {chapters.map((chapter, index) => (
           <NavLink
             key={index}
-            to={`/chapters/${subject}/${chapter}`}
+            to={`/chapters/${grade}/${subject}/${chapter}`}
             className="relative p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:bg-[#009c86] hover:text-white transition-colors duration-300 flex flex-wrap items-center justify-between"
           >
             <span>{chapter}</span>
