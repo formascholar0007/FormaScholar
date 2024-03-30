@@ -8,7 +8,6 @@ import SubjectCard from "../component/SubjectCard";
 import mathicon from "../assets/mathicon.svg";
 import scienceicon from "../assets/scienceicon.svg";
 import physicsicon from "../assets/physics.svg";
-import Footer from "../component/Footer";
 import WhyChooseUs from "../component/WhyChooseUs";
 
 const ImageList = [
@@ -128,7 +127,6 @@ const Home = () => {
 
       <WhyChooseUs />
 
-      <Footer />
     </section>
   );
 };
