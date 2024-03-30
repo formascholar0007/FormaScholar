@@ -7,7 +7,9 @@ import ClassCard from "../component/ClassCard";
 import SubjectCard from "../component/SubjectCard";
 import mathicon from "../assets/mathicon.svg";
 import scienceicon from "../assets/scienceicon.svg";
+import physicsicon from "../assets/physics.svg";
 import Footer from "../component/Footer";
+import WhyChooseUs from "../component/WhyChooseUs";
 
 const ImageList = [
   { id: 1, img: Homepageimg1 },
@@ -41,6 +43,11 @@ const Home = () => {
     10: ["Maths", "Science", "History"],
     11: ["Maths", "Physics", "Chemistry"],
     12: ["Maths", "Physics", "Chemistry", "Bio", "English", "Computer"],
+  };
+  const subjectIconMap = {
+    Maths: mathicon,
+    Science: scienceicon,
+    Physics: physicsicon,
   };
 
   const uniqueSubjects = Array.from(
@@ -98,7 +105,7 @@ const Home = () => {
             <ClassCard
               key={grade}
               grade={grade}
-              heading={`Class ${grade}`}
+              heading={`${grade}`}
               subjects={subjects[grade]}
             />
           ))}
@@ -113,13 +120,15 @@ const Home = () => {
             <SubjectCard
               key={subject}
               subjectName={subject}
-              subjectIcon={subject === "Math" ? mathicon : scienceicon}
+              subjectIcon={subjectIconMap[subject] || scienceicon}
             />
           ))}
         </div>
-
-        <Footer />
       </div>
+
+      <WhyChooseUs />
+
+      <Footer />
     </section>
   );
 };

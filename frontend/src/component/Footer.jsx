@@ -9,7 +9,7 @@ function Footer() {
           <div class="mb-6 md:mb-0">
             <NavLink to="/" class="flex items-center">
               <img
-                src="https://flowbite.com/docs/images/logo.svg"
+                src="#"
                 class="h-8 me-3"
                 alt="FlowBite Logo"
               />
@@ -25,9 +25,9 @@ function Footer() {
               </h2>
               <ul class="text-gray-500 dark:text-gray-400 font-medium">
                 <li class="mb-4">
-                  <a href="https://flowbite.com/" class="hover:underline">
+                  <NavLink to="/" class="hover:underline">
                   FormaScholar
-                  </a>
+                  </NavLink>
                 </li>
               </ul>
             </div>
@@ -37,20 +37,20 @@ function Footer() {
               </h2>
               <ul class="text-gray-500 dark:text-gray-400 font-medium">
                 <li class="mb-4">
-                  <a
-                    href="https://github.com/themesberg/flowbite"
+                  <NavLink
+                    to="#"
                     class="hover:underline "
                   >
                     Github
-                  </a>
+                  </NavLink>
                 </li>
                 <li>
-                  <a
-                    href="https://discord.gg/4eeurUVvTy"
+                  <NavLink
+                    to="#"
                     class="hover:underline"
                   >
                     Discord
-                  </a>
+                  </NavLink>
                 </li>
               </ul>
             </div>
@@ -60,14 +60,14 @@ function Footer() {
               </h2>
               <ul class="text-gray-500 dark:text-gray-400 font-medium">
                 <li class="mb-4">
-                  <a href="#" class="hover:underline">
+                  <a to="#" class="hover:underline">
                     Privacy Policy
                   </a>
                 </li>
                 <li>
-                  <a href="#" class="hover:underline">
+                  <NavLink to="#" class="hover:underline">
                     Terms &amp; Conditions
-                  </a>
+                  </NavLink>
                 </li>
               </ul>
             </div>
@@ -77,14 +77,14 @@ function Footer() {
         <div class="sm:flex sm:items-center sm:justify-between">
           <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
             © 2024{" "}
-            <a href="https://flowbite.com/" class="hover:underline">
+            <a to="https://flowbite.com/" class="hover:underline">
               FormaScholar
             </a>
             . All Rights Reserved.
           </span>
           <div class="flex mt-4 sm:justify-center sm:mt-0">
-            <a
-              href="#"
+            <NavLink
+              to="#"
               class="text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
               <svg
@@ -101,9 +101,9 @@ function Footer() {
                 />
               </svg>
               <span class="sr-only">Facebook page</span>
-            </a>
+            </NavLink>
             <a
-              href="#"
+              to="#"
               class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
             >
               <svg
@@ -118,7 +118,7 @@ function Footer() {
               <span class="sr-only">Discord community</span>
             </a>
             <a
-              href="#"
+              to="#"
               class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
             >
               <svg
@@ -136,8 +136,8 @@ function Footer() {
               </svg>
               <span class="sr-only">Twitter page</span>
             </a>
-            <a
-              href="#"
+            <NavLink
+              to="#"
               class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
             >
               <svg
@@ -154,9 +154,9 @@ function Footer() {
                 />
               </svg>
               <span class="sr-only">GitHub account</span>
-            </a>
-            <a
-              href="#"
+            </NavLink>
+            <NavLink
+              to="#"
               class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
             >
               <svg
@@ -173,7 +173,7 @@ function Footer() {
                 />
               </svg>
               <span class="sr-only">Dribbble account</span>
-            </a>
+            </NavLink>
           </div>
         </div>
       </div>

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
-function ClassCard({  heading, subjects, grade }) {
+function ClassCard({ heading, subjects, grade }) {
   const [showOptions, setShowOptions] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleMouseEnter = () => {
     setShowOptions(true);
@@ -17,14 +17,13 @@ function ClassCard({  heading, subjects, grade }) {
     navigate(`/subjectSyllabus/${grade}/${subject}`);
   };
 
-
   // const formatNameForURL = (name) => {
   //   return name.toLowerCase().replace(/\s+/g, '-');
   // };
 
   return (
     <section
-      className="lg:w-[30%] md:w-[35%] w-[70%] h-64 m-6 bg-white shadow-lg p-2 md:p-4 rounded-lg border border-gray-200 transform hover:scale-105 overflow-hidden "
+      className="lg:w-[30%] md:w-[35%] w-[70%] md:h-64 h-70 m-6 bg-white shadow-lg p-2 md:p-4 rounded-lg border border-gray-200 transform hover:scale-105 overflow-hidden"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{ transition: "transform 0.6s ease-in-out" }}
@@ -41,7 +40,7 @@ function ClassCard({  heading, subjects, grade }) {
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque, labore.
       </p>
       <div
-        className={`flex justify-evenly md:justify-start flex-wrap ${
+        className={`flex justify-start flex-wrap ${
           showOptions ? "opacity-100" : "opacity-0"
         } transition-opacity duration-700 delay-100`}
       >
@@ -49,7 +48,7 @@ function ClassCard({  heading, subjects, grade }) {
           <button
             key={index}
             onClick={() => handleSubjectClick(subject)}
-            className="py-1 px-3 lg:mr-3 md:py-2 md:px-4 mt-3 border-2 border-[#009c86] hover:bg-[#009c86] hover:text-white text-black font-bold rounded-md md:text-lg text-md transition-opacity duration-500 ease-in-out"
+            className="py-1 px-3 lg:mr-3 mr-1 md:py-2 md:px-4 mt-2 border-2 border-[#009c86] hover:bg-[#009c86] hover:text-white text-black font-bold rounded-md md:text-lg text-md transition-opacity duration-500 ease-in-out"
             style={{
               transitionDelay: `${showOptions ? index * 100 : 0}ms`,
             }}

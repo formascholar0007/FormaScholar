@@ -6,13 +6,13 @@ import rewriteAll from 'vite-plugin-rewrite-all';
 export default defineConfig({
   plugins: [
     react(),
-    rewriteAll({
-      rules: [
-        {
-          from: /^\/api(.*)$/,
-          to: '/my-custom-api$1',
-        },
-      ],
-    }),
+    // rewriteAll({
+    //   rules: [
+    //     {
+    //       from: /^\/api(.*)$/,
+    //       to: '/my-custom-api$1',
+    //     },
+    //   ],
+    // }),
   ],
 })
