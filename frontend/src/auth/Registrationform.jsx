@@ -53,6 +53,7 @@ function Registrationform() {
 
       if (response.ok) {
         localStorage.setItem("token", JSON.stringify(registerResponse.data));
+        
         setErrorMessage("");
         setFormData({
           userName: "",
