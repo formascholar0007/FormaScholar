@@ -30,7 +30,7 @@ function LoginForm() {
       const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         headers: {
-          Authorization:`Bearer ${JSON.parse(localStorage.getItem('token'))}`,
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
           Accept: "application/json",
           "Content-Type": "application/json",
         },
@@ -42,9 +42,8 @@ function LoginForm() {
       let loginResponse = await response.json();
       console.warn("Data : ", loginResponse);
 
-      localStorage.setItem("token", JSON.stringify(registerResponse.data))
-
       if (response.ok) {
+        localStorage.setItem("token", JSON.stringify(registerResponse.data));
         setSuccessMessage(loginResponse.message);
         setLoginFormData({
           email: "",
@@ -56,7 +55,7 @@ function LoginForm() {
       }
     } catch (error) {
       console.log("Error during login : ", error);
-      setErrorMessage(loginResponse.message);
+      setErrorMessage(error);
       setErrorVisible(true);
     }
   };
