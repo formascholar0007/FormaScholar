@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const authRoute = require('./routes/authroute');
+const profileRoute = require('./routes/profileroute');
 const globalResponse = require('./middleware/globalResponse');
 require('./config/database');
 
@@ -15,6 +16,7 @@ app.use(cors({
   }));
 
 app.use('/api/auth',  authRoute);
+app.use('/api/profile',profileRoute);
 
 
 
