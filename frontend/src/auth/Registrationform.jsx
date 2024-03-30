@@ -35,7 +35,7 @@ function Registrationform() {
       const response = await fetch("http://localhost:3000/api/auth/register", {
         method: "POST",
         headers: {
-          Authorization:`Bearer ${JSON.parse(localStorage.getItem('token'))}`,
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
           Accept: "application/json",
           "Content-Type": "application/json",
         },
@@ -47,13 +47,12 @@ function Registrationform() {
       });
       let registerResponse = await response.json();
       console.warn("All Data", registerResponse);
-      localStorage.setItem("token", JSON.stringify(registerResponse.data))
-
 
       const statusCode = response.status;
       const statusText = HttpStatus.getStatusText(statusCode);
-      
+
       if (response.ok) {
+        localStorage.setItem("token", JSON.stringify(registerResponse.data));
         setErrorMessage("");
         setFormData({
           userName: "",
@@ -62,15 +61,14 @@ function Registrationform() {
           confirmPassword: "",
         });
         navigate("/additionalInfo");
-      } 
-      else {
-        if (statusCode === HttpStatus.CONFLICT) {
-          setErrorMessage("username or email is not valid!!");
-        } else {
-          setErrorMessage(response.data.error);
-        }
-        setErrorVisible(true);
+      } else {
+        setErrorMessage(
+          registerResponse.message === "User Already Exists"
+            ? registerResponse.message
+            : registerResponse.data.error
+        );
       }
+      setErrorVisible(true);
     } catch (error) {
       console.log("Error:", error);
       setErrorMessage("An error occurred.Please try again later.");
@@ -209,7 +207,7 @@ function Registrationform() {
             >
               {errorMessage && (
                 <div
-                  className="bg-red-100 border-2 border-red-700 text-black px-4 py-3 rounded relative top-[-510px]  lg:relative lg:top-[-485px]"
+                  className="bg-red-100 border-2 border-red-700 text-black px-4 py-3 rounded relative top-[-510px]  lg:relative lg:top-[-460px]"
                   role="alert"
                 >
                   <strong className="font-bold">OPPS!: </strong>
