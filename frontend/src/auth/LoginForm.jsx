@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import loginImage from "../assets/Login1.jpg";
 import Button from "../Common/Button";
 
@@ -11,6 +11,7 @@ function LoginForm() {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -42,8 +43,9 @@ function LoginForm() {
       let loginResponse = await response.json();
       console.warn("Data : ", loginResponse);
 
-      if (response.ok) {
-        localStorage.setItem("token", JSON.stringify(registerResponse.data));
+      if (response.status === 200)  {
+        localStorage.setItem("token", JSON.stringify(loginResponse.data));
+        navigate("/");
         setSuccessMessage(loginResponse.message);
         setLoginFormData({
           email: "",
@@ -55,7 +57,8 @@ function LoginForm() {
       }
     } catch (error) {
       console.log("Error during login : ", error);
-      setErrorMessage(error);
+      const errorMessage = error.message || "An error occurred during login.";
+      setErrorMessage(errorMessage);
       setErrorVisible(true);
     }
   };
