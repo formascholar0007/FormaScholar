@@ -38,8 +38,8 @@ const Home = () => {
   }, [currentIndex]);
 
   const subjects = {
-    8: ["Maths", "Science"],
-    9: ["Maths", "Science"],
+    8:  ["Maths", "Science"],
+    9:  ["Maths", "Science"],
     10: ["Maths", "Science", "History"],
     11: ["Maths", "Physics", "Chemistry"],
     12: ["Maths", "Physics", "Chemistry", "Bio", "English", "Computer"],
