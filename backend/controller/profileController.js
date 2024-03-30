@@ -3,7 +3,7 @@ const { StatusCodes } = require('http-status-codes');
 
 const getProfile = async (req, res) => {
     try {
-        const { userId } = req.params;
+        const userId = req.decodedToken.userId;
         const verifyUser = await UserAdditionalModel.findOne({ userId });
         if (!verifyUser) {
             return res.globalResponse(StatusCodes.NOT_FOUND, false, 'User Not Found', null);
@@ -16,15 +16,15 @@ const getProfile = async (req, res) => {
 
 const updateProfile = async (req, res) => {
     try {
-        const { userId } = req.params;
+        const userId = req.decodedToken.userId;
         const updatedata = req.body;
 
         const updated = await UserAdditionalModel.updateOne(
             { userId },
-            { $set: { updatedata } }
+            { $set:  updatedata  }
         )
         const user = await UserAdditionalModel.findOne({userId});
-        // console.log(updated , user)
+        console.log(updated , user)
         if (updated.acknowledged === true) {
             return res.globalResponse(StatusCodes.OK, false, 'User Updated successfully', null);
         } else {
