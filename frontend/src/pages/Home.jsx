@@ -100,7 +100,7 @@ const Home = () => {
         <h1 className="px-14 pt-14 text-xl md:text-3xl font-semibold">
           Browse Your Classes
         </h1>
-        <div className="flex flex-wrap justify-center lg:justify-start lg:px-8 lg:py-4">
+        <div className="flex flex-wrap justify-center lg:px-8 lg:py-4">
           {[8, 9, 10, 11, 12].map((grade) => (
             <ClassCard
               key={grade}
