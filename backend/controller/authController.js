@@ -89,7 +89,7 @@ const userAdditionalInfo = async (req, res) => {
     const userId = req.decodedToken.userId;
     try {
         let image;
-       if(req.file.path){
+       if(req.file && req.file.path){
            image = req.file.path;
        }
       const userInfo = await UserInfo.create({
