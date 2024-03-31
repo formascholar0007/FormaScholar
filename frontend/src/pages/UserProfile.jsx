@@ -12,9 +12,7 @@ function UserProfile() {
   const [newImage, setNewImage] = useState(null);
   const [editable, setEditable] = useState(false);
   const [file, setFile] = useState(null);
-  const [imageUrl, setImageUrl] = useState('');
-
-
+  const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
@@ -56,11 +54,10 @@ function UserProfile() {
       reader.readAsDataURL(file);
     }
   };
-  
 
   function handleInput(e) {
     e.preventDefault();
-  
+
     const formData = new FormData();
     formData.append("fullName", fullName);
     formData.append("phoneNumber", phoneNumber);
@@ -68,10 +65,10 @@ function UserProfile() {
     formData.append("userClass", userClass);
     formData.append("about", about);
     formData.append("gender", gender);
-    formData.append("image", newImage);
+    formData.append("image", imageUrl);
 
     const token = JSON.parse(localStorage.getItem("token"));
-  
+
     axios
       .put("http://localhost:3000/api/profile", formData, {
         headers: {
@@ -86,7 +83,6 @@ function UserProfile() {
         console.log("Error updating profile:", error);
       });
   }
-  
 
   return (
     <section className="px-4 md:px-24 py-16 font-Alice">
@@ -143,11 +139,19 @@ function UserProfile() {
               </div>
             ) : (
               <div className="py-3 pt-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
-                <img
-                  src={imageUrl || `http://localhost:3000/${newImage || usericon}`}
-                  alt="User Icon"
-                  className="object-contain md:h-32 h-24 w-full sm:h-auto sm:w-auto cursor-pointer"
-                />
+                {newImage || imageUrl ? (
+                  <img
+                    src={imageUrl || `http://localhost:3000/${newImage}`}
+                    alt="User Profile"
+                    className="object-contain md:h-32 h-24 w-full sm:h-auto sm:w-auto cursor-pointer"
+                  />
+                ) : (
+                  <img
+                    src={usericon}
+                    alt="User Icon"
+                    className="object-contain md:h-32 h-24 w-full sm:h-auto sm:w-auto cursor-pointer"
+                  />
+                )}
               </div>
             )}
 
