@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       setIsLoggedIn(true);
     }
-  }, []);
+  }, [isLoggedIn]);
 
   const handleLogin = (token) => {
     localStorage.setItem('token', token);

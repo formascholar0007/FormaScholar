@@ -40,6 +40,16 @@ function UserProfile() {
       });
   }, []);
 
+  function handleInput(e){
+    e.preventDefault();
+
+      axios.put('http://localhost:3000/api/profile', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+  }
+
   return (
     <section className="px-4 md:px-24 py-16 font-Alice">
       <div className="font-Alice">
@@ -50,7 +60,7 @@ function UserProfile() {
           Personal details and application.
         </p>
       </div>
-      <form>
+      <form onSubmit={handleInput}>
         <div className="mt-6 border-t border-gray-100">
           <dl>
             <div className="py-3 pt-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">

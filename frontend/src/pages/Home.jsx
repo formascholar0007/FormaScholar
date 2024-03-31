@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Homepageimg1 from "../assets/Image1.svg";
 import Homepageimg2 from "../assets/Image2.svg";
 import Homepageimg3 from "../assets/Image4.svg";
@@ -21,7 +21,7 @@ const Home = () => {
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top when the component mounts
   }, []);
-
+  
   const [imageId, setImageId] = useState(Homepageimg1);
   const [currentIndex, setCurrentIndex] = useState(0);
 
