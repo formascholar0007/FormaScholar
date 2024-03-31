@@ -29,26 +29,34 @@ const updateProfile = async (req, res) => {
         const userId = req.decodedToken.userId;
         const updatedata = req.body;
 
+        if (req.file && req.file.path) {
+            updatedata.image = req.file.path;
+        }
+
         const updated = await UserAdditionalModel.updateOne(
             { userId },
             { $set: updatedata }
-        )
+        );
+
         const user = await UserAdditionalModel.findOne({ userId });
+
         if (!user) {
             return res.globalResponse(StatusCodes.NOT_FOUND, false, 'User Not Found', null);
         }
-        console.log(updated, user)
+
+        console.log(updated, user);
+
         if (updated.acknowledged === true) {
             return res.globalResponse(StatusCodes.OK, false, 'User Updated successfully', null);
         } else {
             return res.globalResponse(StatusCodes.NOT_FOUND, false, 'User Not Found', null);
         }
     } catch (err) {
+        console.error("Error:", err);
         return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Internal Server Error', null);
     }
+};
 
-
-}
 
 
 
