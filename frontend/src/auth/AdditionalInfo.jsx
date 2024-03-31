@@ -65,7 +65,7 @@ function AdditionalInfo() {
         setErrorMessage("");
         navigate("/");
       } else {
-        setErrorMessage("Pleas Enter Complete information");
+        setErrorMessage("Please Enter Complete information");
       }
       setErrorVisible(true);
       console.log(data);
