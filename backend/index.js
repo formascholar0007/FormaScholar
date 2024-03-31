@@ -6,7 +6,7 @@ const profileRoute = require('./routes/profileroute');
 const globalResponse = require('./middleware/globalResponse');
 require('./config/database');
 
-
+app.use(express.static('public'))
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(globalResponse);
