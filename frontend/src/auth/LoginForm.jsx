@@ -45,12 +45,13 @@ function LoginForm() {
 
       if (response.status === 200)  {
         localStorage.setItem("token", JSON.stringify(loginResponse.data));
-        navigate("/");
         setSuccessMessage(loginResponse.message);
         setLoginFormData({
           email: "",
           password: "",
         });
+        navigate("/");
+        window.location.reload();
       } else {
         console.error("Login Failed  :", loginResponse.message);
         setErrorMessage(loginResponse.message);
