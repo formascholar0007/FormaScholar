@@ -11,6 +11,10 @@ function UserProfile() {
   const [gender, setGender] = useState("");
   const [newImage, setNewImage] = useState(null);
   const [editable, setEditable] = useState(false);
+  const [file, setFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState('');
+
+
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
@@ -22,7 +26,6 @@ function UserProfile() {
         },
       })
       .then((response) => {
-        console.warn(response);
         const userData = response.data.data;
         setFullName(userData.fullName || "");
         setPhoneNumber(userData.phoneNumber || "");
@@ -30,8 +33,8 @@ function UserProfile() {
         setUserClass(userData.className || "");
         setAbout(userData.about || "");
         setGender(userData.gender || "");
-        const imageUrl = userData.image.replace(/\\/g, '/');
-        const newImageurl = imageUrl.split('public/')[1];
+        const imageUrl = userData.image.replace(/\\/g, "/");
+        const newImageurl = imageUrl.split("public/")[1];
         setNewImage(newImageurl || null);
       })
       .catch((error) => {
@@ -39,15 +42,48 @@ function UserProfile() {
       });
   }, []);
 
-  function handleInput(e){
-    e.preventDefault();
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    console.log(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageUrl(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  
 
-      axios.put('http://localhost:3000/api/profile', {
+  function handleInput(e) {
+    e.preventDefault();
+  
+    const formData = new FormData();
+    formData.append("fullName", fullName);
+    formData.append("phoneNumber", phoneNumber);
+    formData.append("email", email);
+    formData.append("userClass", userClass);
+    formData.append("about", about);
+    formData.append("gender", gender);
+    formData.append("image", newImage);
+  
+    const token = JSON.parse(localStorage.getItem("token"));
+  
+    axios
+      .put("http://localhost:3000/api/profile", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
         },
       })
+      .then((response) => {
+        console.log("Profile updated successfully:", response);
+      })
+      .catch((error) => {
+        console.log("Error updating profile:", error);
+      });
   }
+  
 
   return (
     <section className="px-4 md:px-24 py-16 font-Alice">
@@ -60,15 +96,58 @@ function UserProfile() {
         </p>
       </div>
       <form onSubmit={handleInput}>
-        <div className="mt-6 border-t border-gray-100">
+        <div className="mt-6  border-gray-100">
           <dl>
-            <div className="py-3 pt-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
-              <img
-                src={`http://localhost:3000/${newImage || usericon}`}
-                alt="User Icon"
-                className="object-contain md:h-32 h-24 w-full sm:h-auto sm:w-auto"
-              />
-            </div>
+            {editable ? (
+              <div className="col-span-full">
+                <label
+                  htmlFor="cover-photo"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Upload Profile Picutre
+                </label>
+                <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                  <div className="text-center">
+                    <label
+                      htmlFor="image"
+                      className="relative cursor-pointer rounded-md bg-white font-semibold text-[#009c86] focus-within:outline-none focus-within:ring-2 focus-within:ring-[#009c86] focus-within:ring-offset-2 hover:text-[#174943]"
+                    >
+                      <span>
+                        {file ? "Change Profile Picutre" : "Upload a file"}
+                      </span>
+                      <input
+                        id="image"
+                        name="image"
+                        type="file"
+                        className="sr-only focus-within:ring-[#1dae9b] outline-none"
+                        onChange={handleFileUpload}
+                      />
+                    </label>
+
+                    {file && (
+                      <img
+                        src={file.url}
+                        alt={file.name}
+                        className="mt-4 mx-auto rounded-full w-32 h-32 border-2 border-[#1dae9be7] object-cover"
+                      />
+                    )}
+
+                    <p className="flex justify-center mt-2 text-xl ">
+                      {file ? file.name : "PNG, JPG, GIF up to 10MB"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="py-3 pt-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
+                <img
+                  src={imageUrl || `http://localhost:3000/${newImage || usericon}`}
+                  alt="User Icon"
+                  className="object-contain md:h-32 h-24 w-full sm:h-auto sm:w-auto cursor-pointer"
+                />
+              </div>
+            )}
+
             <div className="py-6 grid grid-cols-2 sm:grid-cols-3 md:gap-4 gap-2">
               <label
                 htmlFor="fullName"
@@ -81,7 +160,11 @@ function UserProfile() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 readOnly={!editable}
-                className="mt-1 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 outline-none"
+                className={`mt-1 py-2 px-2 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 ${
+                  editable
+                    ? "border-2 border-gray-200 rounded-md"
+                    : "border-none"
+                }  outline-none`}
               />
             </div>
             <div className="py-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
@@ -96,7 +179,11 @@ function UserProfile() {
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 readOnly={!editable}
-                className="mt-1 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 outline-none"
+                className={`mt-1 py-2 px-2 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 ${
+                  editable
+                    ? "border-2 border-gray-200 rounded-md"
+                    : "border-none"
+                }  outline-none`}
               />
             </div>
             <div className="py-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
@@ -111,7 +198,7 @@ function UserProfile() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 readOnly
-                className="mt-1 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 outline-none"
+                className={`mt-1 py-2 px-2 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 outline-none`}
               />
             </div>
             <div className="py-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
@@ -126,7 +213,11 @@ function UserProfile() {
                 value={userClass}
                 onChange={(e) => setUserClass(e.target.value)}
                 readOnly={!editable}
-                className="mt-1 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 outline-none"
+                className={`mt-1 py-2 px-2 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 ${
+                  editable
+                    ? "border-2 border-gray-200 rounded-md"
+                    : "border-none"
+                }  outline-none`}
               />
             </div>
             <div className="py-6 grid grid-cols-2 sm:grid-cols-3 md:gap-4 gap-2">
@@ -142,7 +233,11 @@ function UserProfile() {
                 maxLength={100}
                 rows={3}
                 readOnly={!editable}
-                className="mt-1 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 outline-none"
+                className={`mt-1 py-2 px-2 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 ${
+                  editable
+                    ? "border-2 border-gray-200 rounded-md"
+                    : "border-none"
+                }  outline-none`}
               />
             </div>
             <div className="py-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
@@ -157,7 +252,11 @@ function UserProfile() {
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
                 readOnly={!editable}
-                className="mt-1 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 outline-none"
+                className={`mt-1 py-2 px-2 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 ${
+                  editable
+                    ? "border-2 border-gray-200 rounded-md"
+                    : "border-none"
+                }  outline-none`}
               />
             </div>
           </dl>
@@ -167,7 +266,9 @@ function UserProfile() {
         <button
           onClick={() => setEditable(!editable)}
           className={`w-full py-3 rounded-md text-lg ${
-            editable ? "bg-[#25c0ab] text-white" : "bg-transparent text-black border-2 border-[#25c0ab]"
+            editable
+              ? "bg-[#25c0ab] text-white"
+              : "bg-transparent text-black border-2 border-[#25c0ab]"
           } transition duration-300 ease-in-out hover:bg-[#25c0ab] hover:text-white hover:border-transparent`}
         >
           {editable ? "Save Changes" : "Edit Profile"}
