@@ -46,8 +46,8 @@ function AdditionalInfo() {
       }
       const data = await response.json();
       console.log(data);
-      navigae("/")
-      window.location.reload();
+      // navigae("/")
+      // window.location.reload();
     } catch (error) {
       console.error("Error:", error);
     }
