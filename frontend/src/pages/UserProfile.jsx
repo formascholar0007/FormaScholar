@@ -31,10 +31,8 @@ function UserProfile() {
         setAbout(userData.about || "");
         setGender(userData.gender || "");
         const imageUrl = userData.image.replace(/\\/g, '/');
-        setNewImage(imageUrl || null);
-
-  console.warn(imageUrl);
-
+        const newImageurl = imageUrl.split('public/')[1];
+        setNewImage(newImageurl || null);
       })
       .catch((error) => {
         console.log("Error Fetching user Data : ", error);
@@ -56,7 +54,7 @@ function UserProfile() {
           <dl className="divide-y divide-gray-100">
             <div className="py-6 pt-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
               <img
-                src={newImage || usericon}
+                src={`http://localhost:3000/${newImage || usericon}`}
                 alt="User Icon"
                 className="object-contain md:h-32 h-24 w-full sm:h-auto sm:w-auto"
               />
