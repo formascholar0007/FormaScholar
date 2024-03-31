@@ -54,8 +54,6 @@ function UserProfile() {
         setImageUrl(reader.result);
       };
       reader.readAsDataURL(file);
-    console.warn(file);
-
     }
   };
   

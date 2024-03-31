@@ -13,7 +13,6 @@ function AdditionalInfo() {
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
-    console.log(file);
     if (file) {
       setFile({
         name: file.name,
@@ -32,7 +31,6 @@ function AdditionalInfo() {
     formData.append("phoneNumber", event.target.phoneNumber.value);
     formData.append("gender", event.target.gender.value);
     formData.append("className", event.target.className.value);
-    console.log(file);
 
     if (
       !formData.get("fullName") ||
@@ -41,7 +39,7 @@ function AdditionalInfo() {
     ) {
       setErrorMessage("Please Enter Required Information");
       setErrorVisible(true);
-      return; 
+      return;
     }
 
     try {
@@ -59,7 +57,6 @@ function AdditionalInfo() {
       );
 
       const data = await response.json();
-      console.log(data);
 
       if (response.ok) {
         setErrorMessage("");
@@ -68,10 +65,7 @@ function AdditionalInfo() {
         setErrorMessage("Pleas Enter Complete information");
       }
       setErrorVisible(true);
-      console.log(data);
-      console.warn("no no no");
     } catch (error) {
-      console.error("Error:", error);
       setErrorMessage("An error occurred.Please try again later.");
       setErrorVisible(true);
     }
@@ -221,10 +215,10 @@ function AdditionalInfo() {
                   className="block w-full focus-within:ring-[#009c86] outline-none rounded-md border-0 lg:py-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-[#009c86]sm:max-w-xs sm:text-sm sm:leading-6"
                   required
                 >
-                  <option>Select Gender</option>
-                  <option>male</option>
-                  <option>female</option>
-                  <option>others</option>
+                  <option value="">Select Gender</option>
+                  <option value="male">male</option>
+                  <option value="female">female</option>
+                  <option value="other">others</option>
                 </select>
               </div>
             </div>
@@ -243,11 +237,11 @@ function AdditionalInfo() {
                   className="block w-full focus-within:ring-[#009c86] outline-none rounded-md border-0 lg:py-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-[#009c86]sm:max-w-xs sm:text-sm sm:leading-6"
                   required
                 >
-                  <option>Select class</option>
-                  <option>9</option>
-                  <option>10</option>
-                  <option>11</option>
-                  <option>12</option>
+                  <option value="">Select class</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
                 </select>
               </div>
             </div>
