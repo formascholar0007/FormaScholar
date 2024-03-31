@@ -146,7 +146,7 @@ function UserProfile() {
                   src={
                     imageUrl || `http://localhost:3000/${newImage || usericon}`
                   }
-                  alt="User Icon"
+                  alt="Student"
                   className="object-contain md:h-32 h-24 w-full sm:h-auto sm:w-auto cursor-pointer"
                 />
               </div>
