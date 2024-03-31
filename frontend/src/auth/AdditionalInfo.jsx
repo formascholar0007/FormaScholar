@@ -1,9 +1,13 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { BiUpload } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+
 
 function AdditionalInfo() {
   const [file, setFile] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
+  const navigae = useNavigate();
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -42,10 +46,12 @@ function AdditionalInfo() {
       }
       const data = await response.json();
       console.log(data);
+      navigae("/")
     } catch (error) {
       console.error("Error:", error);
     }
   };
+
   return (
     <>
       <form

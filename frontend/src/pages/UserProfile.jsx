@@ -33,8 +33,7 @@ function UserProfile() {
         const imageUrl = userData.image.replace(/\\/g, '/');
         setNewImage(imageUrl || null);
 
-  console.warn(imageUrl);
-
+        console.warn(imageUrl);
       })
       .catch((error) => {
         console.log("Error Fetching user Data : ", error);
@@ -42,7 +41,7 @@ function UserProfile() {
   }, []);
 
   return (
-    <section className="px-4 md:px-24 py-6 font-Alice">
+    <section className="px-4 md:px-24 py-16 font-Alice">
       <div className="font-Alice">
         <h3 className="text-xl md:text-xl font-semibold leading-7 text-gray-900">
           Student Information
@@ -53,15 +52,15 @@ function UserProfile() {
       </div>
       <form>
         <div className="mt-6 border-t border-gray-100">
-          <dl className="divide-y divide-gray-100">
-            <div className="py-6 pt-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
+          <dl>
+            <div className="py-3 pt-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
               <img
                 src={newImage || usericon}
                 alt="User Icon"
                 className="object-contain md:h-32 h-24 w-full sm:h-auto sm:w-auto"
               />
             </div>
-            <div className="py-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
+            <div className="py-6 grid grid-cols-2 sm:grid-cols-3 md:gap-4 gap-2">
               <label
                 htmlFor="fullName"
                 className="text-xl font-semibold leading-6 text-gray-900"
@@ -76,7 +75,7 @@ function UserProfile() {
                 className="mt-1 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 outline-none"
               />
             </div>
-            <div className="py-6 grid grid-cols-1 sm:grid-cols-3 md:md:gap-4 gap-2">
+            <div className="py-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
               <label
                 htmlFor="phoneNumber"
                 className="text-xl font-semibold  leading-6 text-gray-900"
@@ -96,13 +95,13 @@ function UserProfile() {
                 htmlFor="email"
                 className="text-xl font-semibold  leading-6 text-gray-900"
               >
-                Email
+                Email Address
               </label>
               <input
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                readOnly={!editable}
+                readOnly
                 className="mt-1 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 outline-none"
               />
             </div>
@@ -111,7 +110,7 @@ function UserProfile() {
                 htmlFor="userClass"
                 className="text-xl font-semibold  leading-6 text-gray-900"
               >
-                 Class
+                Studying at
               </label>
               <input
                 type="text"
@@ -121,7 +120,7 @@ function UserProfile() {
                 className="mt-1 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 outline-none"
               />
             </div>
-            <div className="py-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
+            <div className="py-6 grid grid-cols-2 sm:grid-cols-3 md:gap-4 gap-2">
               <label
                 htmlFor="about"
                 className="text-xl font-semibold  leading-6 text-gray-900"
@@ -152,14 +151,19 @@ function UserProfile() {
                 className="mt-1 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 outline-none"
               />
             </div>
-            <div className="py-12 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
-              <button className="w-full py-3 rounded-md text-lg bg-[#25c0ab] hover:bg-transparent hover:text-black hover:border-2 hover:border-[#25c0ab] text-white">
-                Update Details
-              </button>
-            </div>
           </dl>
         </div>
       </form>
+      <div className="pb-14 pt-12 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
+        <button
+          onClick={() => setEditable(!editable)}
+          className={`w-full py-3 rounded-md text-lg ${
+            editable ? "bg-[#25c0ab] text-white" : "bg-transparent text-black border-2 border-[#25c0ab]"
+          } transition duration-300 ease-in-out hover:bg-[#25c0ab] hover:text-white hover:border-transparent`}
+        >
+          {editable ? "Save Changes" : "Edit Profile"}
+        </button>
+      </div>
     </section>
   );
 }
