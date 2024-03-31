@@ -4,13 +4,14 @@ import { FaCircleUser } from "react-icons/fa6";
 import { useAuth } from "../auth/AuthContext";
 
 const Navbar = () => {
-  const { isLoggedIn, handleLogout } = useAuth();
+  const { isLoggedIn,handleLogout } = useAuth();
   const [navOpen, setNavOpen] = useState(false);
 
   const handleNavToggle = () => {
     setNavOpen(!navOpen);
   };
- 
+  
+
   const handleLogoutClick = () => {
     handleLogout(); 
     setNavOpen(false); 
