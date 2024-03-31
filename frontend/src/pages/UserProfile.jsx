@@ -12,7 +12,9 @@ function UserProfile() {
   const [newImage, setNewImage] = useState(null);
   const [editable, setEditable] = useState(false);
   const [file, setFile] = useState(null);
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState('');
+
+
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
@@ -52,15 +54,15 @@ function UserProfile() {
         setImageUrl(reader.result);
       };
       reader.readAsDataURL(file);
-      console.warn(file);
+    console.warn(file);
+
     }
   };
+  
 
   function handleInput(e) {
     e.preventDefault();
-
-    console.warn("before axois");
-
+  
     const formData = new FormData();
     formData.append("fullName", fullName);
     formData.append("phoneNumber", phoneNumber);
@@ -71,7 +73,7 @@ function UserProfile() {
     formData.append("image", newImage);
 
     const token = JSON.parse(localStorage.getItem("token"));
-
+  
     axios
       .put("http://localhost:3000/api/profile", formData, {
         headers: {
@@ -86,6 +88,7 @@ function UserProfile() {
         console.log("Error updating profile:", error);
       });
   }
+  
 
   return (
     <section className="px-4 md:px-24 py-16 font-Alice">
@@ -143,10 +146,8 @@ function UserProfile() {
             ) : (
               <div className="py-3 pt-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
                 <img
-                  src={
-                    imageUrl || `http://localhost:3000/${newImage || usericon}`
-                  }
-                  alt="Student"
+                  src={imageUrl || `http://localhost:3000/${newImage || usericon}`}
+                  alt="User Icon"
                   className="object-contain md:h-32 h-24 w-full sm:h-auto sm:w-auto cursor-pointer"
                 />
               </div>
@@ -265,19 +266,19 @@ function UserProfile() {
             </div>
           </dl>
         </div>
-        <div className="pb-14 pt-12 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
-          <button
-            onClick={() => setEditable(!editable)}
-            className={`w-full py-3 rounded-md text-lg ${
-              editable
-                ? "bg-[#25c0ab] text-white"
-                : "bg-transparent text-black border-2 border-[#25c0ab]"
-            } transition duration-300 ease-in-out hover:bg-[#25c0ab] hover:text-white hover:border-transparent`}
-          >
-            {editable ? "Save Changes" : "Edit Profile"}
-          </button>
-        </div>
       </form>
+      <div className="pb-14 pt-12 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
+        <button
+          onClick={() => setEditable(!editable)}
+          className={`w-full py-3 rounded-md text-lg ${
+            editable
+              ? "bg-[#25c0ab] text-white"
+              : "bg-transparent text-black border-2 border-[#25c0ab]"
+          } transition duration-300 ease-in-out hover:bg-[#25c0ab] hover:text-white hover:border-transparent`}
+        >
+          {editable ? "Save Changes" : "Edit Profile"}
+        </button>
+      </div>
     </section>
   );
 }

@@ -6,7 +6,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 function AdditionalInfo() {
   const [file, setFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
-  const navigae = useNavigate();
+  const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
@@ -63,7 +63,7 @@ function AdditionalInfo() {
 
       if (response.ok) {
         setErrorMessage("");
-        navigae("/");
+        navigate("/");
       } else {
         setErrorMessage("Pleas Enter Complete information");
       }
