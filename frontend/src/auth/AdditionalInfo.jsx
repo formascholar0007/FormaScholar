@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { BiUpload } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
-
+import { NavLink, useNavigate } from "react-router-dom";
 
 function AdditionalInfo() {
   const [file, setFile] = useState(null);
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState("");
   const navigae = useNavigate();
+
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errorVisible, setErrorVisible] = useState(false);
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
-    console.log(file)
+    console.log(file);
     if (file) {
       setFile({
         name: file.name,
@@ -30,33 +32,59 @@ function AdditionalInfo() {
     formData.append("phoneNumber", event.target.phoneNumber.value);
     formData.append("gender", event.target.gender.value);
     formData.append("className", event.target.className.value);
-    console.log(file)
+    console.log(file);
+
+    if (
+      !formData.get("fullName") ||
+      !formData.get("gender") ||
+      !formData.get("className")
+    ) {
+      setErrorMessage("Please Enter Required Information");
+      setErrorVisible(true);
+      return; 
+    }
 
     try {
       const token = JSON.parse(localStorage.getItem("token"));
-      const response = await fetch('http://localhost:3000/api/auth/additionalInfo', {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
-      if(!response){
-        console.warn("no no no");
-      }
+
+      const response = await fetch(
+        "http://localhost:3000/api/auth/additionalInfo",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
+
       const data = await response.json();
       console.log(data);
-      navigae("/")
-      window.location.reload();
+
+      if (response.ok) {
+        setErrorMessage("");
+        navigae("/");
+      } else {
+        setErrorMessage("Pleas Enter Complete information");
+      }
+      setErrorVisible(true);
+      console.log(data);
+      console.warn("no no no");
     } catch (error) {
       console.error("Error:", error);
+      setErrorMessage("An error occurred.Please try again later.");
+      setErrorVisible(true);
     }
+  };
+
+  const handleCloseError = () => {
+    setErrorVisible(false);
   };
 
   return (
     <>
       <form
-        className="lg:px-80 px-3 lg:py-12 py-6 font-Alice"
+        className="lg:px-72 px-3 lg:py-24 py-28 font-Alice"
         onSubmit={handleSubmit}
       >
         <div className="g:space-y-12">
@@ -89,6 +117,7 @@ function AdditionalInfo() {
                       autoComplete="off"
                       className="block flex-1 border-0 bg-transparent lg:py-3 py-2 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 focus-within:ring-[#009c86] outline-none"
                       placeholder="Jane Smith"
+                      required
                     />
                   </div>
                 </div>
@@ -121,7 +150,7 @@ function AdditionalInfo() {
                   htmlFor="cover-photo"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Upload Profile Picutre 
+                  Upload Profile Picutre
                 </label>
                 <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                   <div className="text-center">
@@ -130,9 +159,7 @@ function AdditionalInfo() {
                       className="relative cursor-pointer rounded-md bg-white font-semibold text-[#009c86] focus-within:outline-none focus-within:ring-2 focus-within:ring-[#009c86] focus-within:ring-offset-2 hover:text-[#174943]"
                     >
                       <span>
-                        {file
-                          ? "Change Profile Picutre"
-                          : "Upload a file"}
+                        {file ? "Change Profile Picutre" : "Upload a file"}
                       </span>
                       <input
                         id="image"
@@ -152,9 +179,7 @@ function AdditionalInfo() {
                     )}
 
                     <p className="flex justify-center mt-2 text-xl ">
-                      {file
-                        ? file.name
-                        : "PNG, JPG, GIF up to 10MB"}
+                      {file ? file.name : "PNG, JPG, GIF up to 10MB"}
                     </p>
                   </div>
                 </div>
@@ -194,6 +219,7 @@ function AdditionalInfo() {
                   name="gender"
                   autoComplete="off"
                   className="block w-full focus-within:ring-[#009c86] outline-none rounded-md border-0 lg:py-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-[#009c86]sm:max-w-xs sm:text-sm sm:leading-6"
+                  required
                 >
                   <option>Select Gender</option>
                   <option>male</option>
@@ -215,6 +241,7 @@ function AdditionalInfo() {
                   name="className"
                   autoComplete="off"
                   className="block w-full focus-within:ring-[#009c86] outline-none rounded-md border-0 lg:py-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-[#009c86]sm:max-w-xs sm:text-sm sm:leading-6"
+                  required
                 >
                   <option>Select class</option>
                   <option>9</option>
@@ -227,18 +254,46 @@ function AdditionalInfo() {
           </div>
         </div>
         <div className="mt-6 flex items-center justify-end gap-x-6">
-          <button
-            type="button"
+          <NavLink
+            to="/"
             className="text-sm font-semibold leading-6 text-gray-900"
           >
             Cancel
-          </button>
+          </NavLink>
           <button
             type="submit"
             className="rounded-md bg-[#009c86] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#116257] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[#009c86]"
           >
             Save
           </button>
+        </div>
+
+        <div
+          className={`h-1 transition-all ${errorVisible ? "" : "opacity-0"}`}
+        >
+          {errorMessage && (
+            <div
+              className="bg-red-100 border-2 border-red-700 text-black px-4 py-3 rounded relative top-[25px]  md:relative lg:top-[25px]"
+              role="alert"
+            >
+              <strong className="font-bold">OPPS!: </strong>
+              <span className="block sm:inline">{errorMessage}</span>
+              <span
+                className="absolute top-0 bottom-0 right-0 px-2 py-1 cursor-pointer"
+                onClick={handleCloseError}
+              >
+                <svg
+                  className="fill-current h-6 w-6 text-red-500"
+                  role="button"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <title>Close</title>
+                  <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+                </svg>
+              </span>
+            </div>
+          )}
         </div>
       </form>
     </>
