@@ -16,7 +16,6 @@ function UserProfile() {
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
-
     axios
       .get("http://localhost:3000/api/profile", {
         headers: {
@@ -65,7 +64,7 @@ function UserProfile() {
     formData.append("userClass", userClass);
     formData.append("about", about);
     formData.append("gender", gender);
-    formData.append("image", imageUrl);
+    formData.append("image", file);
 
     const token = JSON.parse(localStorage.getItem("token"));
 
@@ -78,10 +77,21 @@ function UserProfile() {
       })
       .then((response) => {
         console.log("Profile updated successfully:", response);
+        const updatedUserData = response.data.data;
+        setPhoneNumber(updatedUserData.phoneNumber || "");
+        setEmail(updatedUserData.email || "");
+        setUserClass(updatedUserData.className || "");
+        setAbout(updatedUserData.about || "");
+        setGender(updatedUserData.gender || "");
+        const imageUrl = updatedUserData.image.replace(/\\/g, "/");
+        const newImageUrl = imageUrl.split("public/")[1];
+        setNewImage(newImageUrl || null);
       })
       .catch((error) => {
         console.log("Error updating profile:", error);
       });
+
+    setEditable(false);
   }
 
   return (
@@ -182,7 +192,7 @@ function UserProfile() {
                 Phone Number
               </label>
               <input
-                type="text"
+                type="number"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 readOnly={!editable}
@@ -271,7 +281,7 @@ function UserProfile() {
       </form>
       <div className="pb-14 pt-12 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
         <button
-          onClick={() => setEditable(!editable)}
+          onClick={editable ? handleInput : () => setEditable(true)}
           className={`w-full py-3 rounded-md text-lg ${
             editable
               ? "bg-[#25c0ab] text-white"

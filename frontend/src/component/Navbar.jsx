@@ -10,7 +10,6 @@ const Navbar = () => {
   const handleNavToggle = () => {
     setNavOpen(!navOpen);
   };
-  
 
   const handleLogoutClick = () => {
     handleLogout(); 

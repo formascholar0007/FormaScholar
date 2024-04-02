@@ -21,7 +21,7 @@ const Home = () => {
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top when the component mounts
   }, []);
-  
+
   const [imageId, setImageId] = useState(Homepageimg1);
   const [currentIndex, setCurrentIndex] = useState(0);
 
