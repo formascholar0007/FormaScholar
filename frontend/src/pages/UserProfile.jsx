@@ -60,26 +60,27 @@ function UserProfile() {
     const formData = new FormData();
     formData.append("fullName", fullName);
     formData.append("phoneNumber", phoneNumber);
-    formData.append("email", email); 
     formData.append("userClass", userClass);
     formData.append("about", about);
     formData.append("gender", gender);
-    formData.append("image", file);
+    if (file) { // Only append file if it exists
+      formData.append("image", file);
+    }
 
     const token = JSON.parse(localStorage.getItem("token"));
 
     axios
-      .put("http://localhost:3000/api/profile", formData, {
+      .put("http://localhost:3000/api/profile", formData , {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
+        
       })
       .then((response) => {
         console.log("Profile updated successfully:", response);
         const updatedUserData = response.data.data;
         setPhoneNumber(updatedUserData.phoneNumber || "");
-        setEmail(updatedUserData.email || "");
         setUserClass(updatedUserData.className || "");
         setAbout(updatedUserData.about || "");
         setGender(updatedUserData.gender || "");
