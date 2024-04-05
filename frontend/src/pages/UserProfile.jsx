@@ -60,7 +60,7 @@ function UserProfile() {
     const formData = new FormData();
     formData.append("fullName", fullName);
     formData.append("phoneNumber", phoneNumber);
-    formData.append("userClass", userClass);
+    formData.append("className", userClass);
     formData.append("about", about);
     formData.append("gender", gender);
     if (file) { // Only append file if it exists
