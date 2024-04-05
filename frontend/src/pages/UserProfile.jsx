@@ -9,8 +9,8 @@ function UserProfile() {
   const [userClass, setUserClass] = useState("");
   const [about, setAbout] = useState("");
   const [gender, setGender] = useState("");
-  const [newImage, setNewImage] = useState(null);
   const [editable, setEditable] = useState(false);
+  const [newImage, setNewImage] = useState(null);
   const [file, setFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
 
@@ -42,15 +42,11 @@ function UserProfile() {
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
       setFile({
         name: file.name,
         url: URL.createObjectURL(file),
       });
-      reader.onloadend = () => {
-        setImageUrl(reader.result);
-      };
-      reader.readAsDataURL(file);
+      setImageUrl(URL.createObjectURL(file));
     }
   };
 
@@ -63,9 +59,7 @@ function UserProfile() {
     formData.append("className", userClass);
     formData.append("about", about);
     formData.append("gender", gender);
-    if (file) { // Only append file if it exists
-      formData.append("image", file);
-    }
+    formData.append("image", imageUrl);
 
     const token = JSON.parse(localStorage.getItem("token"));
 
