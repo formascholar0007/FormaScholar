@@ -25,6 +25,7 @@ const getProfile = async (req, res) => {
 }
 
 const updateProfile = async (req, res) => {
+    console.log(req.body);
     try {
         const userId = req.decodedToken.userId;
         const updatedata = req.body;
@@ -47,7 +48,7 @@ const updateProfile = async (req, res) => {
         console.log(updated, user);
 
         if (updated.acknowledged === true) {
-            return res.globalResponse(StatusCodes.OK, false, 'User Updated successfully', null);
+            return res.globalResponse(StatusCodes.OK, false, 'User Updated successfully', user);
         } else {
             return res.globalResponse(StatusCodes.NOT_FOUND, false, 'User Not Found', null);
         }
