@@ -13,7 +13,7 @@ function UserProfile() {
   const [editable, setEditable] = useState(false);
   const [newImage, setNewImage] = useState(null);
   const [file, setFile] = useState(null);
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
@@ -33,12 +33,11 @@ function UserProfile() {
         setGender(userData.gender || "");
         const imageURL = userData.image.replace(/\\/g, "/");
         const newImageurl = imageURL.split("public/")[1];
-        setNewImage(newImageurl || null);
+        setImageUrl(newImageurl || null);
 
         console.log("imageURL", imageURL);
         console.log("newImageurl", newImageurl);
-        console.log("New Image:", newImage);
-        console.log("Image URL:", imageUrl);
+        console.log("New Image:", imageUrl);
 
       })
       .catch((error) => {
