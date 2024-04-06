@@ -25,6 +25,9 @@ function UserProfile() {
       })
       .then((response) => {
         const userData = response.data.data;
+
+        localStorage.setItem("userFullName", userData.fullName);
+
         setFullName(userData.fullName || "");
         setPhoneNumber(userData.phoneNumber || "");
         setEmail(userData.email || "");
@@ -64,7 +67,6 @@ function UserProfile() {
     formData.append("phoneNumber", phoneNumber);
     formData.append("className", userClass);
     formData.append("about", about);
-    
     formData.append("gender", gender);
     formData.append("image", imageUrl);
 

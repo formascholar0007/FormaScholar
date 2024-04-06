@@ -9,6 +9,7 @@ import mathicon from "../assets/mathicon.svg";
 import scienceicon from "../assets/scienceicon.svg";
 import physicsicon from "../assets/physics.svg";
 import WhyChooseUs from "../component/WhyChooseUs";
+import { useAuth } from "../auth/AuthContext";
 
 const ImageList = [
   { id: 1, img: Homepageimg1 },
@@ -17,13 +18,16 @@ const ImageList = [
 ];
 
 const Home = () => {
-
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top when the component mounts
   }, []);
 
   const [imageId, setImageId] = useState(Homepageimg1);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const { isLoggedIn } = useAuth();
+
+  const userFullName = localStorage.getItem("userFullName");
 
   const handleImageClick = (selectedImg) => {
     setImageId(selectedImg);
@@ -42,8 +46,8 @@ const Home = () => {
   }, [currentIndex]);
 
   const subjects = {
-    8:  ["Maths", "Science"],
-    9:  ["Maths", "Science"],
+    8: ["Maths", "Science"],
+    9: ["Maths", "Science"],
     10: ["Maths", "Science", "History"],
     11: ["Maths", "Physics", "Chemistry"],
     12: ["Maths", "Physics", "Chemistry", "Bio", "English", "Computer"],
@@ -58,24 +62,51 @@ const Home = () => {
     new Set([].concat(...Object.values(subjects)))
   );
 
+  function ExploreNow(id) {
+    const element = document.querySelector(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
   return (
     <section className="lg:min-h-screen min-h-screen font-Alice overflow-hidden">
-      <div className="max-w-full container mx-auto md:px-8 md:py-10 py-12 px-6 overflow-hidden bg-gradient-to-b from-gray-900 to-gray-900  text-white">
+      <div className="max-w-full container mx-auto md:px-8 md:py-12 py-8 px-6 overflow-hidden bg-gradient-to-b from-gray-900 to-gray-900  text-white">
         <div className="lg:grid-cols-2 grid grid-cols-1 gap-8">
-          <div className="lg:py-12 flex flex-col pt-2">
-            <h1 className="lg:text-7xl lg:leading-[80px] md:text-6xl text-4xl font-bold lg:mb-6 mb-3 leading-[48px]">
-              Welcome to the
-              <br />
-              <span className="text-[#009c86]"> FormaScholar</span>
-            </h1>
-            <p className="lg:text-lg text-md mb-6 text-gray-300">
-              Embark on a journey of knowledge discovery, where every lesson
-              unveils new horizons and empowers you to reach your full potential
-            </p>
-            <button className="bg-[#009c86] hover:bg-[#17776a] hover:text-black w-[180px] text-white py-3 px-6 rounded-lg text-2xl transition duration-300 ease-in-out">
-              <NavLink to="/registration">Get Started</NavLink>
-            </button>
-          </div>
+          {isLoggedIn ? (
+            <div className="lg:py-16 flex flex-col pt-2">
+              <h1 className="lg:text-7xl lg:leading-[80px] md:text-6xl text-4xl font-bold lg:mb-6 mb-3 leading-[48px]">
+                Hey, <span className="text-[#009c86]"> {userFullName} </span>
+              </h1>
+              <p className="lg:text-lg text-md mb-6 text-gray-300 leading-7">
+                Ready to start your educational journey with FormaScholar?
+                Embrace knowledge, growth, and success on this enriching path
+                together.
+              </p>
+              <button className="bg-[#009c86] hover:bg-[#17776a] hover:text-black w-[180px] md:w-[220px] text-white md:py-5 p-3 rounded-lg text-2xl transition duration-300 ease-in-out">
+                <NavLink to="/" onClick={() => ExploreNow("#browseYourClass")}>
+                  Explore Now
+                </NavLink>
+              </button>
+            </div>
+          ) : (
+            <div className="lg:py-12 flex flex-col pt-2">
+              <h1 className="lg:text-7xl lg:leading-[80px] md:text-6xl text-4xl font-bold lg:mb-6 mb-3 leading-[48px]">
+                Welcome to the
+                <br />
+                <span className="text-[#009c86]"> FormaScholar</span>
+              </h1>
+              <p className="lg:text-lg text-md mb-6 text-gray-300">
+                Embark on a journey of knowledge discovery, where every lesson
+                unveils new horizons and empowers you to reach your full
+                potential
+              </p>
+              <button className="bg-[#009c86] hover:bg-[#17776a] hover:text-black w-[180px] text-white py-3 px-6 rounded-lg text-2xl transition duration-300 ease-in-out">
+                <NavLink to="/registration">Get Started</NavLink>
+              </button>
+            </div>
+          )}
+
           <div className="relative flex md:justify-start justify-center items-center lg:items-start">
             <div className="lg:h-[500px] md:h-[450px]  h-96 overflow-hidden rounded-lg">
               <img
@@ -101,7 +132,10 @@ const Home = () => {
         </div>
       </div>
       <div>
-        <h1 className="px-14 pt-14 text-xl md:text-3xl font-semibold">
+        <h1
+          className="px-14 pt-14 text-xl md:text-3xl font-semibold"
+          id="browseYourClass"
+        >
           Browse Your Classes
         </h1>
         <div className="flex flex-wrap justify-center lg:px-8 lg:py-4">
@@ -131,7 +165,6 @@ const Home = () => {
       </div>
 
       <WhyChooseUs />
-
     </section>
   );
 };

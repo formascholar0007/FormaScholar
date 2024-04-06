@@ -43,6 +43,8 @@ function AdditionalInfo() {
     }
 
     try {
+      localStorage.setItem("userFullName", event.target.fullName.value);
+
       const token = JSON.parse(localStorage.getItem("token"));
 
       const response = await fetch(
