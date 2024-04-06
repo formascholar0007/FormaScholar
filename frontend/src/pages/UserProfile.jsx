@@ -65,6 +65,7 @@ function UserProfile() {
     formData.append("phoneNumber", phoneNumber);
     formData.append("className", userClass);
     formData.append("about", about);
+    
     formData.append("gender", gender);
     formData.append("image", imageUrl);
 
