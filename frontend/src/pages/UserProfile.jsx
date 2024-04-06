@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import usericon from "../assets/user.svg";
 import axios from "axios";
+import { FaCircleUser } from "react-icons/fa6";
 
 function UserProfile() {
   const [fullName, setFullName] = useState("");
@@ -30,9 +31,15 @@ function UserProfile() {
         setUserClass(userData.className || "");
         setAbout(userData.about || "");
         setGender(userData.gender || "");
-        const imageUrl = userData.image.replace(/\\/g, "/");
-        const newImageurl = imageUrl.split("public/")[1];
+        const imageURL = userData.image.replace(/\\/g, "/");
+        const newImageurl = imageURL.split("public/")[1];
         setNewImage(newImageurl || null);
+
+        console.log("imageURL", imageURL);
+        console.log("newImageurl", newImageurl);
+        console.log("New Image:", newImage);
+        console.log("Image URL:", imageUrl);
+
       })
       .catch((error) => {
         console.log("Error Fetching user Data : ", error);
@@ -64,12 +71,11 @@ function UserProfile() {
     const token = JSON.parse(localStorage.getItem("token"));
 
     axios
-      .put("http://localhost:3000/api/profile", formData , {
+      .put("http://localhost:3000/api/profile", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        
       })
       .then((response) => {
         console.log("Profile updated successfully:", response);
@@ -151,9 +157,8 @@ function UserProfile() {
                     className="object-contain md:h-32 h-24 w-full sm:h-auto sm:w-auto cursor-pointer"
                   />
                 ) : (
-                  <img
-                    src={usericon}
-                    alt="User Icon"
+                  <FaCircleUser
+                    size={125}
                     className="object-contain md:h-32 h-24 w-full sm:h-auto sm:w-auto cursor-pointer"
                   />
                 )}
