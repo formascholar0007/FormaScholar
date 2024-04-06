@@ -27,8 +27,6 @@ const getProfile = async (req, res) => {
 
 const updateProfile = async (req, res) => {
     console.log(req.body);
-    console.log("fsdfsdfsd")
-    console.log(req.body);
     try {
         const userId = req.decodedToken.userId;
         const updatedata = req.body;
