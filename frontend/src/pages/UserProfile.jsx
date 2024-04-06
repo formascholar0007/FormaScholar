@@ -64,11 +64,12 @@ function UserProfile() {
     const token = JSON.parse(localStorage.getItem("token"));
 
     axios
-      .put("http://localhost:3000/api/profile", formData, {
+      .put("http://localhost:3000/api/profile", formData , {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
+        
       })
       .then((response) => {
         console.log("Profile updated successfully:", response);
