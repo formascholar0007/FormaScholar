@@ -26,14 +26,15 @@ const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const { isLoggedIn } = useAuth();
-
-  const userFullName = localStorage.getItem("userFullName");
+  const [userFullName, setUserFullName] = useState("Student");
 
   const handleImageClick = (selectedImg) => {
     setImageId(selectedImg);
   };
 
   useEffect(() => {
+    setUserFullName(localStorage.getItem("userFullName"));
+
     const interval = setTimeout(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % ImageList.length);
     }, 6000);
@@ -76,17 +77,18 @@ const Home = () => {
           {isLoggedIn ? (
             <div className="lg:py-16 flex flex-col pt-2">
               <h1 className="lg:text-7xl lg:leading-[80px] md:text-6xl text-4xl font-bold lg:mb-6 mb-3 leading-[48px]">
-                Hey, <span className="text-[#009c86]"> {userFullName} </span>
+                Hey, <span className="text-[#009c86]"> { !userFullName ? "Student" : userFullName } </span>
               </h1>
               <p className="lg:text-lg text-md mb-6 text-gray-300 leading-7">
                 Ready to start your educational journey with FormaScholar?
                 Embrace knowledge, growth, and success on this enriching path
                 together.
               </p>
-              <button className="bg-[#009c86] hover:bg-[#17776a] hover:text-black w-[180px] md:w-[220px] text-white md:py-5 p-3 rounded-lg text-2xl transition duration-300 ease-in-out">
-                <NavLink to="/" onClick={() => ExploreNow("#browseYourClass")}>
-                  Explore Now
-                </NavLink>
+              <button
+                className="bg-[#009c86] hover:bg-[#17776a] hover:text-black w-[180px] md:w-[220px] text-white md:py-5 p-3 rounded-lg text-2xl transition duration-300 ease-in-out"
+                onClick={() => ExploreNow("#browseYourClass")}
+              >
+                Explore Now
               </button>
             </div>
           ) : (
