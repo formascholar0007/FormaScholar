@@ -60,7 +60,7 @@ function UserProfile() {
     const formData = new FormData();
     formData.append("fullName", fullName);
     formData.append("phoneNumber", phoneNumber);
-    formData.append("email", email);
+    formData.append("email", email); 
     formData.append("userClass", userClass);
     formData.append("about", about);
     formData.append("gender", gender);
