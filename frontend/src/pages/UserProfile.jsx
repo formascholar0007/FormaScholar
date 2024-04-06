@@ -60,8 +60,7 @@ function UserProfile() {
     const formData = new FormData();
     formData.append("fullName", fullName);
     formData.append("phoneNumber", phoneNumber);
-    formData.append("email", email); 
-    formData.append("userClass", userClass);
+    formData.append("className", userClass);
     formData.append("about", about);
     formData.append("gender", gender);
     formData.append("image", file);
@@ -72,14 +71,13 @@ function UserProfile() {
       .put("http://localhost:3000/api/profile", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
       })
       .then((response) => {
         console.log("Profile updated successfully:", response);
         const updatedUserData = response.data.data;
         setPhoneNumber(updatedUserData.phoneNumber || "");
-        setEmail(updatedUserData.email || "");
         setUserClass(updatedUserData.className || "");
         setAbout(updatedUserData.about || "");
         setGender(updatedUserData.gender || "");
