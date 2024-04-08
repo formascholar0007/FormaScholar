@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import AdditionalInfo from "./auth/AdditionalInfo";
 import LoginForm from "./auth/LoginForm";
 import Registrationform from "./auth/Registrationform";
@@ -11,23 +16,34 @@ import SubjectSyllabus from "./pages/SubjectSyllabus";
 import Chapters from "./pages/Chapters";
 import Footer from "./component/Footer";
 import { AuthProvider } from "./auth/AuthContext";
+import AdminPanel from "./Admin/AdminPanel";
+import { useState } from "react";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   // window.addEventListener('beforeunload', (e)=>{
   //   let message = "Are you sure want to leave?";
   //   e.returnValue = message;
   // });
+
+  const [isAdmim, setIsAdmin] = useState(false);
+
   return (
     <>
       <AuthProvider>
         <Router>
-          <Navbar />
+          {!isAdmim && <Navbar />}
+
+          {/* If the left operand (!isAdminPanel in this case) is falsy, it
+          returns the left operand. // If the left operand is truthy, it returns
+          the right operand (<Navbar /> in this case).  */}
           <Routes>
             <Route path="/" exact="true" element={<Home />} />
             <Route path="/registration" element={<Registrationform />} />
             <Route path="/loginform" element={<LoginForm />} />
             <Route path="/additionalInfo" element={<AdditionalInfo />} />
             <Route path="/forgetPassword" element={<ForgetPassword />} />
+            <Route path="*" element={<PageNotFound />} />
             <Route
               path="/resetPassword/:userId/:token"
               element={<ResetPassword />}
@@ -41,12 +57,14 @@ function App() {
               path="/chapters/:grade/:subject/:chapter"
               element={<Chapters />}
             />
+            <Route path="/profile" element={<UserProfile />} />
+
             <Route
-              path="/profile"
-              element={<UserProfile />}
-            />
+              path="/adminPanel"
+              element={<AdminPanel setIsAdmin={setIsAdmin} />} />
           </Routes>
-          <Footer />
+
+          {!isAdmim && <Footer />}
         </Router>
       </AuthProvider>
     </>

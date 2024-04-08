@@ -11,7 +11,6 @@ function UserProfile() {
   const [about, setAbout] = useState("");
   const [gender, setGender] = useState("");
   const [editable, setEditable] = useState(false);
-  const [newImage, setNewImage] = useState(null);
   const [file, setFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
 
@@ -34,13 +33,11 @@ function UserProfile() {
         setUserClass(userData.className || "");
         setAbout(userData.about || "");
         setGender(userData.gender || "");
-        const imageURL = userData.image.replace(/\\/g, "/");
-        const newImageurl = imageURL.split("public/")[1];
-        setImageUrl(newImageurl || null);
 
-        console.log("imageURL", imageURL);
-        console.log("newImageurl", newImageurl);
-        console.log("New Image:", imageUrl);
+        const imageUrl = userData.image
+          .replace(/\\/g, "/")
+          .replace("public/", "");
+        setImageUrl(imageUrl || null);
 
       })
       .catch((error) => {
@@ -152,9 +149,9 @@ function UserProfile() {
               </div>
             ) : (
               <div className="py-3 pt-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
-                {newImage || imageUrl ? (
+                {imageUrl ? (
                   <img
-                    src={imageUrl || `http://localhost:3000/${newImage}`}
+                    src={imageUrl}
                     alt="User Profile"
                     className="object-contain md:h-32 h-24 w-full sm:h-auto sm:w-auto cursor-pointer"
                   />
