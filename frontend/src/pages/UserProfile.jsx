@@ -39,6 +39,7 @@ function UserProfile() {
           .replace("public/", "");
         setImageUrl(imageUrl || null);
 
+        console.log(imageUrl);
       })
       .catch((error) => {
         console.log("Error Fetching user Data : ", error);
@@ -83,9 +84,13 @@ function UserProfile() {
         setUserClass(updatedUserData.className || "");
         setAbout(updatedUserData.about || "");
         setGender(updatedUserData.gender || "");
-        const imageUrl = updatedUserData.image.replace(/\\/g, "/");
-        const newImageUrl = imageUrl.split("public/")[1];
-        setNewImage(newImageUrl || null);
+
+        const imageUrl = updatedUserData.image
+          .replace(/\\/g, "/")
+          .replace("public/", "");
+        setImageUrl(imageUrl || null);
+
+        console.log(imageUrl);
       })
       .catch((error) => {
         console.log("Error updating profile:", error);
@@ -97,10 +102,10 @@ function UserProfile() {
   return (
     <section className="px-4 md:px-24 py-16 font-Alice">
       <div className="font-Alice">
-        <h3 className="text-xl md:text-xl font-semibold leading-7 text-gray-900">
+        <h3 className="text-xl md:text-xl font-semibold leading-4 text-gray-900">
           Student Information
         </h3>
-        <p className="mt-1 max-w-xl text-lg leading-6 text-gray-500">
+        <p className="mt-1 max-w-xl text-lg leading-4 text-gray-500">
           Personal details and application.
         </p>
       </div>
@@ -111,7 +116,7 @@ function UserProfile() {
               <div className="col-span-full">
                 <label
                   htmlFor="cover-photo"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block text-sm font-medium leading-4 text-gray-900"
                 >
                   Upload Profile Picutre
                 </label>
@@ -151,7 +156,7 @@ function UserProfile() {
               <div className="py-3 pt-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
                 {imageUrl ? (
                   <img
-                    src={imageUrl}
+                    src={`http://localhost:3000/${imageUrl}`}
                     alt="User Profile"
                     className="object-contain md:h-32 h-24 w-full sm:h-auto sm:w-auto cursor-pointer"
                   />
@@ -163,11 +168,24 @@ function UserProfile() {
                 )}
               </div>
             )}
-
+            <div className="py-6 grid grid-cols-2 sm:grid-cols-3 md:gap-4 gap-2">
+              <textarea
+                value={about}
+                onChange={(e) => setAbout(e.target.value)}
+                maxLength={100}
+                rows={3}
+                readOnly={!editable}
+                className={`mt-1 py-2 px-2 text-xl font-semibold leading-8 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 ${
+                  editable
+                    ? "border-2 border-gray-200 rounded-md"
+                    : "border-none"
+                }  outline-none`}
+              />
+            </div>
             <div className="py-6 grid grid-cols-2 sm:grid-cols-3 md:gap-4 gap-2">
               <label
                 htmlFor="fullName"
-                className="text-xl font-semibold leading-6 text-gray-900"
+                className="text-xl font-semibold leading-4 text-gray-900"
               >
                 Full name
               </label>
@@ -176,7 +194,7 @@ function UserProfile() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 readOnly={!editable}
-                className={`mt-1 py-2 px-2 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 ${
+                className={`mt-1 py-2 px-2 text-lg leading-4 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 ${
                   editable
                     ? "border-2 border-gray-200 rounded-md"
                     : "border-none"
@@ -186,7 +204,7 @@ function UserProfile() {
             <div className="py-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
               <label
                 htmlFor="phoneNumber"
-                className="text-xl font-semibold  leading-6 text-gray-900"
+                className="text-xl font-semibold  leading-4 text-gray-900"
               >
                 Phone Number
               </label>
@@ -195,7 +213,7 @@ function UserProfile() {
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 readOnly={!editable}
-                className={`mt-1 py-2 px-2 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 ${
+                className={`mt-1 py-2 px-2 text-lg leading-4 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 ${
                   editable
                     ? "border-2 border-gray-200 rounded-md"
                     : "border-none"
@@ -205,7 +223,7 @@ function UserProfile() {
             <div className="py-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
               <label
                 htmlFor="email"
-                className="text-xl font-semibold  leading-6 text-gray-900"
+                className="text-xl font-semibold  leading-4 text-gray-900"
               >
                 Email Address
               </label>
@@ -214,13 +232,13 @@ function UserProfile() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 readOnly
-                className={`mt-1 py-2 px-2 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 outline-none`}
+                className={`mt-1 py-2 px-2 text-lg leading-4 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 outline-none`}
               />
             </div>
             <div className="py-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
               <label
                 htmlFor="userClass"
-                className="text-xl font-semibold  leading-6 text-gray-900"
+                className="text-xl font-semibold  leading-4 text-gray-900"
               >
                 Studying at
               </label>
@@ -229,37 +247,18 @@ function UserProfile() {
                 value={userClass}
                 onChange={(e) => setUserClass(e.target.value)}
                 readOnly={!editable}
-                className={`mt-1 py-2 px-2 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 ${
+                className={`mt-1 py-2 px-2 text-lg leading-4 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 ${
                   editable
                     ? "border-2 border-gray-200 rounded-md"
                     : "border-none"
                 }  outline-none`}
               />
             </div>
-            <div className="py-6 grid grid-cols-2 sm:grid-cols-3 md:gap-4 gap-2">
-              <label
-                htmlFor="about"
-                className="text-xl font-semibold  leading-6 text-gray-900"
-              >
-                About
-              </label>
-              <textarea
-                value={about}
-                onChange={(e) => setAbout(e.target.value)}
-                maxLength={100}
-                rows={3}
-                readOnly={!editable}
-                className={`mt-1 py-2 px-2 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 ${
-                  editable
-                    ? "border-2 border-gray-200 rounded-md"
-                    : "border-none"
-                }  outline-none`}
-              />
-            </div>
+
             <div className="py-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
               <label
                 htmlFor="gender"
-                className="text-xl font-semibold  leading-6 text-gray-900"
+                className="text-xl font-semibold  leading-4 text-gray-900"
               >
                 Gender
               </label>
@@ -268,7 +267,7 @@ function UserProfile() {
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
                 readOnly={!editable}
-                className={`mt-1 py-2 px-2 text-lg leading-6 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 ${
+                className={`mt-1 py-2 px-2 text-lg leading-4 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 ${
                   editable
                     ? "border-2 border-gray-200 rounded-md"
                     : "border-none"
