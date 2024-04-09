@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
-import SideNav from "./SideNav";
+import DashHome from "./DashHome";
+import SideNav from "./SideNav"
 
 function AdminPanel(props) {
   useEffect(() => {
@@ -13,13 +14,12 @@ function AdminPanel(props) {
 
   return (
     <section className="lg:min-h-screen min-h-screen font-Alice overflow-hidden">
-      <div className="max-w-full container mx-auto md:px-8 md:py-12 py-8 px-6 overflow-hidden bg-gradient-to-b bg-white  text-white">
-        <div className="lg:grid-cols-2 grid grid-cols-1 gap-8">
 
-          <SideNav />
+      <SideNav />
 
-        </div>
-      </div>
+      <DashHome />
+
+      <div className="flex gap-64 max-w-full container mx-auto md:px-14 md:py-12 py-8 px-6 overflow-hidden bg-gradient-to-b bg-white  text-white"></div>
     </section>
   );
 }

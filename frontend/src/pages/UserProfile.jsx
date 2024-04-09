@@ -39,7 +39,7 @@ function UserProfile() {
           .replace("public/", "");
         setImageUrl(imageUrl || null);
 
-        console.log(imageUrl);
+        console.log(" Addition Image : " ,imageUrl);
       })
       .catch((error) => {
         console.log("Error Fetching user Data : ", error);
@@ -79,6 +79,7 @@ function UserProfile() {
       })
       .then((response) => {
         console.log("Profile updated successfully:", response);
+
         const updatedUserData = response.data.data;
         setPhoneNumber(updatedUserData.phoneNumber || "");
         setUserClass(updatedUserData.className || "");
@@ -154,9 +155,9 @@ function UserProfile() {
               </div>
             ) : (
               <div className="py-3 pt-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
-                {imageUrl ? (
+                {file || imageUrl ? (
                   <img
-                    src={`http://localhost:3000/${imageUrl}`}
+                    src={file ? file.url : `http://localhost:3000/${imageUrl}`}
                     alt="User Profile"
                     className="object-contain md:h-32 h-24 w-full sm:h-auto sm:w-auto cursor-pointer"
                   />

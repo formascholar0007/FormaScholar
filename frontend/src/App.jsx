@@ -2,7 +2,6 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  useLocation,
 } from "react-router-dom";
 import AdditionalInfo from "./auth/AdditionalInfo";
 import LoginForm from "./auth/LoginForm";
@@ -19,6 +18,7 @@ import { AuthProvider } from "./auth/AuthContext";
 import AdminPanel from "./Admin/AdminPanel";
 import { useState } from "react";
 import PageNotFound from "./pages/PageNotFound";
+import DocumentInput from "./Admin/DocumentInput";
 
 function App() {
   // window.addEventListener('beforeunload', (e)=>{
@@ -61,7 +61,10 @@ function App() {
 
             <Route
               path="/adminPanel"
-              element={<AdminPanel setIsAdmin={setIsAdmin} />} />
+              element={<AdminPanel setIsAdmin={setIsAdmin} />}>
+                <Route path="documentInput" element={<DocumentInput />} />
+            </Route>
+
           </Routes>
 
           {!isAdmim && <Footer />}
