@@ -1,8 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdditionalInfo from "./auth/AdditionalInfo";
 import LoginForm from "./auth/LoginForm";
 import Registrationform from "./auth/Registrationform";
@@ -19,6 +15,7 @@ import AdminPanel from "./Admin/AdminPanel";
 import { useState } from "react";
 import PageNotFound from "./pages/PageNotFound";
 import DocumentInput from "./Admin/DocumentInput";
+import DashHome from "./Admin/DashHome";
 
 function App() {
   // window.addEventListener('beforeunload', (e)=>{
@@ -61,10 +58,17 @@ function App() {
 
             <Route
               path="/adminPanel"
-              element={<AdminPanel setIsAdmin={setIsAdmin} />}>
-                <Route path="documentInput" element={<DocumentInput />} />
-            </Route>
+              element={<AdminPanel setIsAdmin={setIsAdmin} />}
+            >
+              {/* Nested route for DashHome (default view) */}
+              <Route index element={<DashHome />} />
 
+              <Route
+                path="/adminPanel/documentInput"
+                element={<DocumentInput />}
+              />
+
+            </Route>
           </Routes>
 
           {!isAdmim && <Footer />}
