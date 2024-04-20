@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { MdOutlineTouchApp } from "react-icons/md";
 
-function Chapters() {
+function userChapter() {
   const { grade, subject, chapter } = useParams();
 
   return (
@@ -52,4 +52,4 @@ function Chapters() {
   );
 }
 
-export default Chapters;
+export default userChapter;

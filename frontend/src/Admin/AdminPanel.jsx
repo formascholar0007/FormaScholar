@@ -13,11 +13,13 @@ function AdminPanel(props) {
   });
 
   return (
-    <section className="lg:min-h-screen min-h-screen font-Alice overflow-hidden">
-      <SideNav />
-
+    <section className="flex lg:min-h-screen min-h-screen font-Alice overflow-hidden">
+      <div className="w-[26%]">
+        <SideNav />
+      </div>
+      <div className="w-[70%]">
         <Outlet />
-
+      </div>
     </section>
   );
 }

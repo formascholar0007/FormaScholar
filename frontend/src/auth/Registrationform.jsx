@@ -2,8 +2,20 @@ import React, { useState } from "react";
 import HttpStatus from "http-status-codes";
 import Button from "../Common/Button";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function Registrationform() {
+  useEffect(() => {
+    const handleReload = (e) => {
+      e.preventDefault();
+    };
+    window.addEventListener("beforeunload", handleReload);
+
+    return () => {
+    window.removeEventListener("beforeunload", handleReload);
+    };
+  }, []);
+
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
@@ -12,7 +24,6 @@ function Registrationform() {
   });
 
   const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
   const navigate = useNavigate();
 

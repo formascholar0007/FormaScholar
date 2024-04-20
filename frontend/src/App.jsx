@@ -7,15 +7,18 @@ import Navbar from "./component/Navbar";
 import Home from "./pages/Home";
 import ResetPassword from "./auth/ResetPassword";
 import UserProfile from "./pages/UserProfile";
+import UserChapter from "./pages/UserChapters"
 import SubjectSyllabus from "./pages/SubjectSyllabus";
-import Chapters from "./pages/Chapters";
+import AdminChapter from "./Admin/AdminChapters";
 import Footer from "./component/Footer";
 import { AuthProvider } from "./auth/AuthContext";
 import AdminPanel from "./Admin/AdminPanel";
 import { useState } from "react";
 import PageNotFound from "./pages/PageNotFound";
-import DocumentInput from "./Admin/DocumentInput";
 import DashHome from "./Admin/DashHome";
+import ClassName from "./Admin/ClassName";
+import Subjects from "./Admin/Subjects";
+import { Logout } from "./auth/Logout";
 
 function App() {
   // window.addEventListener('beforeunload', (e)=>{
@@ -38,6 +41,7 @@ function App() {
             <Route path="/" exact="true" element={<Home />} />
             <Route path="/registration" element={<Registrationform />} />
             <Route path="/loginform" element={<LoginForm />} />
+            <Route path="/logout" element={<Logout />} />
             <Route path="/additionalInfo" element={<AdditionalInfo />} />
             <Route path="/forgetPassword" element={<ForgetPassword />} />
             <Route path="*" element={<PageNotFound />} />
@@ -52,7 +56,7 @@ function App() {
             />
             <Route
               path="/chapters/:grade/:subject/:chapter"
-              element={<Chapters />}
+              element={<UserChapter />}
             />
             <Route path="/profile" element={<UserProfile />} />
 
@@ -60,12 +64,19 @@ function App() {
               path="/adminPanel"
               element={<AdminPanel setIsAdmin={setIsAdmin} />}
             >
-              {/* Nested route for DashHome (default view) */}
               <Route index element={<DashHome />} />
 
               <Route
-                path="/adminPanel/documentInput"
-                element={<DocumentInput />}
+                path="/adminPanel/className"
+                element={<ClassName />}
+              />
+              <Route
+                path="/adminPanel/subjects/:classNumber"
+                element={<Subjects />}
+              />
+              <Route
+                path="/adminPanel/:classNumber/adminChapter/:subject"
+                element={<AdminChapter />}
               />
 
             </Route>
