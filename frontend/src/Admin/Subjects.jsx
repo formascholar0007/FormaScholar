@@ -70,7 +70,7 @@ function Subjects() {
   };
 
   const handleSubjectClick = (subjectName) => {
-    navigate(`/adminPanel/adminChapter/${subjectName}`);
+    navigate(`/adminPanel/${classNumber}/adminChapter/${subjectName}`);
   };
 
   return (

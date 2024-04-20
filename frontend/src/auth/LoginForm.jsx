@@ -1,14 +1,25 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import loginImage from "../assets/Login1.jpg";
 import Button from "../Common/Button";
 
 function LoginForm() {
+  useEffect(() => {
+    const handleReload = (e) => {
+      e.preventDefault();
+      e.returnValue = ''
+    };
+    window.addEventListener("beforeunload", handleReload);
+
+    return () => {
+    window.removeEventListener("beforeunload", handleReload);
+    };
+  }, []);
+
   const [loginFormData, setLoginFormData] = useState({
     email: "",
     password: "",
   });
-  const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
   const navigate = useNavigate();
@@ -43,10 +54,9 @@ function LoginForm() {
       let loginResponse = await response.json();
       console.warn("Data : ", loginResponse);
 
-      if (response.status === 200)  {
+      if (response.status === 200) {
         localStorage.setItem("token", JSON.stringify(loginResponse.data));
         navigate("/");
-        setSuccessMessage(loginResponse.message);
         setLoginFormData({
           email: "",
           password: "",
@@ -126,7 +136,7 @@ function LoginForm() {
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={"password"}
                   placeholder="Enter Your Password"
                   value={loginFormData.password}
                   onChange={handleInputChange}

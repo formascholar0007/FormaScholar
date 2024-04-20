@@ -18,6 +18,7 @@ import PageNotFound from "./pages/PageNotFound";
 import DashHome from "./Admin/DashHome";
 import ClassName from "./Admin/ClassName";
 import Subjects from "./Admin/Subjects";
+import { Logout } from "./auth/Logout";
 
 function App() {
   // window.addEventListener('beforeunload', (e)=>{
@@ -40,6 +41,7 @@ function App() {
             <Route path="/" exact="true" element={<Home />} />
             <Route path="/registration" element={<Registrationform />} />
             <Route path="/loginform" element={<LoginForm />} />
+            <Route path="/logout" element={<Logout />} />
             <Route path="/additionalInfo" element={<AdditionalInfo />} />
             <Route path="/forgetPassword" element={<ForgetPassword />} />
             <Route path="*" element={<PageNotFound />} />
@@ -73,7 +75,7 @@ function App() {
                 element={<Subjects />}
               />
               <Route
-                path="/adminPanel/adminChapter/:subject"
+                path="/adminPanel/:classNumber/adminChapter/:subject"
                 element={<AdminChapter />}
               />
 

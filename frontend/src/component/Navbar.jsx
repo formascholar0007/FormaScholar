@@ -11,10 +11,10 @@ const Navbar = () => {
     setNavOpen(!navOpen);
   };
 
-  const handleLogoutClick = () => {
-    handleLogout(); 
-    setNavOpen(false); 
-  };
+  // const handleLogoutClick = () => {
+  //   handleLogout(); 
+  //   setNavOpen(false); 
+  // };
 
   return (
     <nav className="bg-white shadow-lg flex justify-between items-center h-[70px] max-w-full mx-auto px-4 text-black font-Alice text-xl">
@@ -42,12 +42,12 @@ const Navbar = () => {
                 >
                   Profile
                 </NavLink>
-                <button
-                  onClick={handleLogoutClick}
+                <NavLink
+                  to='/logout'
                   className="block w-full py-3 px-4 text-left text-gray-800 hover:bg-gray-200"
                 >
                   Logout
-                </button>
+                </NavLink>
               </div>
             )}
           </div>
