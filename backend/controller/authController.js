@@ -8,7 +8,7 @@ const nodemailer = require('nodemailer');
 
 const register = async (req, res) => {
 
-    const { userName, email, password } = req.body;
+    const { userName, email, password , role } = req.body;
 
     if (!userName && !email && !password) {
         return res.globalResponse(StatusCodes.PRECONDITION_FAILED, false, 'Missing fields', null);
@@ -26,7 +26,8 @@ const register = async (req, res) => {
         const newUser = await UserModel.create({
             userName,
             email,
-            password: hashPassword
+            password: hashPassword,
+            role
         });
         console.log(newUser)
 
