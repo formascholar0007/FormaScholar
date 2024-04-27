@@ -5,8 +5,8 @@ const authorizeAdmin = require('../guards/authorizeAdmin');
 const subjectController = require('../controller/subject.controller.js');
 
 
-route.get('/' , verifyUserMiddleWare , authorizeAdmin, subjectController.getAllSubject);
-route.post('/' ,verifyUserMiddleWare , authorizeAdmin, subjectController.createSubject);
+route.get('/:classId' , verifyUserMiddleWare , authorizeAdmin, subjectController.getAllSubject);
+route.post('/:classId' ,verifyUserMiddleWare , authorizeAdmin, subjectController.createSubject);
 route.put('/' ,verifyUserMiddleWare , authorizeAdmin, subjectController.updateSubject);
 route.delete('/', verifyUserMiddleWare , authorizeAdmin , subjectController.deleteSubject);
 

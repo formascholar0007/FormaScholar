@@ -3,6 +3,7 @@ const Subject = require('../model/Subject.js');
 
 const createSubject = async (req, res) => {
     const { classId } = req.params;
+    console.log(classId)
     const { subjectName } = req.body;
 
     if (!subjectName) {
