@@ -13,6 +13,16 @@ const createSubject = async (req, res) => {
         return res.globalResponse(StatusCodes.BAD_REQUEST, false, 'ClassId Missing');
     }
     try {
+
+        const existingSubject = await Subject.findOne({
+            subjectName,
+            classId
+        });
+
+        if (existingSubject) {
+            return res.globalResponse(StatusCodes.CONFLICT, false, 'Subject Already Exists');
+        }
+
         const newSubject = await Subject.create({
             subjectName,
             classId

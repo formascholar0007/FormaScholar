@@ -6,6 +6,7 @@ const profileRoute = require('./routes/profile.routes.js');
 const classRoute = require('./routes/class.routes.js');
 const subjectRoute = require('./routes/subject.routes.js');
 const chapterRoute = require('./routes/chapter.routes.js');
+const exerciseRoute = require('./routes/exercise.routes.js');
 const globalResponse = require('./middleware/globalResponse');
 require('./config/database');
 
@@ -23,6 +24,7 @@ app.use('/api/v1/profile', profileRoute);
 app.use('/api/v1/class', classRoute);
 app.use('/api/v1/subject', subjectRoute);
 app.use('/api/v1/chapter', chapterRoute);
+app.use('/api/v1/exercise' , exerciseRoute);
 
 
 

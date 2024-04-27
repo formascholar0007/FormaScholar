@@ -1,5 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
-const Chapter = reqiure('../model/Chapter')
+const Chapter = require('../model/Chapter')
 
 const createChapter = async (req, res) => {
     const { classId, subjectId } = req.params;
@@ -14,6 +14,18 @@ const createChapter = async (req, res) => {
     }
 
     try {
+        
+        const existingChapter = await Chapter.findOne({
+            chapterName,
+            classId,
+            subjectId
+        });
+
+        if(existingChapter){
+        return res.globalResponse(StatusCodes.CONFLICT, false, 'Chapter Already Exists');
+
+        }
+
         const newChapter = await Chapter.create({
             chapterName,
             classId,
@@ -24,7 +36,7 @@ const createChapter = async (req, res) => {
             return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Something went wrong while creating new chapter');
         }
 
-        return res.globalResponse(StatusCodes.Ok, true, 'Chapter Created', newChapter);
+        return res.globalResponse(StatusCodes.OK, true, 'Chapter Created', newChapter);
     } catch (err) {
         console.log(err);
         return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Internal Server error in createChapter controller');
@@ -45,7 +57,7 @@ const getAllChapter = async (req, res) => {
             subjectId
         });
 
-        return res.globalResponse(StatusCodes.Ok, true, 'Chapter Fetched', Chapters);
+        return res.globalResponse(StatusCodes.OK, true, 'Chapter Fetched', Chapters);
     } catch (err) {
         console.log(err);
         return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Internal Server error in getallchapters controller');
@@ -58,6 +70,9 @@ const updateChapter = async (req, res) => {
     const { chapterName } = req.body;
     if (!chapterId) {
         return res.globalResponse(StatusCodes.NOT_FOUND, false, 'ChapterId Missing');
+    }
+    if(!chapterName){
+        return res.globalResponse(StatusCodes.NOT_FOUND, false, 'ChapterName Missing');
     }
     try {
         const updatedChapter = await Chapter.findOneAndUpdate({

@@ -16,7 +16,6 @@ const QuestionSchema = mongoose.Schema({
     },
     exerciseId:{
         type:mongoose.Types.ObjectId,
-        required:true
     },
     chapterId:{
         type:mongoose.Types.ObjectId,
