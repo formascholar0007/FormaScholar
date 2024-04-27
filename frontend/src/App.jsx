@@ -7,7 +7,7 @@ import Navbar from "./component/Navbar";
 import Home from "./pages/Home";
 import ResetPassword from "./auth/ResetPassword";
 import UserProfile from "./pages/UserProfile";
-import UserChapter from "./pages/UserChapters"
+import UserChapter from "./pages/UserChapters";
 import SubjectSyllabus from "./pages/SubjectSyllabus";
 import AdminChapter from "./Admin/AdminChapters";
 import Footer from "./component/Footer";
@@ -66,29 +66,24 @@ function App() {
               path="/adminPanel"
               element={<AdminPanel setIsAdmin={setIsAdmin} />}
             >
+              
               <Route index element={<DashHome />} />
 
-              <Route
-                path="/adminPanel/className"
-                element={<ClassName />}
-              />
+              <Route path="/adminPanel/className" element={<ClassName />} />
               <Route
                 path="/adminPanel/adminRegister"
                 element={<AdminRegister />}
               />
+              <Route path="/adminPanel/adminLogin" element={<AdminLogin />} />
               <Route
-                path="/adminPanel/adminLogin"
-                element={<AdminLogin />}
-              />
-              <Route
-                path="/adminPanel/subjects/:classNumber"
+                path="/adminPanel/subjects/:classId"
                 element={<Subjects />}
               />
+
               <Route
-                path="/adminPanel/:classNumber/adminChapter/:subject"
+                path="/adminPanel/:classId/adminChapter/:subjectid"
                 element={<AdminChapter />}
               />
-
             </Route>
           </Routes>
 

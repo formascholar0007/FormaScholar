@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext";
 import Button from "../Common/Button";
 
 function AdminLogin() {
+  const { adminHandleLogin } = useAuth();
+
   useEffect(() => {
     const handleReload = (e) => {
       e.preventDefault();
@@ -43,7 +46,7 @@ function AdminLogin() {
       const response = await fetch("http://localhost:3000/api/v1/auth/login", {
         method: "POST",
         headers: {
-           Authorization: `Bearer ${JSON.parse(
+          Authorization: `Bearer ${JSON.parse(
             localStorage.getItem("adminToken")
           )}`,
           Accept: "application/json",
@@ -59,7 +62,9 @@ function AdminLogin() {
 
       if (response.status === 200) {
         localStorage.setItem("adminToken", JSON.stringify(loginResponse.data));
-        handleLogin();
+
+        adminHandleLogin();
+
         navigate("/adminPanel");
         setAdminLoginData({
           email: "",

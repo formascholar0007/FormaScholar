@@ -3,238 +3,177 @@ import { IoMdAdd, IoMdAddCircleOutline } from "react-icons/io";
 import { MdOutlineTouchApp, MdOutlineDeleteSweep } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 function AdminChapters() {
-  const { classNumber, subject } = useParams();
-
-  const [subjectChapter, setSubjectChapters] = useState({
-    8: [
-      {
-        subject: "Maths",
-        chapters: [
-          "Chapter 1 - Algebra 8",
-          "Chapter 2 - Geometry 8",
-          "Chapter 3 - Calculus 8",
-        ],
-      },
-      {
-        subject: "Science",
-        chapters: [
-          "Chapter 1 - Biology 8",
-          "Chapter 2 - Chemistry 8",
-          "Chapter 3 - Physics 8",
-        ],
-      },
-      {
-        subject: "History",
-        chapters: [
-          "Chapter 1 - Ancient History 8",
-          "Chapter 2 - Medieval History 8",
-          "Chapter 3 - Modern History 8",
-        ],
-      },
-    ],
-    9: [
-      {
-        subject: "Maths",
-        chapters: [
-          "Chapter 1 - Algebra 9",
-          "Chapter 2 - Geometry 9",
-          "Chapter 3 - Calculus 9",
-        ],
-      },
-      {
-        subject: "Science",
-        chapters: [
-          "Chapter 1 - Biology 9",
-          "Chapter 2 - Chemistry 9",
-          "Chapter 3 - Physics 9",
-        ],
-      },
-      {
-        subject: "History",
-        chapters: [
-          "Chapter 1 - Ancient History 9",
-          "Chapter 2 - Medieval History 9",
-          "Chapter 3 - Modern History 9",
-        ],
-      },
-    ],
-    10: [
-      {
-        subject: "Maths",
-        chapters: [
-          "Chapter 1 - Algebra 10",
-          "Chapter 2 - Geometry 10",
-          "Chapter 3 - Calculus 10",
-        ],
-      },
-      {
-        subject: "Science",
-        chapters: [
-          "Chapter 1 - Biology 10",
-          "Chapter 2 - Chemistry 10",
-          "Chapter 3 - Physics 10",
-        ],
-      },
-      {
-        subject: "History",
-        chapters: [
-          "Chapter 1 - Ancient History 10",
-          "Chapter 2 - Medieval History 10",
-          "Chapter 3 - Modern History 10",
-        ],
-      },
-    ],
-    11: [
-      {
-        subject: "Maths",
-        chapters: [
-          "Chapter 1 - Algebra 11",
-          "Chapter 2 - Geometry 11",
-          "Chapter 3 - Calculus 11",
-        ],
-      },
-      {
-        subject: "Science",
-        chapters: [
-          "Chapter 1 - Biology 11",
-          "Chapter 2 - Chemistry 11",
-          "Chapter 3 - Physics 11",
-        ],
-      },
-      {
-        subject: "History",
-        chapters: [
-          "Chapter 1 - Ancient History 11",
-          "Chapter 2 - Medieval History 11",
-          "Chapter 3 - Modern History 11",
-        ],
-      },
-      {
-        subject: "Computer",
-        chapters: [
-          "Chapter 1 - Introduction to Computers 11",
-          "Chapter 2 - Programming Basics 11",
-          "Chapter 3 - Data Structures 11",
-        ],
-      },
-    ],
-    12: [
-      {
-        subject: "Maths",
-        chapters: [
-          "Chapter 1 - Algebra 12",
-          "Chapter 2 - Geometry 12",
-          "Chapter 3 - Calculus 12",
-        ],
-      },
-      {
-        subject: "Science",
-        chapters: [
-          "Chapter 1 - Biology 12",
-          "Chapter 2 - Chemistry 12",
-          "Chapter 3 - Physics 12",
-        ],
-      },
-      {
-        subject: "History",
-        chapters: [
-          "Chapter 1 - Ancient History 12",
-          "Chapter 2 - Medieval History 12",
-          "Chapter 3 - Modern History 12",
-        ],
-      },
-      {
-        subject: "Computer",
-        chapters: [
-          "Chapter 1 - Computer Science Fundamentals 12",
-          "Chapter 2 - Algorithms and Data Structures 12",
-          "Chapter 3 - Database Management 12",
-        ],
-      },
-    ],
-  })
-  const subjectsWithChapters = subjectChapter[classNumber] || [];
-  const selectedSubject = subjectsWithChapters.find(
-    (item) => item.subject === subject
-  );
-  const chapters = selectedSubject ? selectedSubject.chapters : [];
+  const { classId, subjectid } = useParams();
 
   const [isEditing, setIsEditing] = useState(false);
-  const [editChapterIndex, setEditChapterIndex] = useState(null);
-  const [editedChapter, setEditedChapter] = useState("");
+  const [editSubjectID, seteditSubjectID] = useState(null);
+  const [newSubjectName, setnewSubjectName] = useState("");
   const [isAdding, setIsAdding] = useState(false);
-  const [newChapter, setNewChapter] = useState("");
+  const [subjects, setsubjects] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errorVisible, setErrorVisible] = useState(false);
   const navigate = useNavigate();
 
-  const handleEdit = (index) => {
-    setIsEditing(true);
-    setEditChapterIndex(index);
-    setEditedChapter(selectedSubject.chapters[index]);
-  };
+  useEffect(() => {
+    getAllsubjects();
+  }, []);
 
-  const handleSaveEdit = () => {
-    const updatedChapters = [...selectedSubject.chapters];
-    updatedChapters[editChapterIndex] = editedChapter;
-    const updatedSubjects = [...subjectChapter[classNumber]];
-    updatedSubjects.find((item) => item.subject === subject).chapters = updatedChapters;
-    setSubjectChapters({ ...subjectChapter, [classNumber]: updatedSubjects });
-    setIsEditing(false);
-    setEditChapterIndex(null);
-    setEditedChapter("");
-  };
-
-  const handleDelete = (index) => {
-    const updatedChapters = [...selectedSubject.chapters];
-    updatedChapters.splice(index, 1);
-    const updatedSubjects = [...subjectChapter[classNumber]];
-    updatedSubjects.find((item) => item.subject === subject).chapters = updatedChapters;
-    setSubjectChapters({ ...subjectChapter, [classNumber]: updatedSubjects });
-  };
-
-  const handleSubjectClick = (chapterName) => {
-    navigate(`/adminPanel/${classNumber}/${subject}/chapters/${chapterName}`);
-  };
-
-  const handleAddNewChapter = () => {
-    setIsAdding(true);
-    setNewChapter("");
-  };
-
-  const handleAddChapter = () => {
-    if (newChapter.trim() !== "") {
-      const updatedChapters = [...selectedSubject.chapters, newChapter];
-      const updatedSubjects = [...subjectChapter[classNumber]];
-      updatedSubjects.find((item) => item.subject === subject).chapters = updatedChapters;
-      setSubjectChapters({ ...subjectChapter, [classNumber]: updatedSubjects });
-      setIsAdding(false);
-      setNewChapter("");
+  const getAllsubjects = async () => {
+    try {
+      const data = await fetch(
+        `http://localhost:3000/api/v1/subject/${classId}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `bearer ${JSON.parse(
+              localStorage.getItem("adminToken")
+            )}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      let response = await data.json();
+      
+      if (response.success) {
+        setsubjects(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+      setErrorVisible(true);
+      setErrorMessage(error.toString());
     }
   };
 
+  const addNewClass = async (e) => {
+    e.preventDefault();
+
+    try {
+      const data = await fetch(
+        `http://localhost:3000/api/v1/subject/${classId}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `bearer ${JSON.parse(
+              localStorage.getItem("adminToken")
+            )}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ subjectName: newSubjectName }),
+        }
+      );
+
+      const response = await data.json();
+      if (!response.success) {
+        setErrorMessage(response.message);
+        setIsAdding(true);
+      }
+
+      setnewSubjectName("");
+      setIsAdding(false);
+      getAllsubjects();
+    } catch (error) {
+      console.log(error);
+      setErrorVisible(true);
+      setErrorMessage(error.toString());
+    }
+  };
+
+  const handleEdit = async (id) => {
+    try {
+      const data = await fetch(
+        `http://localhost:3000/api/v1/subject/`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `bearer ${JSON.parse(
+              localStorage.getItem("adminToken")
+            )}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ subjectId: id, subjectName: newSubjectName }),
+        }
+      );
+      const response = await data.json();
+      if (response.success) {
+        getAllsubjects();
+      }
+    } catch (error) {
+      console.log(error);
+      setErrorVisible(true);
+      setErrorMessage(error.toString());
+    }
+  };
+  
+
+  const handleDelete = async (id) => {
+    try {
+      const data = await fetch(
+        `http://localhost:3000/api/v1/subject`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `bearer ${JSON.parse(
+              localStorage.getItem("adminToken")
+            )}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ subjectId: id }),
+        }
+      );
+      const response = await data.json();
+      if (response.success) {
+        getAllsubjects();
+      }
+    } catch (error) {
+      console.log(error);
+      setErrorVisible(true);
+      setErrorMessage(error.toString());
+    }
+  };
+  
+
+  const handleCloseError = () => {
+    setErrorVisible(false);
+  };
+
+  const handleAddNewClassBtn = () => {
+    setIsAdding(true);
+    setIsEditing(false); // Ensure editing mode is turned off when adding a new class
+    setnewSubjectName(""); // Clear the input field when adding a new class
+  };
+
+  const handleSubjectClick = (subjectId) => {
+    navigate(`/adminPanel/${classId}/adminChapter/${subjectId}`);
+  };
+
   return (
-    <section className="container mx-auto py-12 font-Alice">
+    <section className="container mx-auto py-16 font-Alice">
       <h1 className="md:text-5xl text-3xl font-bold text-center mb-2">
-        Class {classNumber} - {subject}
+        Add a new Chapters
       </h1>
-      <p className="md:text-lg text-sm text-gray-700 text-center mb-8 px-6">
-        {`Add, Edit, Delete any chapter in ${subject} for Class ${classNumber}`}{" "}
-        <span className="text-[#009c86] font-bold"> FormaScholar </span>
+      <p className="md:text-lg text-sm text-gray-500 text-center mb-12">
+        Add New subjects, Chapters, Lessons, and other Data...
       </p>
-      {chapters.map((chapter, index) => (
-        <div key={index} className="flex items-center gap-6 px-8 py-2">
-          {isEditing && editChapterIndex === index ? (
+
+      {subjects.map((subjectItem, index) => (
+        <div
+          key={subjectItem._id}
+          className="flex items-center gap-6 px-8 py-2"
+        >
+          {isEditing && editSubjectID === subjectItem._id ? (
             <>
               <input
                 type="text"
-                value={editedChapter}
-                onChange={(e) => setEditedChapter(e.target.value)}
+                value={newSubjectName}
+                onChange={(e) => setnewSubjectName(e.target.value)}
                 className="relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:border-[#009c86] outline-none hover:text-black transition-colors duration-300 flex flex-wrap items-center justify-between"
               />
               <button
                 className="transition duration-300 ease-in-out transform hover:scale-105 w-[14%]"
-                onClick={handleSaveEdit}
+                onClick={() => handleEdit(subjectItem._id)}
               >
                 <IoMdAddCircleOutline
                   size={45}
@@ -245,15 +184,19 @@ function AdminChapters() {
           ) : (
             <>
               <button
-                onClick={() => handleSubjectClick(chapter)}
+                onClick={() => handleSubjectClick(subjectItem._id)}
                 className="relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:bg-[#009c86] hover:text-white transition-colors duration-300 flex flex-wrap items-center justify-between"
               >
-                Chapter {"  "} {index + 1} - {chapter}
+                {subjectItem.subjectName}
                 <MdOutlineTouchApp className="ml-2 w-6 h-6" />
               </button>
               <button
                 className="transition duration-300 ease-in-out transform hover:scale-105"
-                onClick={() => handleEdit(index)}
+                onClick={() => {
+                  setIsEditing(true);
+                  seteditSubjectID(subjectItem._id);
+                  setnewSubjectName(subjectItem.subjectName);
+                }}
               >
                 <FaRegEdit
                   size={38}
@@ -263,7 +206,7 @@ function AdminChapters() {
 
               <button
                 className="transition duration-300 ease-in-out transform hover:scale-105"
-                onClick={() => handleDelete(index)}
+                onClick={() => handleDelete(subjectItem._id)}
               >
                 <MdOutlineDeleteSweep
                   size={40}
@@ -274,18 +217,19 @@ function AdminChapters() {
           )}
         </div>
       ))}
+
       {isAdding ? (
         <div className="w-full px-12 pt-8 flex justify-center items-center gap-12">
           <input
             type="text"
-            value={newChapter}
-            onChange={(e) => setNewChapter(e.target.value)}
+            value={newSubjectName}
+            onChange={(e) => setnewSubjectName(e.target.value)}
             className="relative w-full p-4 border-2 shadow-md outline-none border-[#009c86] rounded-lg text-lg text-[#009c86] transition-colors duration-300 flex flex-wrap items-center justify-between"
-            placeholder="Enter new chapter name"
+            placeholder="Enter new class name"
           />
           <button
             className="w-52 py-3 flex justify-center items-center gap-2 bg-[#009c86] text-white rounded-lg border-2 hover:border-[#009c86] hover:bg-transparent hover:text-black transition duration-300 ease-in-out transform hover:scale-105"
-            onClick={handleAddChapter}
+            onClick={addNewClass}
           >
             <IoMdAdd size={40} />
             <span className="text-xl">Add</span>
@@ -295,13 +239,43 @@ function AdminChapters() {
         <div className="w-full px-12 pt-8 flex justify-center">
           <button
             className="w-52 py-3 flex justify-center items-center gap-2 border-2 border-[#009c86] rounded-lg hover:bg-[#009c86] hover:text-white transition duration-300 ease-in-out transform hover:scale-105"
-            onClick={handleAddNewChapter}
+            onClick={handleAddNewClassBtn}
           >
             <IoMdAdd size={38} />
-            <span className="text-xl">Add New Chapter</span>
+            <span className="text-xl">Add New Class</span>
           </button>
         </div>
       )}
+
+      <div
+        className={`flex justify-center transition-all ${
+          errorVisible ? "" : "opacity-0"
+        }`}
+      >
+        {errorMessage && (
+          <div
+            className="bg-red-100 border-2 md:w-[80%] w-full border-red-700 text-black px-4 py-3 rounded relative top-[40px]  lg:relative lg:top-[40px]"
+            role="alert"
+          >
+            <strong className="font-bold">OPPS!: </strong>
+            <span className="block sm:inline">{errorMessage}</span>
+            <span
+              className="absolute top-0 bottom-0 right-0 px-2 py-1 cursor-pointer"
+              onClick={handleCloseError}
+            >
+              <svg
+                className="fill-current h-6 w-6 text-red-500"
+                role="button"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <title>Close</title>
+                <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+              </svg>
+            </span>
+          </div>
+        )}
+      </div>
     </section>
   );
 }
