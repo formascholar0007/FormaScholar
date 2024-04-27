@@ -24,7 +24,7 @@ function ClassName() {
 
   const getAllClasses = async () => {
     try {
-      const data = await fetch("http://localhost:3000/api/class/", {
+      const data = await fetch("http://localhost:3000/api/v1/class/", {
         method: "GET",
         headers: {
           Authorization: `bearer ${JSON.parse(

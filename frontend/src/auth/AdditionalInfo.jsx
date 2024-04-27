@@ -48,7 +48,7 @@ function AdditionalInfo() {
       const token = JSON.parse(localStorage.getItem("token"));
 
       const response = await fetch(
-        "http://localhost:3000/api/auth/additionalInfo",
+        "http://localhost:3000/api/v1/auth/additionalInfo",
         {
           method: "POST",
           headers: {
