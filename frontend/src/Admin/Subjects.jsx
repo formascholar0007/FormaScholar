@@ -87,7 +87,7 @@ function Subjects() {
   const handleEdit = async (id) => {
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/subject/`,
+        `http://localhost:3000/api/v1/subject/${id}`,
         {
           method: "PUT",
           headers: {
@@ -96,7 +96,7 @@ function Subjects() {
             )}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ subjectId: id, subjectName: newSubjectName }),
+          body: JSON.stringify({ subjectName: newSubjectName }),
         }
       );
       const response = await data.json();
@@ -114,7 +114,7 @@ function Subjects() {
   const handleDelete = async (id) => {
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/subject`,
+        `http://localhost:3000/api/v1/subject/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -123,7 +123,6 @@ function Subjects() {
             )}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ subjectId: id }),
         }
       );
       const response = await data.json();
