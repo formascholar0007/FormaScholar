@@ -59,7 +59,7 @@ const updateSubject = async (req, res) => {
     }
 
     try {
-        const updatedSubject = await Class.findOneAndUpdate({ _id: subjectId }, { subjectName }, { new: true });
+        const updatedSubject = await Subject.findOneAndUpdate({ _id: subjectId }, { subjectName }, { new: true });
 
         if (!updatedSubject) {
             return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Subject Cannot Update Right Now');
@@ -80,12 +80,11 @@ const deleteSubject = async (req, res) => {
     }
 
     try {
-        const deletedClass = await Class.findOneAndDelete({ _id: subjectId });
+        const deletedClass = await Subject.findOneAndDelete({ _id: subjectId });
 
         if (!deletedClass) {
             return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Subject not found Or not delete right now');
         }
-
         return res.globalResponse(StatusCodes.OK, true, 'Subject deleted successfully');
     } catch (err) {
         console.error(err);

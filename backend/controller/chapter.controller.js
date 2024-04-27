@@ -2,7 +2,12 @@ const { StatusCodes } = require('http-status-codes');
 
 
 const createChapter = async (req, res) => {
-    console.log("create chapter");
+    const {classId , subjectId} = req.params;
+    const {chapterName} = req.body;
+
+   
+
+  
 }
 
 const getAllChapter = async (req, res) => {
