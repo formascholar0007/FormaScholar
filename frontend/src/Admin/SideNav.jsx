@@ -106,7 +106,7 @@ const SideNav = () => {
                     activeclassname="text-gray-900 dark:text-white"
                   >
                     <RiLogoutCircleRLine className="w-5 h-5" />
-                    <span className="ms-3">User Data</span>
+                    <span className="ms-3">Log out</span>
                   </NavLink>
                 </li>
               </ul>
