@@ -17,7 +17,7 @@ function UserProfile() {
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
     axios
-      .get("http://localhost:3000/api/profile", {
+      .get("http://localhost:3000/api/v1/profile", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -71,7 +71,7 @@ function UserProfile() {
     const token = JSON.parse(localStorage.getItem("token"));
 
     axios
-      .put("http://localhost:3000/api/profile", formData, {
+      .put("http://localhost:3000/api/v1/profile", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
