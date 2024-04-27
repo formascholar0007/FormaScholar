@@ -2,7 +2,7 @@ const { StatusCodes } = require('http-status-codes');
 const Subject = require('../model/Subject.js');
 
 const createSubject = async (req, res) => {
-    const { classId } = req.params
+    const { classId } = req.params;
     const { subjectName } = req.body;
 
     if (!subjectName) {
@@ -33,8 +33,11 @@ const createSubject = async (req, res) => {
 
 const getAllSubject = async(req,res)=>{
 
+const {classId} = req.params;
+
     try {
-        const allSubjects = await Subject.find();
+        const allSubjects = await Subject.find({classId});
+        
         res.globalResponse(StatusCodes.OK, true, 'Subject Retrieved Successfully', allSubjects);
     } catch (err) {
         console.error(err);
