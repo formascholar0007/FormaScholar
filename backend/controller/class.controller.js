@@ -49,9 +49,10 @@ const getAllClasses = async (req, res) => {
 }
 
 const updateClass = async (req, res) => {
-    const { Id, className } = req.body;
+    const {classId} = req.params;
+    const { className } = req.body;
 
-    if (!Id) {
+    if (!classId) {
         return res.globalResponse(StatusCodes.NOT_FOUND, false, 'ClassId Not Found');
     }
 
@@ -60,7 +61,7 @@ const updateClass = async (req, res) => {
     }
 
     try {
-        const updatedClass = await Class.findOneAndUpdate({ _id: Id }, { className }, { new: true });
+        const updatedClass = await Class.findOneAndUpdate({ _id: classId }, { className }, { new: true });
 
         if (!updatedClass) {
             return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Class Cannot Update Right Now');
@@ -74,14 +75,14 @@ const updateClass = async (req, res) => {
 }
 
 const deleteClass = async (req, res) => {
-    const { Id } = req.body;
+    const { classId } = req.params;
 
-    if (!Id) {
+    if (!classId) {
         return res.globalResponse(StatusCodes.NOT_FOUND, false, 'ClassId Not Found');
     }
 
     try {
-        const deletedClass = await Class.findOneAndDelete({ _id: Id });
+        const deletedClass = await Class.findOneAndDelete({ _id: classId });
 
         if (!deletedClass) {
             return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Class not found or not delete right now');

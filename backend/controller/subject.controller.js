@@ -32,13 +32,13 @@ const createSubject = async (req, res) => {
 
 }
 
-const getAllSubject = async(req,res)=>{
+const getAllSubject = async (req, res) => {
 
-const {classId} = req.params;
+    const { classId } = req.params;
 
     try {
-        const allSubjects = await Subject.find({classId});
-        
+        const allSubjects = await Subject.find({ classId });
+
         res.globalResponse(StatusCodes.OK, true, 'Subject Retrieved Successfully', allSubjects);
     } catch (err) {
         console.error(err);
@@ -48,7 +48,8 @@ const {classId} = req.params;
 }
 
 const updateSubject = async (req, res) => {
-    const { subjectId, subjectName } = req.body;
+    const { subjectId } = req.params;
+    const { subjectName } = req.body;
 
     if (!subjectId) {
         return res.globalResponse(StatusCodes.NOT_FOUND, false, 'SubjectId Not Found');
@@ -73,7 +74,7 @@ const updateSubject = async (req, res) => {
 }
 
 const deleteSubject = async (req, res) => {
-    const { subjectId } = req.body;
+    const { subjectId } = req.params;
 
     if (!subjectId) {
         return res.globalResponse(StatusCodes.NOT_FOUND, false, 'SubjectId Not Found');
@@ -92,4 +93,4 @@ const deleteSubject = async (req, res) => {
     }
 }
 
-module.exports = { createSubject , getAllSubject ,updateSubject , deleteSubject }
+module.exports = { createSubject, getAllSubject, updateSubject, deleteSubject }

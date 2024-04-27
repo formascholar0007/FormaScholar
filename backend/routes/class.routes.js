@@ -6,7 +6,7 @@ const authorizeAdmin = require('../guards/authorizeAdmin');
 
 router.get('/', verifyUserMiddleWare , authorizeAdmin ,  ClassController.getAllClasses);
 router.post('/', verifyUserMiddleWare , authorizeAdmin , ClassController.createClass);
-router.put('/', verifyUserMiddleWare , authorizeAdmin , ClassController.updateClass);
-router.delete('/', verifyUserMiddleWare , authorizeAdmin , ClassController.deleteClass);
+router.put('/:classId', verifyUserMiddleWare , authorizeAdmin , ClassController.updateClass);
+router.delete('/:classId', verifyUserMiddleWare , authorizeAdmin , ClassController.deleteClass);
 
 module.exports = router;

@@ -10,8 +10,9 @@ const createChapter = async (req, res) => {
     }
 
     if (!chapterName) {
-        return res.globalResponse(StatusCodes.NOT_FOUND, false, 'Chapter Name Missing');
+        return res.globalResponse(StatusCodes.BAD_REQUEST, false, 'Chapter Name Missing');
     }
+
     try {
         const newChapter = await Chapter.create({
             chapterName,
@@ -33,8 +34,9 @@ const createChapter = async (req, res) => {
 
 const getAllChapter = async (req, res) => {
     const { classId, subjectId } = req.params;
+
     if (!classId || !subjectId) {
-        return res.globalResponse(StatusCodes.NOT_FOUND, false, 'ClassId Not Found || SubjectId Not Found');
+        return res.globalResponse(StatusCodes.BAD_REQUEST, false, 'ClassId or SubjectId Missing');
     }
 
     try {
@@ -52,7 +54,8 @@ const getAllChapter = async (req, res) => {
 }
 
 const updateChapter = async (req, res) => {
-    const { chapterId, chapterName } = req.body;
+    const { chapterId } = req.params;
+    const { chapterName } = req.body;
     if (!chapterId) {
         return res.globalResponse(StatusCodes.NOT_FOUND, false, 'ChapterId Missing');
     }
@@ -73,7 +76,7 @@ const updateChapter = async (req, res) => {
 }
 
 const deleteChapter = async (req, res) => {
-    const {chapterId} = req.body;
+    const { chapterId } = req.params;
 
     if (!chapterId) {
         return res.globalResponse(StatusCodes.NOT_FOUND, false, 'ChapterId Not Found');

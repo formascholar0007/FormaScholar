@@ -7,8 +7,8 @@ const subjectController = require('../controller/subject.controller.js');
 
 route.get('/:classId' , verifyUserMiddleWare , authorizeAdmin, subjectController.getAllSubject);
 route.post('/:classId' ,verifyUserMiddleWare , authorizeAdmin, subjectController.createSubject);
-route.put('/' ,verifyUserMiddleWare , authorizeAdmin, subjectController.updateSubject);
-route.delete('/', verifyUserMiddleWare , authorizeAdmin , subjectController.deleteSubject);
+route.put('/:subjectId' ,verifyUserMiddleWare , authorizeAdmin, subjectController.updateSubject);
+route.delete('/:subjectId', verifyUserMiddleWare , authorizeAdmin , subjectController.deleteSubject);
 
 
 
