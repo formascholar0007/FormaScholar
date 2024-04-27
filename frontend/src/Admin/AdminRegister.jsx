@@ -3,11 +3,11 @@ import HttpStatus from "http-status-codes";
 import Button from "../Common/Button";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-// import { useAuth } from "./AuthContext";
+import { useAuth } from "../auth/AuthContext";
 
 function AdminRegister() {
 
-//   const {handleLogin} = useAuth();
+  const {adminHandleLogin} = useAuth();
 
   useEffect(() => {
     const handleReload = (e) => {
@@ -62,6 +62,8 @@ function AdminRegister() {
 
       if (response.ok) {
         localStorage.setItem("adminToken", JSON.stringify(registerResponse.data));
+
+        adminHandleLogin();
         
         setErrorMessage("");
         setFormData({

@@ -147,8 +147,8 @@ function ClassName() {
     setNewClassName(""); // Clear the input field when adding a new class
   };
 
-  const handleSubjectClick = (classNumber) => {
-    navigate(`/adminPanel/subjects/${classNumber}`);
+  const handleSubjectClick = (classId) => {
+    navigate(`/adminPanel/subjects/${classId}`);
   };
 
   return (
