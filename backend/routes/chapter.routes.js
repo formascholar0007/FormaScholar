@@ -5,8 +5,8 @@ const verifyUserMiddleWare = require('../middleware/verifyUserMiddleWare');
 const authorizeAdmin = require('../guards/authorizeAdmin');
 const ChapterController = require('../controller/chapter.controller.js');
 
-router.get('/', verifyUserMiddleWare , authorizeAdmin ,  ChapterController.getAllChapter);
-router.post('/', verifyUserMiddleWare , authorizeAdmin , ChapterController.createChapter);
+router.get('/:classId/:subjectId', verifyUserMiddleWare , authorizeAdmin ,  ChapterController.getAllChapter);
+router.post('/:classId/:subjectId', verifyUserMiddleWare , authorizeAdmin , ChapterController.createChapter);
 router.put('/', verifyUserMiddleWare , authorizeAdmin , ChapterController.updateChapter);
 router.delete('/', verifyUserMiddleWare , authorizeAdmin , ChapterController.deleteChapter);
 

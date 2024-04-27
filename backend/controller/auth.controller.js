@@ -154,7 +154,6 @@ const forgotPassword = async (req, res) => {
     }
 };
 
-
 const resetPassword = async (req, res) => {
     const { userId, token } = req.params;
     console.log(req.params);

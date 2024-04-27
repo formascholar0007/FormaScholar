@@ -50,7 +50,7 @@ const {classId} = req.params;
 const updateSubject = async (req, res) => {
     const { subjectId, subjectName } = req.body;
 
-    if (!Id) {
+    if (!subjectId) {
         return res.globalResponse(StatusCodes.NOT_FOUND, false, 'SubjectId Not Found');
     }
 
