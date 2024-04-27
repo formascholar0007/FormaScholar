@@ -32,7 +32,7 @@ const QuestionSchema = mongoose.Schema({
     }
 
 },{
-    timestamp:true
+    timestamps:true
 });
 
 const QuestionModel = mongoose.model(QuestionSchema);

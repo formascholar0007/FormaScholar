@@ -15,7 +15,7 @@ const ChapterSchema = mongoose.Schema({
     },
 
 },{
-    timestamp:true
+    timestamps:true
 })
 
 const ChapterModel = mongoose.model(ChapterSchema);

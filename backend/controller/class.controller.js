@@ -24,13 +24,15 @@ const createClass = async (req, res) => {
         });
 
         if (!newClass) {
-            return res.globalResponse(StatusCodes.BAD_GATEWAY, false, 'Class Cannot Create Write Now');
+            return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Class Cannot Create Write Now');
         }
 
-        res.globalResponse(StatusCodes.CREATED, true, 'Class Created Successfully');
+        res.globalResponse(StatusCodes.CREATED, true, 'Class Created Successfully' , newClass);
 
     } catch (err) {
         console.log(err);
+        return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Something Went Wrong In CreateClass controller' , err);
+
     }
 
 
@@ -61,7 +63,7 @@ const updateClass = async (req, res) => {
         const updatedClass = await Class.findOneAndUpdate({ _id: Id }, { className }, { new: true });
 
         if (!updatedClass) {
-            return res.globalResponse(StatusCodes.BAD_GATEWAY, false, 'Class Cannot Update Right Now');
+            return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Class Cannot Update Right Now');
         }
 
         return res.globalResponse(StatusCodes.OK, true, 'Class Update Successfully', updatedClass);
@@ -82,7 +84,7 @@ const deleteClass = async (req, res) => {
         const deletedClass = await Class.findOneAndDelete({ _id: Id });
 
         if (!deletedClass) {
-            return res.globalResponse(StatusCodes.NOT_FOUND, false, 'Class not found');
+            return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Class not found or not delete right now');
         }
 
         return res.globalResponse(StatusCodes.OK, true, 'Class deleted successfully');

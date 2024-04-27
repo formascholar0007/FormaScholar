@@ -1,9 +1,10 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const authRoute = require('./routes/authroute');
-const profileRoute = require('./routes/profileroute');
-const classRoute = require('./routes/classroute');
+const authRoute = require('./routes/auth.routes.js');
+const profileRoute = require('./routes/profile.routes.js');
+const classRoute = require('./routes/class.routes.js');
+const subjectRoute = require('./routes/subject.routes.js');
 const globalResponse = require('./middleware/globalResponse');
 require('./config/database');
 
@@ -16,9 +17,10 @@ app.use(cors({
   credentials: true
 }));
 
-app.use('/api/auth', authRoute);
-app.use('/api/profile', profileRoute);
-app.use('/api/class', classRoute)
+app.use('/api/v1/auth', authRoute);
+app.use('/api/v1/profile', profileRoute);
+app.use('/api/v1/class', classRoute);
+app.use('/api/v1/subject', subjectRoute);
 
 
 

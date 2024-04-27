@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const ClassController = require('../controller/classController');
+const ClassController = require('../controller/class.controller.js');
 const verifyUserMiddleWare = require('../middleware/verifyUserMiddleWare');
 const authorizeAdmin = require('../guards/authorizeAdmin');
 

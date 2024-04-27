@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const SubjectSchema = mongoose.Schema({
-    SubjectName:{
+const subjectSchema = mongoose.Schema({
+    subjectName:{
         type:String,
         required:true
     },
@@ -10,8 +10,8 @@ const SubjectSchema = mongoose.Schema({
         required:true
     }
 },{
-    timestamp:true
+    timestamps:true
 })
 
-const SubjectModel = mongoose.model(SubjectSchema);
+const SubjectModel = mongoose.model("Subject" , subjectSchema);
 module.exports = SubjectModel;

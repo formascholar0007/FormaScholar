@@ -18,7 +18,7 @@ const ExerciseSchema = mongoose.Schema({
      }
 
 },{
-    timestamp:true
+    timestamps:true
 });
 
 const ExerciseModel = mongoose.model(ExerciseSchema);
