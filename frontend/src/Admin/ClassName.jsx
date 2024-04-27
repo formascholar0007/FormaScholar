@@ -10,32 +10,54 @@ import { useEffect } from "react";
 
 function ClassName() {
   const [isEditing, setIsEditing] = useState(false);
-  const [editClassIndex, setEditClassIndex] = useState(null);
+  const [editClassid, setEditClassid] = useState(null);
   const [newClassName, setNewClassName] = useState("");
   const [isAdding, setIsAdding] = useState(false);
-  const [classes, setClasses] = useState(
-    Array.from({ length: 5 }, (_, index) => index + 8)
-  );
+  const [classes, setClasses] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch data or perform any initial setup if needed
+    getAllClasses();
   }, []);
+
+  const getAllClasses = async () => {
+    try {
+      const data = await fetch("http://localhost:3000/api/class/", {
+        method: "GET",
+        headers: {
+          Authorization: `bearer ${JSON.parse(
+            localStorage.getItem("adminToken")
+          )}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      let response = await data.json();
+
+      if (response.success) {
+        setClasses(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+      setErrorVisible(true);
+      setErrorMessage(error.toString());
+    }
+  };
 
   const handleAddClass = () => {
     if (
       newClassName.trim() !== "" &&
       newClassName >= 1 &&
       newClassName <= 12 &&
-      editClassIndex !== null
+      editClassid !== null
     ) {
       const updatedClasses = [...classes];
-      updatedClasses[editClassIndex] = parseInt(newClassName, 10);
+      updatedClasses[editClassid] = parseInt(newClassName, 10);
       setClasses(updatedClasses);
       setIsEditing(false);
-      setEditClassIndex(null);
+      setEditClassid(null);
       setNewClassName("");
       setErrorMessage("");
       setErrorVisible(false);
@@ -45,41 +67,105 @@ function ClassName() {
     }
   };
 
-  const handleAddNewClass = () => {
-    setIsAdding(true);
-    setIsEditing(false); // Ensure editing mode is turned off when adding a new class
-    setNewClassName(""); // Clear the input field when adding a new class
-  };
+  const addNewClass = async (e) => {
+    e.preventDefault();
 
-  const handleAdd = () => {
-    if (newClassName.trim() !== "" && newClassName >= 1 && newClassName <= 12) {
-      setClasses([...classes, parseInt(newClassName, 10)]);
+    if (
+      !newClassName ||
+      isNaN(parseInt(newClassName)) ||
+      newClassName < 1 ||
+      newClassName > 12
+    ) {
+      setErrorMessage("Please enter a valid class number (1-12).");
+      setErrorVisible(true);
+      return;
+    }
+
+    try {
+      const data = await fetch("http://localhost:3000/api/class/", {
+        method: "POST",
+        headers: {
+          Authorization: `bearer ${JSON.parse(
+            localStorage.getItem("adminToken")
+          )}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ className: newClassName }),
+      });
+
+      const response = await data.json();
+      if (!response.success) {
+        setErrorMessage(response.message);
+        setIsAdding(true);
+      }
+
+      setNewClassName("");
       setIsAdding(false);
-      setNewClassName("");
-      setErrorMessage("");
-      setErrorVisible(false);
-    } else {
-      setErrorMessage("Please enter a valid class number (1-12).");
+      getAllClasses();
+    } catch (error) {
+      console.log(error);
       setErrorVisible(true);
+      setErrorMessage(error.toString());
     }
   };
 
-  const handleEdit = (index) => {
-    setIsEditing(true);
-    setEditClassIndex(index);
-    setNewClassName(classes[index]);
+  const handleEdit = async (id) => {
+    try {
+      const data = await fetch("http://localhost:3000/api/class/", {
+        method: "PUT",
+        headers: {
+          Authorization: `bearer ${JSON.parse(
+            localStorage.getItem("adminToken")
+          )}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ Id: id, className: newClassName }),
+      });
+
+      const response = await data.json();
+      if (response.success) {
+        getAllClasses();
+      }
+
+    } catch (error) {
+      console.log(error);
+      setErrorVisible(true);
+      setErrorMessage(error.toString());
+    }
   };
 
-  const handleDelete = (index) => {
-    const updatedClass = [...classes];
-    updatedClass.splice(index, 1);
-    setClasses(updatedClass);
-    //The first argument, index, specifies the index at which to start removing elements, and the second argument, 1, specifies
-    //  the number of elements to remove. In this case, it removes one element starting from the index specified by index.
+  const handleDelete = async (id) => {
+    try {
+      const data = await fetch("http://localhost:3000/api/class/", {
+        method: "DELETE",
+        headers: {
+          Authorization: `bearer ${JSON.parse(
+            localStorage.getItem("adminToken")
+          )}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ Id: id, className: newClassName }),
+      });
+
+      const response = await data.json();
+      if (response.success) {
+        getAllClasses();
+      }
+    } catch (error) {
+      console.log(error);
+      setErrorVisible(true);
+      setErrorMessage(error.toString());
+    }
   };
 
   const handleCloseError = () => {
     setErrorVisible(false);
+  };
+
+  const handleAddNewClassBtn = () => {
+    setIsAdding(true);
+    setIsEditing(false); // Ensure editing mode is turned off when adding a new class
+    setNewClassName(""); // Clear the input field when adding a new class
   };
 
   const handleSubjectClick = (classNumber) => {
@@ -95,9 +181,9 @@ function ClassName() {
         Add New Classes, Chapters, Lessons, and other Data...
       </p>
 
-      {classes.map((classNumber, index) => (
-        <div key={index} className="flex items-center gap-6 px-8 py-2">
-          {isEditing && editClassIndex === index ? (
+      {classes.map((classItem, index) => (
+        <div key={classItem._id} className="flex items-center gap-6 px-8 py-2">
+          {isEditing && editClassid === classItem._id ? (
             <>
               <input
                 type="number"
@@ -107,7 +193,7 @@ function ClassName() {
               />
               <button
                 className="transition duration-300 ease-in-out transform hover:scale-105 w-[14%]"
-                onClick={handleAddClass}
+                onClick={() => handleEdit(classItem._id)}
               >
                 <IoMdAddCircleOutline
                   size={45}
@@ -118,16 +204,19 @@ function ClassName() {
           ) : (
             <>
               <button
-                // to={`/class/${classNumber}`}
-                onClick={() => handleSubjectClick(classNumber)}
+                onClick={() => handleSubjectClick(classItem._id)}
                 className="relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:bg-[#009c86] hover:text-white transition-colors duration-300 flex flex-wrap items-center justify-between"
               >
-                Class {classNumber}
+                Class {classItem.className}
                 <MdOutlineTouchApp className="ml-2 w-6 h-6" />
               </button>
               <button
                 className="transition duration-300 ease-in-out transform hover:scale-105"
-                onClick={() => handleEdit(index)}
+                onClick={() => {
+                  setIsEditing(true);
+                  setEditClassid(classItem._id);
+                  setNewClassName(classItem.className);
+                }}
               >
                 <FaRegEdit
                   size={38}
@@ -137,7 +226,7 @@ function ClassName() {
 
               <button
                 className="transition duration-300 ease-in-out transform hover:scale-105"
-                onClick={() => handleDelete(index)}
+                onClick={() => handleDelete(classItem._id)}
               >
                 <MdOutlineDeleteSweep
                   size={40}
@@ -160,7 +249,7 @@ function ClassName() {
           />
           <button
             className="w-52 py-3 flex justify-center items-center gap-2 bg-[#009c86] text-white rounded-lg border-2 hover:border-[#009c86] hover:bg-transparent hover:text-black transition duration-300 ease-in-out transform hover:scale-105"
-            onClick={handleAdd}
+            onClick={addNewClass}
           >
             <IoMdAdd size={40} />
             <span className="text-xl">Add</span>
@@ -170,7 +259,7 @@ function ClassName() {
         <div className="w-full px-12 pt-8 flex justify-center">
           <button
             className="w-52 py-3 flex justify-center items-center gap-2 border-2 border-[#009c86] rounded-lg hover:bg-[#009c86] hover:text-white transition duration-300 ease-in-out transform hover:scale-105"
-            onClick={handleAddNewClass}
+            onClick={handleAddNewClassBtn}
           >
             <IoMdAdd size={38} />
             <span className="text-xl">Add New Class</span>

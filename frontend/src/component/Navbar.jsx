@@ -37,6 +37,12 @@ const Navbar = () => {
             {navOpen && (
               <div className="absolute top-[50px] right-0 mt-2 w-48 bg-white shadow-xl rounded-md z-10">
                 <NavLink
+                  to="/"
+                  className="block w-full py-3 px-4 text-left text-gray-800 hover:bg-gray-200"
+                >
+                  Home
+                </NavLink>
+                <NavLink
                   to="/profile"
                   className="block w-full py-3 px-4 text-left text-gray-800 hover:bg-gray-200"
                 >

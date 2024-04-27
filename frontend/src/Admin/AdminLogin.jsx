@@ -2,27 +2,24 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Button from "../Common/Button";
-import { useAuth } from "./AuthContext";
 
-function LoginForm() {
-
-  const {handleLogin} = useAuth();
-
+function AdminLogin() {
   useEffect(() => {
     const handleReload = (e) => {
       e.preventDefault();
-      e.returnValue = ''
+      e.returnValue = "";
     };
     window.addEventListener("beforeunload", handleReload);
 
     return () => {
-    window.removeEventListener("beforeunload", handleReload);
+      window.removeEventListener("beforeunload", handleReload);
     };
   }, []);
 
-  const [loginFormData, setLoginFormData] = useState({
+  const [AdminLoginData, setAdminLoginData] = useState({
     email: "",
     password: "",
+    role: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
@@ -30,13 +27,13 @@ function LoginForm() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setLoginFormData({ ...loginFormData, [name]: value });
+    setAdminLoginData({ ...AdminLoginData, [name]: value });
     setErrorMessage("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!loginFormData.email || !loginFormData.password) {
+    if (!AdminLoginData.email || !AdminLoginData.password) {
       setErrorMessage("Please provide both email and password");
       setErrorVisible(true);
       return;
@@ -46,23 +43,25 @@ function LoginForm() {
       const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+           Authorization: `Bearer ${JSON.parse(
+            localStorage.getItem("adminToken")
+          )}`,
           Accept: "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: loginFormData.email,
-          password: loginFormData.password,
+          email: AdminLoginData.email,
+          password: AdminLoginData.password,
         }),
       });
       let loginResponse = await response.json();
       console.warn("Data : ", loginResponse);
 
       if (response.status === 200) {
-        localStorage.setItem("token", JSON.stringify(loginResponse.data));
+        localStorage.setItem("adminToken", JSON.stringify(loginResponse.data));
         handleLogin();
-        navigate("/");
-        setLoginFormData({
+        navigate("/adminPanel");
+        setAdminLoginData({
           email: "",
           password: "",
         });
@@ -113,7 +112,7 @@ function LoginForm() {
                   name="email"
                   type="email"
                   placeholder="Enter Your Email"
-                  value={loginFormData.email}
+                  value={AdminLoginData.email}
                   onChange={handleInputChange}
                   required
                   className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#009c86] sm:text-sm sm:leading-6 outline-none"
@@ -143,11 +142,41 @@ function LoginForm() {
                   name="password"
                   type={"password"}
                   placeholder="Enter Your Password"
-                  value={loginFormData.password}
+                  value={AdminLoginData.password}
                   onChange={handleInputChange}
                   required
                   className="block w-full rounded-md border-0 p-1.5  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#009c86] sm:text-sm sm:leading-6 outline-none"
                 />
+              </div>
+              <div className="w-full md:w-1/2 mt-4">
+                <label
+                  htmlFor="role"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Role
+                </label>
+                <div className="mt-2">
+                  {/* <select
+                  id="role"
+                  name="role"
+                  autoComplete="off"
+                  className="block w-full focus-within:ring-[#009c86] outline-none rounded-md border-0 lg:py-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-[#009c86]sm:max-w-xs sm:text-sm sm:leading-6"
+                  required
+                >
+                  <option value="">Select Role</option>
+                  <option value="admin">admin</option>
+                  <option value="user">user</option>
+                </select> */}
+                  <input
+                    id="role"
+                    name="role"
+                    type="role"
+                    placeholder="Enter Your role"
+                    value={AdminLoginData.role}
+                    onChange={handleInputChange}
+                    className="block w-full rounded-md border-0 p-1.5  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#009c86] sm:text-sm sm:leading-6 outline-none"
+                  />
+                </div>
               </div>
             </div>
             <div>
@@ -194,4 +223,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default AdminLogin;

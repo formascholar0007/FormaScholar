@@ -19,6 +19,8 @@ import DashHome from "./Admin/DashHome";
 import ClassName from "./Admin/ClassName";
 import Subjects from "./Admin/Subjects";
 import { Logout } from "./auth/Logout";
+import AdminRegister from "./Admin/AdminRegister";
+import AdminLogin from "./Admin/AdminLogin";
 
 function App() {
   // window.addEventListener('beforeunload', (e)=>{
@@ -69,6 +71,14 @@ function App() {
               <Route
                 path="/adminPanel/className"
                 element={<ClassName />}
+              />
+              <Route
+                path="/adminPanel/adminRegister"
+                element={<AdminRegister />}
+              />
+              <Route
+                path="/adminPanel/adminLogin"
+                element={<AdminLogin />}
               />
               <Route
                 path="/adminPanel/subjects/:classNumber"

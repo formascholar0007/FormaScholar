@@ -3,11 +3,11 @@ import HttpStatus from "http-status-codes";
 import Button from "../Common/Button";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useAuth } from "./AuthContext";
+// import { useAuth } from "./AuthContext";
 
-function Registrationform() {
+function AdminRegister() {
 
-  const {handleLogin} = useAuth();
+//   const {handleLogin} = useAuth();
 
   useEffect(() => {
     const handleReload = (e) => {
@@ -24,7 +24,7 @@ function Registrationform() {
     userName: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    role: "",
   });
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -39,18 +39,11 @@ function Registrationform() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (formData.password !== formData.confirmPassword) {
-      setErrorMessage("Password does not match");
-      setErrorVisible(true);
-      return;
-    }
-
     try {
       const response = await fetch("http://localhost:3000/api/auth/register", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        //   Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
           Accept: "application/json",
           "Content-Type": "application/json",
         },
@@ -58,6 +51,7 @@ function Registrationform() {
           userName: formData.userName,
           email: formData.email,
           password: formData.password,
+          role: formData.role,
         }),
       });
       let registerResponse = await response.json();
@@ -67,17 +61,16 @@ function Registrationform() {
       const statusText = HttpStatus.getStatusText(statusCode);
 
       if (response.ok) {
-        localStorage.setItem("token", JSON.stringify(registerResponse.data));
-        handleLogin();
+        localStorage.setItem("adminToken", JSON.stringify(registerResponse.data));
         
         setErrorMessage("");
         setFormData({
           userName: "",
           email: "",
           password: "",
-          confirmPassword: "",
+          role: "",
         });
-        navigate("/additionalInfo");
+        navigate("/adminPanel");
       } else {
         setErrorMessage(
           registerResponse.message === "User Already Exists"
@@ -107,7 +100,7 @@ function Registrationform() {
             alt="FormaScholar"
           />
           <h2 className="mt-2 md:mt-10 lg:text-2xl text-xl  font-bold leading-9 tracking-tight text-gray-900">
-            Registration Form
+              Admin Registeration Form
           </h2>
           <p className="mt-1 lg:text-md text-sm text-gray-500">
             Create your account. It’s free and only takes a minute.
@@ -178,21 +171,33 @@ function Registrationform() {
               </div>
               <div className="w-full md:w-1/2 px-3">
                 <label
-                  htmlFor="confirmPassword"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Confirm Password
-                </label>
-                <input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  placeholder="Enter Your Confirm Password"
-                  value={formData.confirmPassword}
-                  onChange={handleInputChange}
+                htmlFor="role"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Role
+              </label>
+              <div className="mt-2">
+                {/* <select
+                  id="role"
+                  name="role"
+                  autoComplete="off"
+                  className="block w-full focus-within:ring-[#009c86] outline-none rounded-md border-0 lg:py-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-[#009c86]sm:max-w-xs sm:text-sm sm:leading-6"
                   required
+                >
+                  <option value="">Select Role</option>
+                  <option value="admin">admin</option>
+                  <option value="user">user</option>
+                </select> */}
+                 <input
+                  id="role"
+                  name="role"
+                  type="role"
+                  placeholder="Enter Your role"
+                  value={formData.role}
+                  onChange={handleInputChange}
                   className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#009c86] sm:text-sm sm:leading-6 outline-none"
                 />
+              </div>
               </div>
             </div>
             <div className="flex flex-col justify-end lg:justify-start">
@@ -253,4 +258,4 @@ function Registrationform() {
   );
 }
 
-export default Registrationform;
+export default AdminRegister;
