@@ -61,7 +61,7 @@ function ClassName() {
     }
 
     try {
-      const data = await fetch("http://localhost:3000/api/class/", {
+      const data = await fetch("http://localhost:3000/api/v1/class/", {
         method: "POST",
         headers: {
           Authorization: `bearer ${JSON.parse(
@@ -90,7 +90,7 @@ function ClassName() {
 
   const handleEdit = async (id) => {
     try {
-      const data = await fetch("http://localhost:3000/api/class/", {
+      const data = await fetch("http://localhost:3000/api/v1/class/", {
         method: "PUT",
         headers: {
           Authorization: `bearer ${JSON.parse(
@@ -115,7 +115,7 @@ function ClassName() {
 
   const handleDelete = async (id) => {
     try {
-      const data = await fetch("http://localhost:3000/api/class/", {
+      const data = await fetch("http://localhost:3000/api/v1/class/", {
         method: "DELETE",
         headers: {
           Authorization: `bearer ${JSON.parse(
