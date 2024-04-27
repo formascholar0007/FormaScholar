@@ -46,27 +46,6 @@ function ClassName() {
     }
   };
 
-  const handleAddClass = () => {
-    if (
-      newClassName.trim() !== "" &&
-      newClassName >= 1 &&
-      newClassName <= 12 &&
-      editClassid !== null
-    ) {
-      const updatedClasses = [...classes];
-      updatedClasses[editClassid] = parseInt(newClassName, 10);
-      setClasses(updatedClasses);
-      setIsEditing(false);
-      setEditClassid(null);
-      setNewClassName("");
-      setErrorMessage("");
-      setErrorVisible(false);
-    } else {
-      setErrorMessage("Please enter a valid class number (1-12).");
-      setErrorVisible(true);
-    }
-  };
-
   const addNewClass = async (e) => {
     e.preventDefault();
 
