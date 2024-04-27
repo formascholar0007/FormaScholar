@@ -5,26 +5,26 @@ import { FaRegEdit } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
-function AdminChapters() {
-  const { classId, subjectid } = useParams();
+function AdminExercise() {
+  const { classId, subjectid, chapterId } = useParams();
 
   const [isEditing, setIsEditing] = useState(false);
-  const [editChapterId, seteditChapterId] = useState(null);
-  const [newChapterName, setnewChapterName] = useState("");
+  const [editExerciseId, seteditExerciseId] = useState(null);
+  const [newExerciseName, setnewExerciseName] = useState("");
   const [isAdding, setIsAdding] = useState(false);
-  const [chapters, setchapters] = useState([]);
+  const [exercise, setexercise] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getAllchapters();
+    getAllexercise();
   }, []);
 
-  const getAllchapters = async () => {
+  const getAllexercise = async () => {
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/chapter/${classId}/${subjectid}`,
+        `http://localhost:3000/api/v1/exercise/${classId}/${subjectid}/${chapterId}`,
         {
           method: "GET",
           headers: {
@@ -38,7 +38,7 @@ function AdminChapters() {
       let response = await data.json();
       
       if (response.success) {
-        setchapters(response.data);
+        setexercise(response.data);
       }
     } catch (error) {
       console.log(error);
@@ -52,7 +52,7 @@ function AdminChapters() {
 
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/chapter/${classId}/${subjectid}`,
+        `http://localhost:3000/api/v1/exercise/${classId}/${subjectid}/${chapterId}`,
         {
           method: "POST",
           headers: {
@@ -61,7 +61,7 @@ function AdminChapters() {
             )}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ chapterName: newChapterName }),
+          body: JSON.stringify({ exerciseName: newExerciseName }),
         }
       );
 
@@ -73,10 +73,10 @@ function AdminChapters() {
         setIsAdding(true);
       }
 
-      setnewChapterName("");
+      setnewExerciseName("");
       setIsAdding(false);
 
-      getAllchapters();
+      getAllexercise();
     } catch (error) {
       console.log(error);
       setErrorVisible(true);
@@ -84,10 +84,10 @@ function AdminChapters() {
     }
   };
 
-  const handleEdit = async ( chapterId ) => {
+  const handleEdit = async ( exerciseId ) => {
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/chapter/${chapterId}`,
+        `http://localhost:3000/api/v1/exercise/${exerciseId}`,
         {
           method: "PUT",
           headers: {
@@ -96,13 +96,13 @@ function AdminChapters() {
             )}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ chapterName: newChapterName }),
+          body: JSON.stringify({ exerciseName: newExerciseName }),
         }
       );
       const response = await data.json();
       
       if (response.success) {
-        getAllchapters();
+        getAllexercise();
       }
     } catch (error) {
       console.log(error);
@@ -111,11 +111,11 @@ function AdminChapters() {
     }
   };
   
-  const handleDelete = async (chapterId) => {
+  const handleDelete = async (exerciseId) => {
 
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/chapter/${chapterId}`,
+        `http://localhost:3000/api/v1/exercise/${exerciseId}`,
         {
           method: "DELETE",
           headers: {
@@ -131,7 +131,7 @@ function AdminChapters() {
       console.warn(response);
 
       if (response.success) {
-        getAllchapters();
+        getAllexercise();
       }
     } catch (error) {
       console.log(error);
@@ -148,38 +148,38 @@ function AdminChapters() {
   const handleAddNewClassBtn = () => {
     setIsAdding(true);
     setIsEditing(false); // Ensure editing mode is turned off when adding a new class
-    setnewChapterName(""); // Clear the input field when adding a new class
+    setnewExerciseName(""); // Clear the input field when adding a new class
   };
 
-  const handleChapterClick = (chapterId) => {
-    navigate(`/adminPanel/${classId}/adminChapter/${subjectid}/adminExercise/${chapterId}`);
+  const handleExerciseClick = (exerciseId) => {
+    navigate(`/adminPanel/${classId}/adminChapter/${subjectid}/adminExercise/${exerciseId}`);
   };
 
   return (
     <section className="container mx-auto py-16 font-Alice">
       <h1 className="md:text-5xl text-3xl font-bold text-center mb-2">
-        Add a new Chapters
+        Add a new Exercise
       </h1>
       <p className="md:text-lg text-sm text-gray-500 text-center mb-12">
-        Add New chapters, Chapters, Lessons, and other Data...
+        Add New exercise, exercise, Lessons, and other Data...
       </p>
 
-      {chapters.map((chapterItem, index) => (
+      {exercise.map((exerciseItem, index) => (
         <div
-          key={chapterItem._id}
+          key={exerciseItem._id}
           className="flex items-center gap-6 px-8 py-2"
         >
-          {isEditing && editChapterId === chapterItem._id ? (
+          {isEditing && editExerciseId === exerciseItem._id ? (
             <>
               <input
                 type="text"
-                value={newChapterName}
-                onChange={(e) => setnewChapterName(e.target.value)}
+                value={newExerciseName}
+                onChange={(e) => setnewExerciseName(e.target.value)}
                 className="relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:border-[#009c86] outline-none hover:text-black transition-colors duration-300 flex flex-wrap items-center justify-between"
               />
               <button
                 className="transition duration-300 ease-in-out transform hover:scale-105 w-[14%]"
-                onClick={() => handleEdit(chapterItem._id)}
+                onClick={() => handleEdit(exerciseItem._id)}
               >
                 <IoMdAddCircleOutline
                   size={45}
@@ -190,18 +190,18 @@ function AdminChapters() {
           ) : (
             <>
               <button
-                onClick={() => handleChapterClick(chapterItem._id)}
+                onClick={() => handleExerciseClick(exerciseItem._id)}
                 className="relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:bg-[#009c86] hover:text-white transition-colors duration-300 flex flex-wrap items-center justify-between"
               >
-                Chapter {index + 1}  : {chapterItem.chapterName}
+                Exercise {index + 1}  : {exerciseItem.exerciseName}
                 <MdOutlineTouchApp className="ml-2 w-6 h-6" />
               </button>
               <button
                 className="transition duration-300 ease-in-out transform hover:scale-105"
                 onClick={() => {
                   setIsEditing(true);
-                  seteditChapterId(chapterItem._id);
-                  setnewChapterName(chapterItem.chapterName);
+                  seteditExerciseId(exerciseItem._id);
+                  setnewExerciseName(exerciseItem.exerciseName);
                 }}
               >
                 <FaRegEdit
@@ -212,7 +212,7 @@ function AdminChapters() {
 
               <button
                 className="transition duration-300 ease-in-out transform hover:scale-105"
-                onClick={() => handleDelete(chapterItem._id)}
+                onClick={() => handleDelete(exerciseItem._id)}
               >
                 <MdOutlineDeleteSweep
                   size={40}
@@ -228,8 +228,8 @@ function AdminChapters() {
         <div className="w-full px-12 pt-8 flex justify-center items-center gap-12">
           <input
             type="text"
-            value={newChapterName}
-            onChange={(e) => setnewChapterName(e.target.value)}
+            value={newExerciseName}
+            onChange={(e) => setnewExerciseName(e.target.value)}
             className="relative w-full p-4 border-2 shadow-md outline-none border-[#009c86] rounded-lg text-lg text-[#009c86] transition-colors duration-300 flex flex-wrap items-center justify-between"
             placeholder="Enter new class name"
           />
@@ -286,4 +286,4 @@ function AdminChapters() {
   );
 }
 
-export default AdminChapters;
+export default AdminExercise;

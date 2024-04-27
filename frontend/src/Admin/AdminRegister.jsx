@@ -179,17 +179,6 @@ function AdminRegister() {
                 Role
               </label>
               <div className="mt-2">
-                {/* <select
-                  id="role"
-                  name="role"
-                  autoComplete="off"
-                  className="block w-full focus-within:ring-[#009c86] outline-none rounded-md border-0 lg:py-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-[#009c86]sm:max-w-xs sm:text-sm sm:leading-6"
-                  required
-                >
-                  <option value="">Select Role</option>
-                  <option value="admin">admin</option>
-                  <option value="user">user</option>
-                </select> */}
                  <input
                   id="role"
                   name="role"
@@ -200,25 +189,6 @@ function AdminRegister() {
                   className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#009c86] sm:text-sm sm:leading-6 outline-none"
                 />
               </div>
-              </div>
-            </div>
-            <div className="flex flex-col justify-end lg:justify-start">
-              <div>
-                <input
-                  type="checkbox"
-                  className="border border-gray-400"
-                  required
-                />{" "}
-                <span>
-                  I accept the{" "}
-                  <NavLink to="#" className="text-[#009c86] font-semibold">
-                    Terms of Use
-                  </NavLink>{" "}
-                  &amp;{" "}
-                  <NavLink to="#" className="text-[#009c86] font-semibold">
-                    Privacy Policy
-                  </NavLink>
-                </span>
               </div>
             </div>
             <div className="mt-2">

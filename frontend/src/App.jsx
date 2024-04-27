@@ -21,6 +21,7 @@ import Subjects from "./Admin/Subjects";
 import { Logout } from "./auth/Logout";
 import AdminRegister from "./Admin/AdminRegister";
 import AdminLogin from "./Admin/AdminLogin";
+import AdminExercise from "./Admin/AdminExercise";
 
 function App() {
   // window.addEventListener('beforeunload', (e)=>{
@@ -79,10 +80,13 @@ function App() {
                 path="/adminPanel/subjects/:classId"
                 element={<Subjects />}
               />
-
               <Route
                 path="/adminPanel/:classId/adminChapter/:subjectid"
                 element={<AdminChapter />}
+              />
+              <Route
+                path="/adminPanel/:classId/adminChapter/:subjectid/adminExercise/:chapterId"
+                element={<AdminExercise />}
               />
             </Route>
           </Routes>

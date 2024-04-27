@@ -161,17 +161,6 @@ function AdminLogin() {
                   Role
                 </label>
                 <div className="mt-2">
-                  {/* <select
-                  id="role"
-                  name="role"
-                  autoComplete="off"
-                  className="block w-full focus-within:ring-[#009c86] outline-none rounded-md border-0 lg:py-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-[#009c86]sm:max-w-xs sm:text-sm sm:leading-6"
-                  required
-                >
-                  <option value="">Select Role</option>
-                  <option value="admin">admin</option>
-                  <option value="user">user</option>
-                </select> */}
                   <input
                     id="role"
                     name="role"
@@ -191,7 +180,7 @@ function AdminLogin() {
           <p className="mt-6 text-center text-sm text-gray-500">
             Don't have an account?{" "}
             <NavLink
-              to="/registration"
+              to="/adminPanel/adminRegister"
               className="font-bold leading-6 text-[#009c86] hover:text-[#49dbc8]"
             >
               Register Now

@@ -2,6 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { Navigate, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { FaCircleUser } from "react-icons/fa6";
+import { HiOutlineLogin } from "react-icons/hi";
+import { SiGnuprivacyguard } from "react-icons/si";
 
 import {
   RiDashboardLine,
@@ -174,7 +176,7 @@ const SideNav = () => {
                       className="flex items-center px-4 py-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                       activeclassname="text-gray-900 dark:text-white"
                     >
-                      <RiUserLine className="w-5 h-5" />
+                      <HiOutlineLogin className="w-5 h-5" />
                       <span className="ms-3">Log In</span>
                     </NavLink>
                   </li>
@@ -184,7 +186,7 @@ const SideNav = () => {
                       className="flex w-full items-center px-4 py-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                       activeclassname="text-gray-900 dark:text-white"
                     >
-                      <RiLogoutCircleRLine className="w-5 h-5" />
+                      <SiGnuprivacyguard className="w-5 h-5" />
                       <span className="ms-3">Register Now</span>
                     </NavLink>
                   </li>
