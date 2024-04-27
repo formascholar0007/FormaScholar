@@ -1,5 +1,6 @@
+const globalResponse = require('../middleware/globalResponse');
 const { StatusCodes } = require('http-status-codes');
-const Chapter = reqiure('../model/Chapter')
+const Chapter = require('../model/Chapter')
 
 const createChapter = async (req, res) => {
     const { classId, subjectId } = req.params;
@@ -24,7 +25,7 @@ const createChapter = async (req, res) => {
             return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Something went wrong while creating new chapter');
         }
 
-        return res.globalResponse(StatusCodes.Ok, true, 'Chapter Created', newChapter);
+        return res.globalResponse(StatusCodes.OK, true, 'Chapter Created', newChapter);
     } catch (err) {
         console.log(err);
         return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Internal Server error in createChapter controller');
@@ -45,7 +46,7 @@ const getAllChapter = async (req, res) => {
             subjectId
         });
 
-        return res.globalResponse(StatusCodes.Ok, true, 'Chapter Fetched', Chapters);
+        return res.globalResponse(StatusCodes.OK, true, 'Chapter Fetched', Chapters);
     } catch (err) {
         console.log(err);
         return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Internal Server error in getallchapters controller');

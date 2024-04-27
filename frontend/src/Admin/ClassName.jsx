@@ -90,7 +90,7 @@ function ClassName() {
 
   const handleEdit = async (id) => {
     try {
-      const data = await fetch("http://localhost:3000/api/v1/class/", {
+      const data = await fetch(`http://localhost:3000/api/v1/class/${id}` , {
         method: "PUT",
         headers: {
           Authorization: `bearer ${JSON.parse(
@@ -98,7 +98,7 @@ function ClassName() {
           )}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ Id: id, className: newClassName }),
+        body: JSON.stringify({ className: newClassName }),
       });
 
       const response = await data.json();
@@ -115,7 +115,7 @@ function ClassName() {
 
   const handleDelete = async (id) => {
     try {
-      const data = await fetch("http://localhost:3000/api/v1/class/", {
+      const data = await fetch(`http://localhost:3000/api/v1/class/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `bearer ${JSON.parse(
@@ -123,7 +123,7 @@ function ClassName() {
           )}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ Id: id, className: newClassName }),
+        body: JSON.stringify({ className: newClassName }),
       });
 
       const response = await data.json();

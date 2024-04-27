@@ -10,21 +10,21 @@ function AdminChapters() {
 
   const [isEditing, setIsEditing] = useState(false);
   const [editSubjectID, seteditSubjectID] = useState(null);
-  const [newSubjectName, setnewSubjectName] = useState("");
+  const [newChapterName, setnewChapterName] = useState("");
   const [isAdding, setIsAdding] = useState(false);
-  const [subjects, setsubjects] = useState([]);
+  const [chapters, setchapters] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getAllsubjects();
+    getAllchapters();
   }, []);
 
-  const getAllsubjects = async () => {
+  const getAllchapters = async () => {
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/subject/${classId}`,
+        `http://localhost:3000/api/v1/chapter/${classId}/${subjectid}`,
         {
           method: "GET",
           headers: {
@@ -38,7 +38,7 @@ function AdminChapters() {
       let response = await data.json();
       
       if (response.success) {
-        setsubjects(response.data);
+        setchapters(response.data);
       }
     } catch (error) {
       console.log(error);
@@ -52,7 +52,7 @@ function AdminChapters() {
 
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/subject/${classId}`,
+        `http://localhost:3000/api/v1/chapter/${classId}/${subjectid}`,
         {
           method: "POST",
           headers: {
@@ -61,19 +61,22 @@ function AdminChapters() {
             )}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ subjectName: newSubjectName }),
+          body: JSON.stringify({ chapterName: newChapterName }),
         }
       );
 
       const response = await data.json();
+      console.log(response);
+
       if (!response.success) {
         setErrorMessage(response.message);
         setIsAdding(true);
       }
 
-      setnewSubjectName("");
+      setnewChapterName("");
       setIsAdding(false);
-      getAllsubjects();
+
+      getAllchapters();
     } catch (error) {
       console.log(error);
       setErrorVisible(true);
@@ -81,10 +84,10 @@ function AdminChapters() {
     }
   };
 
-  const handleEdit = async (id) => {
+  const handleEdit = async ( chapterId ) => {
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/subject/`,
+        `http://localhost:3000/api/v1/chapter/${chapterId}`,
         {
           method: "PUT",
           headers: {
@@ -93,12 +96,13 @@ function AdminChapters() {
             )}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ subjectId: id, subjectName: newSubjectName }),
+          body: JSON.stringify({ chapterName: newChapterName }),
         }
       );
       const response = await data.json();
+      
       if (response.success) {
-        getAllsubjects();
+        getAllchapters();
       }
     } catch (error) {
       console.log(error);
@@ -107,11 +111,11 @@ function AdminChapters() {
     }
   };
   
+  const handleDelete = async (chapterId) => {
 
-  const handleDelete = async (id) => {
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/subject`,
+        `http://localhost:3000/api/v1/chapter/${chapterId}`,
         {
           method: "DELETE",
           headers: {
@@ -120,12 +124,14 @@ function AdminChapters() {
             )}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ subjectId: id }),
         }
       );
+
       const response = await data.json();
+      console.warn(response);
+
       if (response.success) {
-        getAllsubjects();
+        getAllchapters();
       }
     } catch (error) {
       console.log(error);
@@ -142,11 +148,11 @@ function AdminChapters() {
   const handleAddNewClassBtn = () => {
     setIsAdding(true);
     setIsEditing(false); // Ensure editing mode is turned off when adding a new class
-    setnewSubjectName(""); // Clear the input field when adding a new class
+    setnewChapterName(""); // Clear the input field when adding a new class
   };
 
-  const handleSubjectClick = (subjectId) => {
-    navigate(`/adminPanel/${classId}/adminChapter/${subjectId}`);
+  const handleChapterClick = (chapterID) => {
+    navigate(`/adminPanel/${classId}/adminChapter/${chapterID}`);
   };
 
   return (
@@ -155,25 +161,25 @@ function AdminChapters() {
         Add a new Chapters
       </h1>
       <p className="md:text-lg text-sm text-gray-500 text-center mb-12">
-        Add New subjects, Chapters, Lessons, and other Data...
+        Add New chapters, Chapters, Lessons, and other Data...
       </p>
 
-      {subjects.map((subjectItem, index) => (
+      {chapters.map((chapterItem, index) => (
         <div
-          key={subjectItem._id}
+          key={chapterItem._id}
           className="flex items-center gap-6 px-8 py-2"
         >
-          {isEditing && editSubjectID === subjectItem._id ? (
+          {isEditing && editSubjectID === chapterItem._id ? (
             <>
               <input
                 type="text"
-                value={newSubjectName}
-                onChange={(e) => setnewSubjectName(e.target.value)}
+                value={newChapterName}
+                onChange={(e) => setnewChapterName(e.target.value)}
                 className="relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:border-[#009c86] outline-none hover:text-black transition-colors duration-300 flex flex-wrap items-center justify-between"
               />
               <button
                 className="transition duration-300 ease-in-out transform hover:scale-105 w-[14%]"
-                onClick={() => handleEdit(subjectItem._id)}
+                onClick={() => handleEdit(chapterItem._id)}
               >
                 <IoMdAddCircleOutline
                   size={45}
@@ -184,18 +190,18 @@ function AdminChapters() {
           ) : (
             <>
               <button
-                onClick={() => handleSubjectClick(subjectItem._id)}
+                onClick={() => handleChapterClick(chapterItem._id)}
                 className="relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:bg-[#009c86] hover:text-white transition-colors duration-300 flex flex-wrap items-center justify-between"
               >
-                {subjectItem.subjectName}
+                Chapter {index + 1}  : {chapterItem.chapterName}
                 <MdOutlineTouchApp className="ml-2 w-6 h-6" />
               </button>
               <button
                 className="transition duration-300 ease-in-out transform hover:scale-105"
                 onClick={() => {
                   setIsEditing(true);
-                  seteditSubjectID(subjectItem._id);
-                  setnewSubjectName(subjectItem.subjectName);
+                  seteditSubjectID(chapterItem._id);
+                  setnewChapterName(chapterItem.chapterName);
                 }}
               >
                 <FaRegEdit
@@ -206,7 +212,7 @@ function AdminChapters() {
 
               <button
                 className="transition duration-300 ease-in-out transform hover:scale-105"
-                onClick={() => handleDelete(subjectItem._id)}
+                onClick={() => handleDelete(chapterItem._id)}
               >
                 <MdOutlineDeleteSweep
                   size={40}
@@ -222,8 +228,8 @@ function AdminChapters() {
         <div className="w-full px-12 pt-8 flex justify-center items-center gap-12">
           <input
             type="text"
-            value={newSubjectName}
-            onChange={(e) => setnewSubjectName(e.target.value)}
+            value={newChapterName}
+            onChange={(e) => setnewChapterName(e.target.value)}
             className="relative w-full p-4 border-2 shadow-md outline-none border-[#009c86] rounded-lg text-lg text-[#009c86] transition-colors duration-300 flex flex-wrap items-center justify-between"
             placeholder="Enter new class name"
           />
