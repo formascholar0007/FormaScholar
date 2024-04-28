@@ -36,7 +36,7 @@ function AdminChapters() {
         }
       );
       let response = await data.json();
-      
+
       if (response.success) {
         setchapters(response.data);
       }
@@ -84,7 +84,7 @@ function AdminChapters() {
     }
   };
 
-  const handleEdit = async ( chapterId ) => {
+  const handleEdit = async (chapterId) => {
     try {
       const data = await fetch(
         `http://localhost:3000/api/v1/chapter/${chapterId}`,
@@ -100,7 +100,7 @@ function AdminChapters() {
         }
       );
       const response = await data.json();
-      
+
       if (response.success) {
         getAllchapters();
       }
@@ -110,9 +110,8 @@ function AdminChapters() {
       setErrorMessage(error.toString());
     }
   };
-  
-  const handleDelete = async (chapterId) => {
 
+  const handleDelete = async (chapterId) => {
     try {
       const data = await fetch(
         `http://localhost:3000/api/v1/chapter/${chapterId}`,
@@ -139,7 +138,6 @@ function AdminChapters() {
       setErrorMessage(error.toString());
     }
   };
-  
 
   const handleCloseError = () => {
     setErrorVisible(false);
@@ -151,8 +149,16 @@ function AdminChapters() {
     setnewChapterName(""); // Clear the input field when adding a new class
   };
 
-  const handleChapterClick = (chapterId) => {
-    navigate(`/adminPanel/${classId}/adminChapter/${subjectid}/adminExercise/${chapterId}`);
+  const handleChapterClick = (chapterId, isExercise) => {
+    {
+      isExercise
+        ? navigate(
+            `/adminPanel/${classId}/adminChapter/${subjectid}/adminExercise/${chapterId}`
+          )
+        : navigate(
+            `/adminPanel/${classId}/adminChapter/${subjectid}/adminExercise/${0}/adminQuestionAnswer/${chapterId}`
+          );
+    }
   };
 
   return (
@@ -190,10 +196,15 @@ function AdminChapters() {
           ) : (
             <>
               <button
-                onClick={() => handleChapterClick(chapterItem._id)}
+                onClick={() =>
+                  handleChapterClick(
+                    chapterItem._id,
+                    chapterItem.subjectId.isExercise
+                  )
+                }
                 className="relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:bg-[#009c86] hover:text-white transition-colors duration-300 flex flex-wrap items-center justify-between"
               >
-                Chapter {index + 1}  : {chapterItem.chapterName}
+                Chapter {index + 1} : {chapterItem.chapterName}
                 <MdOutlineTouchApp className="ml-2 w-6 h-6" />
               </button>
               <button

@@ -8,7 +8,7 @@ function DashHome() {
   const { isAdmin } = useAuth();
 
   return (
-    <div className="px-8 py-24 sm:ml-64">
+    <section className="px-8 py-24 sm:ml-64 overflow-hidden">
       {isAdmin ? (
         <div className="px-6 py-6 rounded-lg dark:border-gray-700">
           <div className="grid md:grid-cols-3 gap-4 mb-4">
@@ -41,7 +41,7 @@ function DashHome() {
         </div>
       </div>
       )}
-    </div>
+    </section>
   );
 }
 

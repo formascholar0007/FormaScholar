@@ -1,35 +1,34 @@
-import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { MdOutlineTouchApp } from "react-icons/md";
-import { useState } from "react";
-import { IoMdAdd } from "react-icons/io";
+import React, { useState } from "react";
+import { IoMdAdd, IoMdAddCircleOutline } from "react-icons/io";
+import { MdOutlineTouchApp, MdOutlineDeleteSweep } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
-import { MdOutlineDeleteSweep } from "react-icons/md";
-import { IoMdAddCircleOutline } from "react-icons/io";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
-function Subjects() {
-  const { classId } = useParams();
+function AdminquestionSolutions() {
+  const { classId, subjectid,chapterId,exerciseId } = useParams();
 
-  const [subjects, setsubjects] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
-  const [editSubjectID, seteditSubjectID] = useState(null);
-  const [newSubjectName, setnewSubjectName] = useState("");
-  const [isExercise, setIsExercise] = useState(false);
-
+  const [editQuestionSolutionId, seteditQuestionSolutionId] = useState(null);
+  const [newFormData, setnewFormData] = useState({
+    questions: "",
+    solution: "",
+  });
   const [isAdding, setIsAdding] = useState(false);
+  const [questionSolutions, setquestionSolutions] = useState([]);
+
   const [errorMessage, setErrorMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getAllsubjects();
+    getAllquestionSolutions();
   }, []);
 
-  const getAllsubjects = async () => {
+  const getAllquestionSolutions = async () => {
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/subject/${classId}`,
+        `http://localhost:3000/api/v1/question/${classId}/${subjectid}/${chapterId}/${exerciseId}`,
         {
           method: "GET",
           headers: {
@@ -41,9 +40,10 @@ function Subjects() {
         }
       );
       let response = await data.json();
+      console.log(response);
 
       if (response.success) {
-        setsubjects(response.data);
+        setquestionSolutions(response.data);
       }
     } catch (error) {
       console.log(error);
@@ -57,7 +57,7 @@ function Subjects() {
 
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/subject/${classId}`,
+        `http://localhost:3000/api/v1/question/${classId}/${subjectid}/${chapterId}/${exerciseId}`,
         {
           method: "POST",
           headers: {
@@ -66,19 +66,22 @@ function Subjects() {
             )}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ subjectName: newSubjectName, isExercise: Boolean(isExercise) }),
+          body: JSON.stringify({ questionNo: questionNo, question: newFormData.questions, answer: newFormData.answer }),
         }
       );
 
       const response = await data.json();
+      console.log(response);
+
       if (!response.success) {
         setErrorMessage(response.message);
         setIsAdding(true);
       }
 
-      setnewSubjectName("");
+      setnewFormData("");
       setIsAdding(false);
-      getAllsubjects();
+
+      getAllquestionSolutions();
     } catch (error) {
       console.log(error);
       setErrorVisible(true);
@@ -86,21 +89,25 @@ function Subjects() {
     }
   };
 
-  const handleEdit = async (id) => {
+  const handleEdit = async (questionSolutionId) => {
     try {
-      const data = await fetch(`http://localhost:3000/api/v1/subject/${id}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `bearer ${JSON.parse(
-            localStorage.getItem("adminToken")
-          )}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ subjectName: newSubjectName }),
-      });
+      const data = await fetch(
+        `http://localhost:3000/api/v1/question/${questionSolutionId}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `bearer ${JSON.parse(
+              localStorage.getItem("adminToken")
+            )}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ question: newFormData.questions, answer: newFormData.answer }),
+        }
+      );
       const response = await data.json();
+
       if (response.success) {
-        getAllsubjects();
+        getAllquestionSolutions();
       }
     } catch (error) {
       console.log(error);
@@ -109,20 +116,26 @@ function Subjects() {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (questionSolutionId) => {
     try {
-      const data = await fetch(`http://localhost:3000/api/v1/subject/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `bearer ${JSON.parse(
-            localStorage.getItem("adminToken")
-          )}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const data = await fetch(
+        `http://localhost:3000/api/v1/question/${questionSolutionId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `bearer ${JSON.parse(
+              localStorage.getItem("adminToken")
+            )}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       const response = await data.json();
+      console.warn(response);
+
       if (response.success) {
-        getAllsubjects();
+        getAllquestionSolutions();
       }
     } catch (error) {
       console.log(error);
@@ -137,39 +150,55 @@ function Subjects() {
 
   const handleAddNewClassBtn = () => {
     setIsAdding(true);
-    setIsEditing(false); // Ensure editing mode is turned off when adding a new class
-    setnewSubjectName(""); // Clear the input field when adding a new class
+    setIsEditing(false); 
+    setnewFormData(""); 
   };
 
-  const handleSubjectClick = (subjectId) => {
-    navigate(`/adminPanel/${classId}/adminChapter/${subjectId}`);
+  const handleChapterClick = (questionSolutionId) => {
+    navigate(``);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setformData({ ...newFormData, [name]: value });
+    e.target.style.height = "auto";
+    e.target.style.height = e.target.scrollHeight + "px";
   };
 
   return (
     <section className="container mx-auto py-16 font-Alice">
       <h1 className="md:text-5xl text-3xl font-bold text-center mb-2">
-        Add a new Subject
+        Add new Question and Solutions
       </h1>
       <p className="md:text-lg text-sm text-gray-500 text-center mb-12">
         Add New subjects, Chapters, Lessons, and other Data...
       </p>
 
-      {subjects.map((subjectItem, index) => (
+      {questionSolutions.map((questionsolutionItem, index) => (
         <div
-          key={subjectItem._id}
+          key={questionsolutionItem._id}
           className="flex items-center gap-6 px-8 py-2"
         >
-          {isEditing && editSubjectID === subjectItem._id ? (
+          {isEditing && editQuestionSolutionId === questionsolutionItem._id ? (
             <>
-              <input
-                type="text"
-                value={newSubjectName}
-                onChange={(e) => setnewSubjectName(e.target.value)}
-                className="relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:border-[#009c86] outline-none hover:text-black transition-colors duration-300 flex flex-wrap items-center justify-between"
-              />
+              <div className="w-full flex flex-col gap-4">
+                <textarea
+                  type="text"
+                  value={newFormData.questions}
+                  onChange={handleChange}
+                  className="overflow-hidden relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:border-[#009c86] outline-none hover:text-black transition-colors duration-300 flex flex-wrap items-center justify-between"
+                />
+                <textarea
+                  type="text"
+                  value={newFormData.solution}
+                  onChange={handleChange}
+                  className="overflow-hidden relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:border-[#009c86] outline-none hover:text-black transition-colors duration-300 flex flex-wrap items-center justify-between"
+                />
+              </div>
+
               <button
                 className="transition duration-300 ease-in-out transform hover:scale-105 w-[14%]"
-                onClick={() => handleEdit(subjectItem._id)}
+                onClick={() => handleEdit(questionsolutionItem._id)}
               >
                 <IoMdAddCircleOutline
                   size={45}
@@ -180,18 +209,30 @@ function Subjects() {
           ) : (
             <>
               <button
-                onClick={() => handleSubjectClick(subjectItem._id)}
-                className="relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:bg-[#009c86] hover:text-white transition-colors duration-300 flex flex-wrap items-center justify-between"
+                onClick={() => handleChapterClick(questionsolutionItem._id)}
+                className="relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:bg-[#009c86] hover:text-white transition-colors duration-300 flex flex-wrap "
               >
-                {subjectItem.subjectName}
-                <MdOutlineTouchApp className="ml-2 w-6 h-6" />
+                <div className="w-full flex flex-col items-start gap-4">
+                  <p className="text-lg font-bold text-black">
+                  Questions
+                     {questionsolutionItem.question}
+                  </p>
+                  <p className="text-lg font-bold">
+                  Solution
+                    {questionsolutionItem.solution}
+                  </p>
+                </div>
+
               </button>
               <button
                 className="transition duration-300 ease-in-out transform hover:scale-105"
                 onClick={() => {
                   setIsEditing(true);
-                  seteditSubjectID(subjectItem._id);
-                  setnewSubjectName(subjectItem.subjectName);
+                  seteditQuestionSolutionId(questionsolutionItem._id);
+                  setnewFormData({
+                    questions: questionsolutionItem.question,
+                    solution: questionsolutionItem.solution,
+                  });
                 }}
               >
                 <FaRegEdit
@@ -202,7 +243,7 @@ function Subjects() {
 
               <button
                 className="transition duration-300 ease-in-out transform hover:scale-105"
-                onClick={() => handleDelete(subjectItem._id)}
+                onClick={() => handleDelete(questionsolutionItem._id)}
               >
                 <MdOutlineDeleteSweep
                   size={40}
@@ -216,23 +257,21 @@ function Subjects() {
 
       {isAdding ? (
         <div className="w-full px-12 pt-8 flex justify-center items-center gap-12">
-          <div className="w-full px-12 pt-4 flex flex-col justify-center items-center gap-6">
-            <input
+          <div className="flex flex-col w-full gap-5">
+            <textarea
               type="text"
-              value={newSubjectName}
-              onChange={(e) => setnewSubjectName(e.target.value)}
-              className="relative w-full p-4 border-2 shadow-md outline-none border-[#009c86] rounded-lg text-lg text-[#009c86] transition-colors duration-300 flex flex-wrap items-center justify-between"
-              placeholder="Enter new class name"
+              value={newFormData.questions}
+              onChange={handleChange}
+              placeholder={"Enter Question here"}
+              className="overflow-hidden relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:border-[#009c86] outline-none hover:text-black transition-colors duration-300 flex flex-wrap items-center justify-between"
             />
-            <select
-              id="isExercise"
-              className="relative w-full p-4 border-2 shadow-md outline-none border-[#009c86] rounded-lg text-lg text-[#009c86] transition-colors duration-300 flex flex-wrap items-center justify-between"
-              onChange={((e) => setIsExercise(e.target.value))}
-              value={isExercise}
-            >
-              <option value="false" >false</option>
-              <option value="true" >true</option>
-            </select>
+            <textarea
+              type="text"
+              value={newFormData.solution}
+              placeholder={"Enter Solution here"}
+              onChange={handleChange}
+              className="overflow-hidden relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:border-[#009c86] outline-none hover:text-black transition-colors duration-300 flex flex-wrap items-center justify-between"
+            />
           </div>
           <button
             className="w-52 py-3 flex justify-center items-center gap-2 bg-[#009c86] text-white rounded-lg border-2 hover:border-[#009c86] hover:bg-transparent hover:text-black transition duration-300 ease-in-out transform hover:scale-105"
@@ -287,4 +326,4 @@ function Subjects() {
   );
 }
 
-export default Subjects;
+export default AdminquestionSolutions;

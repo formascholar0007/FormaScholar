@@ -152,7 +152,7 @@ function AdminExercise() {
   };
 
   const handleExerciseClick = (exerciseId) => {
-    navigate(`/adminPanel/${classId}/adminChapter/${subjectid}/adminExercise/${exerciseId}`);
+    navigate(`/adminPanel/${classId}/adminChapter/${subjectid}/adminExercise/${chapterId}/adminQuestionAnswer/:${exerciseId}`);
   };
 
   return (
