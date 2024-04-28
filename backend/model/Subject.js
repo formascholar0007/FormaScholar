@@ -7,6 +7,7 @@ const subjectSchema = mongoose.Schema({
     },
     classId:{
         type:mongoose.Types.ObjectId,
+        ref:'Class',
         required:true
     },
     isExercise: {

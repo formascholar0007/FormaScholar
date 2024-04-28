@@ -6,14 +6,17 @@ const ExerciseSchema = mongoose.Schema({
    },
    chapterId: {
       type: mongoose.Types.ObjectId,
+      ref:'Chapter',
       required: true
    },
    subjectId: {
       type: mongoose.Types.ObjectId,
+      ref:'Subject',
       required: true
    },
    classId: {
       type: mongoose.Types.ObjectId,
+      ref:'Class',
       required: true
    }
 
