@@ -150,15 +150,11 @@ function AdminChapters() {
   };
 
   const handleChapterClick = (chapterId, isExercise) => {
-    {
-      isExercise
-        ? navigate(
-            `/adminPanel/${classId}/adminChapter/${subjectid}/adminExercise/${chapterId}`
-          )
-        : navigate(
-            `/adminPanel/${classId}/adminChapter/${subjectid}/adminExercise/${0}/adminQuestionAnswer/${chapterId}`
-          );
-    }
+    navigate(
+      `/adminPanel/${classId}/adminChapter/${subjectid}/adminExercise/${
+        isExercise ? chapterId : 0
+      }/adminQuestionAnswer/${chapterId}`
+    );
   };
 
   return (

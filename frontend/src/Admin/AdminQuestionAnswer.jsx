@@ -5,27 +5,28 @@ import { FaRegEdit } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
-function AdminquestionSolutions() {
-  const { classId, subjectid,chapterId,exerciseId } = useParams();
+function Adminquestionanswers() {
+  const { classId, subjectid, chapterId, exerciseId } = useParams();
 
   const [isEditing, setIsEditing] = useState(false);
-  const [editQuestionSolutionId, seteditQuestionSolutionId] = useState(null);
+  const [editQuestionanswerId, seteditQuestionanswerId] = useState(null);
   const [newFormData, setnewFormData] = useState({
     questions: "",
-    solution: "",
+    answer: "",
+    questionNo: "",
   });
   const [isAdding, setIsAdding] = useState(false);
-  const [questionSolutions, setquestionSolutions] = useState([]);
+  const [questionanswers, setquestionanswers] = useState([]);
 
   const [errorMessage, setErrorMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getAllquestionSolutions();
+    getAllquestionanswers();
   }, []);
 
-  const getAllquestionSolutions = async () => {
+  const getAllquestionanswers = async () => {
     try {
       const data = await fetch(
         `http://localhost:3000/api/v1/question/${classId}/${subjectid}/${chapterId}/${exerciseId}`,
@@ -40,10 +41,9 @@ function AdminquestionSolutions() {
         }
       );
       let response = await data.json();
-      console.log(response);
 
       if (response.success) {
-        setquestionSolutions(response.data);
+        setquestionanswers(response.data);
       }
     } catch (error) {
       console.log(error);
@@ -66,22 +66,30 @@ function AdminquestionSolutions() {
             )}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ questionNo: questionNo, question: newFormData.questions, answer: newFormData.answer }),
+          body: JSON.stringify({
+            questionNo: newFormData.questionNo,
+            question: newFormData.questions,
+            answer: newFormData.answer,
+          }),
         }
       );
 
       const response = await data.json();
-      console.log(response);
 
       if (!response.success) {
         setErrorMessage(response.message);
         setIsAdding(true);
       }
 
-      setnewFormData("");
+      setnewFormData({
+        questions: "",
+        answer: "",
+        questionNo: "",
+      });
       setIsAdding(false);
+      getAllquestionanswers();
 
-      getAllquestionSolutions();
+      getAllquestionanswers();
     } catch (error) {
       console.log(error);
       setErrorVisible(true);
@@ -89,10 +97,10 @@ function AdminquestionSolutions() {
     }
   };
 
-  const handleEdit = async (questionSolutionId) => {
+  const handleEdit = async (questionanswerId) => {
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/question/${questionSolutionId}`,
+        `http://localhost:3000/api/v1/question/${questionanswerId}`,
         {
           method: "PUT",
           headers: {
@@ -101,13 +109,17 @@ function AdminquestionSolutions() {
             )}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ question: newFormData.questions, answer: newFormData.answer }),
+          body: JSON.stringify({
+            questionNo: newFormData.questionNo,
+            question: newFormData.questions,
+            answer: newFormData.answer,
+          }),
         }
       );
       const response = await data.json();
 
       if (response.success) {
-        getAllquestionSolutions();
+        getAllquestionanswers();
       }
     } catch (error) {
       console.log(error);
@@ -116,10 +128,10 @@ function AdminquestionSolutions() {
     }
   };
 
-  const handleDelete = async (questionSolutionId) => {
+  const handleDelete = async (questionanswerId) => {
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/question/${questionSolutionId}`,
+        `http://localhost:3000/api/v1/question/${questionanswerId}`,
         {
           method: "DELETE",
           headers: {
@@ -132,10 +144,9 @@ function AdminquestionSolutions() {
       );
 
       const response = await data.json();
-      console.warn(response);
 
       if (response.success) {
-        getAllquestionSolutions();
+        getAllquestionanswers();
       }
     } catch (error) {
       console.log(error);
@@ -150,88 +161,109 @@ function AdminquestionSolutions() {
 
   const handleAddNewClassBtn = () => {
     setIsAdding(true);
-    setIsEditing(false); 
-    setnewFormData(""); 
+    setIsEditing(false);
+    setnewFormData("");
   };
 
-  const handleChapterClick = (questionSolutionId) => {
+  const handleChapterClick = (questionanswerId) => {
     navigate(``);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setformData({ ...newFormData, [name]: value });
-    e.target.style.height = "auto";
-    e.target.style.height = e.target.scrollHeight + "px";
+
+    if (name === "questionNo") {
+      setnewFormData({ ...newFormData, [name]: parseInt(value) });
+    } else {
+      setnewFormData({ ...newFormData, [name]: value });
+    }
+
+    if (e.target.tagName === "TEXTAREA") {
+      e.target.style.height = "auto";
+      e.target.style.height = e.target.scrollHeight + "px";
+    }
   };
 
   return (
     <section className="container mx-auto py-16 font-Alice">
       <h1 className="md:text-5xl text-3xl font-bold text-center mb-2">
-        Add new Question and Solutions
+        Add new Question and answers
       </h1>
       <p className="md:text-lg text-sm text-gray-500 text-center mb-12">
         Add New subjects, Chapters, Lessons, and other Data...
       </p>
 
-      {questionSolutions.map((questionsolutionItem, index) => (
+      {questionanswers.map((questionanswerItem, index) => (
         <div
-          key={questionsolutionItem._id}
+          key={questionanswerItem._id}
           className="flex items-center gap-6 px-8 py-2"
         >
-          {isEditing && editQuestionSolutionId === questionsolutionItem._id ? (
+          {isEditing && editQuestionanswerId === questionanswerItem._id ? (
             <>
               <div className="w-full flex flex-col gap-4">
                 <textarea
                   type="text"
+                  name="questions"
+                  rows={3}
                   value={newFormData.questions}
                   onChange={handleChange}
                   className="overflow-hidden relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:border-[#009c86] outline-none hover:text-black transition-colors duration-300 flex flex-wrap items-center justify-between"
                 />
                 <textarea
                   type="text"
-                  value={newFormData.solution}
+                  rows={25}
+                  name="answer"
+                  value={newFormData.answer}
                   onChange={handleChange}
                   className="overflow-hidden relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:border-[#009c86] outline-none hover:text-black transition-colors duration-300 flex flex-wrap items-center justify-between"
                 />
               </div>
 
               <button
-                className="transition duration-300 ease-in-out transform hover:scale-105 w-[14%]"
-                onClick={() => handleEdit(questionsolutionItem._id)}
+                className="transition duration-300 ease-in-out transform hover:scale-105"
+                onClick={() => handleEdit(questionanswerItem._id)}
               >
                 <IoMdAddCircleOutline
                   size={45}
                   className="text-[#009c86] hover:text-[#142a27] cursor-pointer ml-4"
                 />
               </button>
+              <button
+                className="transition duration-300 ease-in-out transform hover:scale-105"
+                onClick={() => handleDelete(questionanswerItem._id)}
+              >
+                <MdOutlineDeleteSweep
+                  size={40}
+                  className="text-[#009c86] hover:text-[#142a27] cursor-pointer"
+                />
+              </button>
             </>
           ) : (
             <>
               <button
-                onClick={() => handleChapterClick(questionsolutionItem._id)}
-                className="relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:bg-[#009c86] hover:text-white transition-colors duration-300 flex flex-wrap "
+                onClick={() => handleChapterClick(questionanswerItem._id)}
+                className="relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] transition-colors duration-300 flex flex-wrap "
               >
-                <div className="w-full flex flex-col items-start gap-4">
-                  <p className="text-lg font-bold text-black">
-                  Questions
-                     {questionsolutionItem.question}
+                <div className="w-full flex flex-col items-start gap-2">
+                  <h1 className="font-bold text-xl">Question {index + 1} :</h1>
+                  <p className="pl-4 pb-2 text-lg text-start font-semibold text-black">
+                    {questionanswerItem.question}
                   </p>
-                  <p className="text-lg font-bold">
-                  Solution
-                    {questionsolutionItem.solution}
-                  </p>
+                  <h1 className="font-bold text-xl pt-2">Solution :</h1>
+                  <pre className="pl-4 text-lg text-start whitespace-pre-wrap text-black">
+                    {questionanswerItem.answer}
+                  </pre>
                 </div>
-
               </button>
               <button
                 className="transition duration-300 ease-in-out transform hover:scale-105"
                 onClick={() => {
                   setIsEditing(true);
-                  seteditQuestionSolutionId(questionsolutionItem._id);
+                  seteditQuestionanswerId(questionanswerItem._id);
                   setnewFormData({
-                    questions: questionsolutionItem.question,
-                    solution: questionsolutionItem.solution,
+                    questionNo: index + 1,
+                    questions: questionanswerItem.question,
+                    answer: questionanswerItem.answer,
                   });
                 }}
               >
@@ -243,7 +275,7 @@ function AdminquestionSolutions() {
 
               <button
                 className="transition duration-300 ease-in-out transform hover:scale-105"
-                onClick={() => handleDelete(questionsolutionItem._id)}
+                onClick={() => handleDelete(questionanswerItem._id)}
               >
                 <MdOutlineDeleteSweep
                   size={40}
@@ -258,8 +290,17 @@ function AdminquestionSolutions() {
       {isAdding ? (
         <div className="w-full px-12 pt-8 flex justify-center items-center gap-12">
           <div className="flex flex-col w-full gap-5">
+            <input
+              type="number"
+              name="questionNo"
+              value={newFormData.questionNo}
+              onChange={handleChange}
+              placeholder={"Enter Question No"}
+              className="overflow-hidden relative  p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:border-[#009c86] outline-none hover:text-black transition-colors duration-300 flex flex-wrap items-center justify-between"
+            />
             <textarea
               type="text"
+              name="questions"
               value={newFormData.questions}
               onChange={handleChange}
               placeholder={"Enter Question here"}
@@ -267,19 +308,20 @@ function AdminquestionSolutions() {
             />
             <textarea
               type="text"
-              value={newFormData.solution}
-              placeholder={"Enter Solution here"}
+              name="answer"
+              value={newFormData.answer}
+              placeholder={"Enter answer here"}
               onChange={handleChange}
               className="overflow-hidden relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:border-[#009c86] outline-none hover:text-black transition-colors duration-300 flex flex-wrap items-center justify-between"
             />
+            <button
+              className="w-52 py-3 flex justify-center items-center gap-2 bg-[#009c86] text-white rounded-lg border-2 hover:border-[#009c86] hover:bg-transparent hover:text-black transition duration-300 ease-in-out transform hover:scale-105"
+              onClick={addNewClass}
+            >
+              <IoMdAdd size={40} />
+              <span className="text-xl">Add</span>
+            </button>
           </div>
-          <button
-            className="w-52 py-3 flex justify-center items-center gap-2 bg-[#009c86] text-white rounded-lg border-2 hover:border-[#009c86] hover:bg-transparent hover:text-black transition duration-300 ease-in-out transform hover:scale-105"
-            onClick={addNewClass}
-          >
-            <IoMdAdd size={40} />
-            <span className="text-xl">Add</span>
-          </button>
         </div>
       ) : (
         <div className="w-full px-12 pt-8 flex justify-center">
@@ -326,4 +368,4 @@ function AdminquestionSolutions() {
   );
 }
 
-export default AdminquestionSolutions;
+export default Adminquestionanswers;
