@@ -17,12 +17,13 @@ const createQuestion = async (req, res) => {
             classId,
             subjectId,
             chapterId,
-            ...(exerciseId && { exerciseId }),
             questionNo,
             question,
             answer
         };
-
+       if(exerciseId){
+           createData.exerciseId = exerciseId;
+         }
         // Create a new question
         const newQuestion = await Question.create(createData);
 
