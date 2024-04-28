@@ -56,7 +56,7 @@ const getAllChapter = async (req, res) => {
         const Chapters = await Chapter.find({
             classId,
             subjectId
-        });
+        }).populate('subjectId');
 
         return res.globalResponse(StatusCodes.OK, true, 'Chapter Fetched', Chapters);
     } catch (err) {

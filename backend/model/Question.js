@@ -16,6 +16,7 @@ const QuestionSchema = mongoose.Schema({
     },
     exerciseId: {
         type: mongoose.Types.ObjectId,
+        default: ""
     },
     chapterId: {
         type: mongoose.Types.ObjectId,

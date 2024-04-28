@@ -10,6 +10,3 @@ router.post('/:classId/:subjectId/:chapterId', verifyUserMiddleWare , authorizeA
 router.put('/:exerciseId', verifyUserMiddleWare , authorizeAdmin , ExerciseController.updateExercise);
 router.delete('/:exerciseId', verifyUserMiddleWare , authorizeAdmin , ExerciseController.deleteExercise);
 
-
-
-module.exports = router;

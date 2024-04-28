@@ -4,13 +4,16 @@ const Subject = require('../model/Subject.js');
 const createSubject = async (req, res) => {
     const { classId } = req.params;
     console.log(classId)
-    const { subjectName } = req.body;
+    const { subjectName , isExercise } = req.body;
 
     if (!subjectName) {
         return res.globalResponse(StatusCodes.PRECONDITION_FAILED, false, 'Subject Field Missing');
     }
     if (!classId) {
         return res.globalResponse(StatusCodes.BAD_REQUEST, false, 'ClassId Missing');
+    }
+    if (typeof isExercise !== 'boolean') {
+        return res.globalResponse(StatusCodes.PRECONDITION_FAILED, false, 'isExercise should be a boolean value');
     }
     try {
 
@@ -25,7 +28,8 @@ const createSubject = async (req, res) => {
 
         const newSubject = await Subject.create({
             subjectName,
-            classId
+            classId,
+            isExercise : isExercise || false
         });
 
         if (!newSubject) {

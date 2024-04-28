@@ -8,6 +8,10 @@ const subjectSchema = mongoose.Schema({
     classId:{
         type:mongoose.Types.ObjectId,
         required:true
+    },
+    isExercise: {
+        type: Boolean,
+        default: false 
     }
 },{
     timestamps:true
