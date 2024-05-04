@@ -246,9 +246,9 @@ function Adminquestionanswers() {
               >
                 <div className="w-full flex flex-col items-start gap-2">
                   <h1 className="font-bold text-xl">Question {index + 1} :</h1>
-                  <p className="pl-4 pb-2 text-lg text-start font-semibold text-black">
+                  <pre className="pl-4 pb-2 text-lg text-start font-bold  whitespace-pre-wrap text-black">
                     {questionanswerItem.question}
-                  </p>
+                  </pre>
                   <h1 className="font-bold text-xl pt-2">Solution :</h1>
                   <pre className="pl-4 text-lg text-start whitespace-pre-wrap text-black">
                     {questionanswerItem.answer}
@@ -330,7 +330,7 @@ function Adminquestionanswers() {
             onClick={handleAddNewClassBtn}
           >
             <IoMdAdd size={38} />
-            <span className="text-xl">Add New Class</span>
+            <span className="text-xl">Add New Data</span>
           </button>
         </div>
       )}

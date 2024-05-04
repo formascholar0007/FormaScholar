@@ -249,7 +249,7 @@ function Subjects() {
             onClick={handleAddNewClassBtn}
           >
             <IoMdAdd size={38} />
-            <span className="text-xl">Add New Class</span>
+            <span className="text-xl">Add New Subject</span>
           </button>
         </div>
       )}

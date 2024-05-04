@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Navigate, NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { FaCircleUser } from "react-icons/fa6";
 import { HiOutlineLogin } from "react-icons/hi";
 import { SiGnuprivacyguard } from "react-icons/si";
@@ -17,6 +17,10 @@ import { useAuth } from "../auth/AuthContext";
 const SideNav = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
+  const[adminProfile, setAdminProfile] = useState({
+    adminName: "Ayush",
+    adminPic: "https://i.pinimg.com/originals/cf/a6/04/cfa60461c22087bdc815e9140b96e600.jpg",
+  })
 
   const { isAdmin, adminHandleLogout } = useAuth();
 
@@ -24,6 +28,11 @@ const SideNav = () => {
     adminHandleLogout();
     navigate("/adminPanel/adminLogin");
   };
+
+  const handleAdminProfile = async () => {
+    const data = await fetch('');
+
+  }
 
   return (
     <>
@@ -91,7 +100,7 @@ const SideNav = () => {
                   </li>
                   <li>
                     <NavLink
-                      to="/user-data"
+                      to="/adminPanel/adminUserData"
                       className="flex items-center px-4 py-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                       activeclassname="text-gray-900 dark:text-white"
                     >
@@ -123,8 +132,9 @@ const SideNav = () => {
                   </li>
                 </ul>
                 <div className="lg:mt-14 mt-6 px-4 pt-28 lg:pt-38 flex items-center gap-3">
-                  <FaCircleUser size={48} />
-                  <h1 className="text-xl">Ayush</h1>
+                  {/* <FaCircleUser size={48} /> */}
+                  <img src={adminProfile.adminPic} alt="avtar" className="w-22 h-16 rounded-full" />
+                  <h1 className="text-xl">{adminProfile.adminName}</h1>
                 </div>
               </div>
             </aside>
