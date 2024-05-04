@@ -7,7 +7,7 @@ import Navbar from "./component/Navbar";
 import Home from "./pages/Home";
 import ResetPassword from "./auth/ResetPassword";
 import UserProfile from "./pages/UserProfile";
-import UserChapter from "./pages/UserChapters";
+import UserChapter from "./pages/UserExercise";
 import SubjectSyllabus from "./pages/SubjectSyllabus";
 import AdminChapter from "./Admin/AdminChapters";
 import Footer from "./component/Footer";
@@ -24,6 +24,7 @@ import AdminLogin from "./Admin/AdminLogin";
 import AdminExercise from "./Admin/AdminExercise";
 import AdminQuestionAnswer from "./Admin/AdminQuestionAnswer";
 import AdminUserData from "./Admin/AdminUserData";
+import UserExercise from "./pages/UserExercise";
 
 function App() {
   // window.addEventListener('beforeunload', (e)=>{
@@ -56,12 +57,12 @@ function App() {
             />
             <Route path="/userProfile" element={<UserProfile />} />
             <Route
-              path="/subjectSyllabus/:grade/:subject"
+              path="/subjectSyllabus/:grade/:classId/:subjectId"
               element={<SubjectSyllabus />}
             />
             <Route
-              path="/chapters/:grade/:subject/:chapter"
-              element={<UserChapter />}
+              path="/exercise/:classId/:subjectId/:chapterId"
+              element={<UserExercise />}
             />
             <Route path="/profile" element={<UserProfile />} />
 

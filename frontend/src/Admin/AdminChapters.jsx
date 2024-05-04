@@ -150,11 +150,18 @@ function AdminChapters() {
   };
 
   const handleChapterClick = (chapterId, isExercise) => {
-    navigate(
-      `/adminPanel/${classId}/adminChapter/${subjectid}/adminExercise/${
-        isExercise ? chapterId : 0
-      }/adminQuestionAnswer/${chapterId}`
-    );
+    // `/adminPanel/${classId}/adminChapter/${subjectid}/adminExercise/${
+    //   isExercise ? chapterId : 0
+    // }/adminQuestionAnswer/${chapterId}`
+    if (isExercise) {
+      navigate(
+        `/adminPanel/${classId}/adminChapter/${subjectid}/adminExercise/${chapterId}`
+      );
+    } else {
+      navigate(
+        `/adminPanel/${classId}/adminChapter/${subjectid}/adminExercise/${chapterId}/adminQuestionAnswer/${chapterId}`
+      );
+    }
   };
 
   return (

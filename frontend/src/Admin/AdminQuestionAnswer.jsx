@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 function Adminquestionanswers() {
-  const { classId, subjectid, chapterId, exerciseId } = useParams();
+  const { classId, subjectid, exerciseId, chapterId } = useParams();
 
   const [isEditing, setIsEditing] = useState(false);
   const [editQuestionanswerId, seteditQuestionanswerId] = useState(null);
@@ -162,7 +162,11 @@ function Adminquestionanswers() {
   const handleAddNewClassBtn = () => {
     setIsAdding(true);
     setIsEditing(false);
-    setnewFormData("");
+    setnewFormData({
+      questions: "",
+      answer: "",
+      questionNo: "", 
+    });
   };
 
   const handleChapterClick = (questionanswerId) => {
@@ -173,7 +177,7 @@ function Adminquestionanswers() {
     const { name, value } = e.target;
 
     if (name === "questionNo") {
-      setnewFormData({ ...newFormData, [name]: parseInt(value) });
+      setnewFormData({ ...newFormData, [name]: parseInt(value) || "" });
     } else {
       setnewFormData({ ...newFormData, [name]: value });
     }
