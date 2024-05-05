@@ -20,7 +20,7 @@ const getProfile = async (req, res) => {
         }
         return res.globalResponse(StatusCodes.OK, true, 'User Found', userProfile);
     } catch (err) {
-        console.error('Error fetching user profile:', error);
+        console.error('Error fetching user profile:', err);
         return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Internal Server Error', null);
     }
 }
@@ -100,11 +100,9 @@ const deleteUser = async (req, res) => {
         if (!user) {
             return res.globalResponse(StatusCodes.NOT_FOUND, false, 'Something Went Wrong While Deleting User', null);
         }
-
         return res.globalResponse(StatusCodes.OK, true, 'User Deleted Successfully', null);
     } catch (err) {
         return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Internal Server Error Delete User', null);
-
     }
 
 

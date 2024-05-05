@@ -10,21 +10,13 @@ const userInfoValidatorSchema = require('../middleware/userInfoValidator');
 const userAdditionalSchemaJoi = require('../validation/userInfoSchema');
 const verifyUserMiddleWare = require('../middleware/verifyUserMiddleWare');
 
-const storage = multer.diskStorage({
-    destination:function(req,file,cb){
-        cb(null,'public/Images');
-    },
-    filename: function(req,file,cb){
-        cb(null,Date.now()+'_'+file.originalname);
-    }
-});
 
-const upload = multer({storage:storage});
-console.log("upload ; ",upload);
+
+
 
 route.post('/register',registerValidateSchema(registerSchema), authController.register);
 route.post('/login' ,loginValidatorSchema(loginSchema),authController.login);
-route.post('/additionalInfo',verifyUserMiddleWare , upload.single('image'), userInfoValidatorSchema(userAdditionalSchemaJoi), authController.userAdditionalInfo);
+route.post('/additionalInfo',verifyUserMiddleWare , userInfoValidatorSchema(userAdditionalSchemaJoi), authController.userAdditionalInfo);
 route.post('/forgotPassword' , authController.forgotPassword);
 route.post('/resetPassword/:userId/:token' , authController.resetPassword);
 

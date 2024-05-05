@@ -89,15 +89,15 @@ const userAdditionalInfo = async (req, res) => {
     }
     const userId = req.decodedToken.userId;
     try {
-        let image;
-        if(req.file && req.file.path){
-            image = req.file.path;
-        }
+
+      const avatarURL = gender === 'male' ? `https://avatar.iran.liara.run/public/boy` : `https://avatar.iran.liara.run/public/girl`
+
+       
       const userInfo = await UserInfo.create({
         userId,
         fullName,
         about,
-        image,
+        avatar : avatarURL,
         phoneNumber,
         gender,
         className

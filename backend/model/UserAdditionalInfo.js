@@ -15,7 +15,7 @@ const UserAdditionalSchema = mongoose.Schema({
         type: String,
         default:''
     },
-    image: {
+    avatar: {
         type: String,
         default:''
     },
@@ -24,7 +24,7 @@ const UserAdditionalSchema = mongoose.Schema({
         default:''
     },
     gender: {
-        enum: ['male', 'female', 'other'],
+        enum: ['male', 'female'],
         type: String,
         required: true
     },
