@@ -81,6 +81,7 @@ const login = async (req, res) => {
 }
 
 const userAdditionalInfo = async (req, res) => {
+    console.log(req.body);
 
     const { fullName, about , phoneNumber, gender, className } = req.body;
     
