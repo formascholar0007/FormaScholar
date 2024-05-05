@@ -28,6 +28,8 @@ const SubjectSyllabus = () => {
         }
       );
 
+      console.log(response.data);
+
       if (response.data.success) {
         setChapters(response.data.data)
         setSubjectName(response.data.data[0].subjectId.subjectName || "")
@@ -46,27 +48,30 @@ const SubjectSyllabus = () => {
     getAllChapters();
   }, []);
 
-  const handleChatperClick = (chapterId) => {
-    navigate(`/exercise/${classId}/${subjectId}/${chapterId}`);
+  const handleChatperClick = (chapterId, isExercise) => {
+    if (isExercise) {
+      navigate(`/exercise/${classId}/${subjectId}/${chapterId}`)
+    } else {
+        navigate(`/userQuestionSolution/${classId}/${subjectId}/${chapterId}/${chapterId}`)
+    }
   };
 
-
   return (
-    <section className="container mx-auto py-12 font-Alice">
-      <h1 className="md:text-5xl text-3xl font-bold text-center mb-2">{`Class ${grade} ${subjectName}`}</h1>
+    <section className=" mx-auto py-12 font-Alice">
+      <h1 className="md:text-5xl text-3xl font-bold text-center mb-2">{`Class ${grade} ${subjectName} Chapters`}</h1>
       <p className="md:text-lg text-sm text-gray-700 text-center mb-8 px-6">
         {`Select any chapter from the options below to begin learning Class  ${grade} ${subjectName} with`}{" "}
         <span className="text-[#009c86] font-bold"> FormaScholar </span>
       </p>
 
-      <div className="flex lg:flex-row lg:justify-between flex-col items-center lg:py-14 py-8">
+      <div className="flex lg:flex-row g:justify-start flex-col items-start lg:py-14 py-8">
         <div className="lg:w-[30%] h-full mx-2 mb-4  py-4 lg:float-left lg:mr-2">
           {/* Ad Content Left */}
         </div>
         <div className="grid grid-cols-1 gap-4 w-full h-full px-8">
           {chapters.map((chapter, index) => (
             <button
-            onClick={() => handleChatperClick(chapter._id)}
+            onClick={() => handleChatperClick(chapter._id, chapter.subjectId.isExercise)}
               key={index}
               className="relative p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:bg-[#009c86] hover:text-white transition-colors duration-300 flex flex-wrap items-center justify-between"
             >

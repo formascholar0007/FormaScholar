@@ -25,6 +25,7 @@ import AdminExercise from "./Admin/AdminExercise";
 import AdminQuestionAnswer from "./Admin/AdminQuestionAnswer";
 import AdminUserData from "./Admin/AdminUserData";
 import UserExercise from "./pages/UserExercise";
+import UserQuestionSolutions from "./pages/UserQuestionSolutions";
 
 function App() {
   // window.addEventListener('beforeunload', (e)=>{
@@ -63,6 +64,10 @@ function App() {
             <Route
               path="/exercise/:classId/:subjectId/:chapterId"
               element={<UserExercise />}
+            />
+            <Route
+              path="/userQuestionSolution/:classId/:subjectId/:chapterId/:exerciseId"
+              element={<UserQuestionSolutions />}
             />
             <Route path="/profile" element={<UserProfile />} />
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { MdOutlineTouchApp } from "react-icons/md";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -8,10 +8,10 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { MdOutlineReadMore } from "react-icons/md";
 
-
 function UserExercise() {
   const { classId, subjectId, chapterId } = useParams();
   const [exercise, setExercise] = useState([]);
+  const navigate = useNavigate();
 
   const getAllChapters = async () => {
     try {
@@ -44,24 +44,31 @@ function UserExercise() {
     getAllChapters();
   }, []);
 
-  const handleChatperClick = () => {};
+  const handleChatperClick = (exerciseId) => {
+    navigate(
+      `/userQuestionSolution/${classId}/${subjectId}/${chapterId}/${exerciseId}`
+    );
+  };
 
   return (
     <section className="container mx-auto py-12 font-Alice">
       <h1 className="md:text-5xl text-3xl font-bold text-center mb-2">
-        {chapterId} of{" "}
+        Chapter All Exercises
       </h1>
-      <h1 className="md:text-5xl text-3xl font-bold text-center mb-2">
+      {/* <h1 className="md:text-5xl text-3xl font-bold text-center mb-2">
+        {chapterId} of{" "}
+      </h1> */}
+      {/* <h1 className="md:text-5xl text-3xl font-bold text-center mb-2">
         {" "}
         Class {classId}
-      </h1>
+      </h1> */}
       <p className="md:text-lg text-sm text-gray-700 text-center mb-8 px-6">
-        {`Select any chapter from the options below to begin learning Class ${classId} ${subjectId} with`}
+        {`Select any Exercise from the options below to begin learning with`}
         <span className="text-[#009c86] font-bold"> FormaScholar </span>
       </p>
-      <div className="flex lg:flex-row lg:justify-between flex-col items-center lg:py-14 py-8">
-        <div className="grid grid-cols-1 gap-4 w-full h-full px-8 md:px-28">
-          <h1 className="md:text-3xl text-2xl font-semibold">
+      <div className="flex lg:flex-row lg:justify-start flex-col items-start lg:py-14 py-8">
+        <div className="grid grid-cols-1 gap-6 w-full h-full px-2 md:px-28">
+          <h1 className="md:text-3xl text-2xl mx-8 font-semibold">
             Exercise in Sequence
           </h1>
           <div className="grid grid-cols-1 gap-4 w-full h-full px-8">
@@ -80,7 +87,7 @@ function UserExercise() {
           </div>
         </div>
 
-        <div className="lg:w-[32%] h-full mx-2 mt-4  py-4float-right lg:ml-2">
+        <div className="lg:w-[40%] h-full mx-2 mt-4  py-4float-right lg:ml-2">
           {/* Ad Content Right */}
         </div>
       </div>

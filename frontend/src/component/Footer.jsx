@@ -3,8 +3,8 @@ import { NavLink } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="bg-white dark:bg-gray-900">
-      <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+    <footer className="bg-white dark:bg-gray-900 h-full bottom-0 w-full">
+      <div className="mx-auto h-full w-full max-w-screen-xl p-4 py-6 lg:py-14">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
             <NavLink to="/" className="flex items-center">

@@ -193,7 +193,7 @@ function AdminExercise() {
                 onClick={() => handleExerciseClick(exerciseItem._id)}
                 className="relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] hover:bg-[#009c86] hover:text-white transition-colors duration-300 flex flex-wrap items-center justify-between"
               >
-                Exercise {index + 1}  : {exerciseItem.exerciseName}
+                Exercise {exerciseItem.exerciseName}
                 <MdOutlineTouchApp className="ml-2 w-6 h-6" />
               </button>
               <button
