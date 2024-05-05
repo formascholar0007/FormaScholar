@@ -62,7 +62,7 @@ const updateProfile = async (req, res) => {
 const getAllUsersProfile = async (req, res) => {
 
     try {
-        const allUsers = await UserModel.find({ role: 'user' });
+        const allUsers = await UserAdditionalModel.find({ role: 'user' }).populate('userId');
 
         if (!allUsers) {
             return res.globalResponse(StatusCodes.NOT_FOUND, false, 'No Users Found', null);

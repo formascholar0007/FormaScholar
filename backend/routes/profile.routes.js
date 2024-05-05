@@ -19,7 +19,7 @@ console.log("upload ; ",upload);
 
 route.get('/' , verifyUserMiddleWare, profileController.getProfile);
 route.put('/',verifyUserMiddleWare, upload.single('image'), profileController.updateProfile);
-route.put('/getAllUsers',verifyUserMiddleWare, authorizeAdmin , profileController.getAllUsersProfile);
-route.put('/deleteUser/:userId',verifyUserMiddleWare, authorizeAdmin , profileController.deleteUser);
+route.get('/getAllUsers',verifyUserMiddleWare, authorizeAdmin , profileController.getAllUsersProfile);
+route.delete('/deleteUser/:userId',verifyUserMiddleWare, authorizeAdmin , profileController.deleteUser);
 
 module.exports = route;
