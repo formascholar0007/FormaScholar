@@ -97,7 +97,7 @@ const userAdditionalInfo = async (req, res) => {
         userId,
         fullName,
         about,
-        avatar : avatarURL,
+        avatar : avatarURL  || '',
         phoneNumber,
         gender,
         className

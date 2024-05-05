@@ -17,7 +17,7 @@ const UserAdditionalSchema = mongoose.Schema({
     },
     avatar: {
         type: String,
-        default:''
+        required:true
     },
     phoneNumber: {
         type: String,
