@@ -62,13 +62,20 @@ const updateProfile = async (req, res) => {
 const getAllUsersProfile = async (req, res) => {
 
     try {
-        const allUsers = await UserAdditionalModel.find({ role: 'user' }).populate('userId');
+        const allUsers = await UserModel.find({ role: 'user' });
 
         if (!allUsers) {
             return res.globalResponse(StatusCodes.NOT_FOUND, false, 'No Users Found', null);
 
         }
-        return res.globalResponse(StatusCodes.OK, true, 'Users Found', allUsers);
+       
+        const usersWithAdditionalInfo = await Promise.all(allUsers.map(async (user) => {
+            const additionalInfo = await UserAdditionalModel.findOne({ userId: user._id });
+            return { user, additionalInfo };
+        }));
+
+
+        return res.globalResponse(StatusCodes.OK, true, 'Users Found', usersWithAdditionalInfo);
 
     } catch (err) {
         return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Internal Server Error', null);
