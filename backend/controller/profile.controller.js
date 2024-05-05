@@ -92,7 +92,11 @@ const deleteUser = async (req, res) => {
     }
 
     try {
-        const user = await UserModelAndDelete(userId);
+        const userAdditional = await UserAdditionalModel.findOneAndDelete({userId});
+        const user = await UserModel.findByIdAndDelete(userId);
+        if (!userAdditional) {
+            return res.globalResponse(StatusCodes.NOT_FOUND, false, 'Something Went Wrong While Deleting UserAdditional', null);
+        }
         if (!user) {
             return res.globalResponse(StatusCodes.NOT_FOUND, false, 'Something Went Wrong While Deleting User', null);
         }
