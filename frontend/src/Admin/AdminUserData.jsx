@@ -1,4 +1,4 @@
-import { MdOutlineTouchApp } from "react-icons/md";
+import { MdOutlineDeleteSweep, MdOutlineTouchApp } from "react-icons/md";
 import { useState } from "react";
 import { useEffect } from "react";
 import { RiUserLine } from "react-icons/ri";
@@ -13,23 +13,62 @@ function AdminUserData() {
   }, []);
 
   const getAlluserData = async () => {
-    // try {
-    //   const data = await fetch("", {});
+    try {
+      const data = await fetch(
+        "http://localhost:3000/api/v1/profile/getAllUsers",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `bearer ${JSON.parse(
+              localStorage.getItem("adminToken")
+            )}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    //   let response = await data.json();
+      let response = await data.json();
 
-    //   if (response.success) {
-    //     setUserData(response.data);
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    //   setErrorVisible(true);
-    //   setErrorMessage(error.toString());
-    // }
+      if (!response.success) {
+        setErrorVisible(true);
+        setErrorMessage(response.message);
+      }
+      setUserData(response.data);
+    } catch (error) {
+      console.log(error);
+      setErrorVisible(true);
+      setErrorMessage(error.toString());
+    }
   };
   const handleCloseError = () => {
     setErrorVisible(false);
   };
+  const handleDelete = async (userId) => {
+    try {
+      const data = await fetch(
+        `http://localhost:3000/api/v1/profile/deleteUser/${userId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `bearer ${JSON.parse(
+              localStorage.getItem("adminToken")
+            )}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const response = await data.json();
+
+      if (response.success) {
+        getAlluserData();
+      }
+    } catch (error) {
+      console.log(error);
+      setErrorVisible(true);
+      setErrorMessage(error.toString());
+    }
+  }
 
   return (
     <section className="container  py-16 font-Alice">
@@ -38,39 +77,59 @@ function AdminUserData() {
       </h1>
 
       {/* {userData.map((userData, index) => ( */}
-        <div className="flex w-[60%] items-center gap-6 px-8 py-6">
-          <button className="relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] transition-colors duration-300 flex flex-wrap ">
-            {/* <h1 className="font-bold text-xl py-3"> {index + 1}</h1> */}
+      <div className="flex flex-col w-[60%] items-center gap-6 px-8 py-6">
+        {userData.map((item, index) => (
+          <main key={index} className="relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] transition-colors duration-300 flex flex-wrap justify-between">
+            <div>
 
             <div className="w-full flex items-start gap-2">
-              <h1 className="font-bold text-xl">UserName :</h1>
+              <h1 className="font-bold text-xl">UserName: </h1>
               <pre className="pl-4 pb-2 text-xl text-start font-bold  whitespace-pre-wrap text-black">
-                Ayush
+                {item.additionalInfo.fullName}
+              </pre>
+            </div>
+
+            <div className="w-full flex items-start gap-2">
+              <h1 className="font-bold text-xl">Phone: </h1>
+              <pre className="pl-6 pb-2 text-xl text-start font-bold  whitespace-pre-wrap text-black">
+                {item.additionalInfo.phoneNumber}
               </pre>
             </div>
 
             <div className="w-full flex items-start gap-6">
               <h1 className="font-bold text-x">Email :</h1>
               <pre className="pl-4 pb-2 text-xl text-start font-bold whitespace-pre-wrap text-black">
-                ayush@mgmail.com
+                {item.user.email}
               </pre>
             </div>
 
             <div className="w-full flex items-start gap-5">
               <h1 className="font-bold text-xl">Class :</h1>
               <pre className="pl-4 pb-2 text-xl text-start font-bold whitespace-pre-wrap text-black">
-                12
+                {item.additionalInfo.className}
               </pre>
             </div>
 
             <div className="w-full flex items-start">
               <h1 className="font-bold text-xl">Gender :</h1>
               <pre className="pl-4 text-xl text-start font-bold whitespace-pre-wrap text-black">
-                Male
+                {item.additionalInfo.gender}
               </pre>
             </div>
-          </button>
-        </div>
+            </div>
+
+            <button
+                className="transition duration-300  ease-in-out transform hover:scale-105"
+                onClick={() => handleDelete(item.user._id)}
+              >
+                <MdOutlineDeleteSweep
+                  size={40}
+                  className="text-[#009c86]  hover:text-[#142a27] cursor-pointer"
+                />
+              </button>
+          </main>
+        ))}
+      </div>
       {/* ))} */}
 
       <div
