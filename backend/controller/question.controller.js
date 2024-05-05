@@ -7,11 +7,10 @@ const createQuestion = async (req, res) => {
 
     const { classId, subjectId, chapterId, exerciseId } = req.params;
     const { questionNo, question, answer } = req.body;
-
+    
     if (!classId || !subjectId || !chapterId) {
         return res.globalResponse(StatusCodes.NOT_FOUND, false, 'ClassId Not Found || SubjectId Not Found || ChapterId Not Found');
     }
-
     try {
         const createData = {
             classId,
@@ -24,7 +23,6 @@ const createQuestion = async (req, res) => {
        if(exerciseId){
            createData.exerciseId = exerciseId;
          }
-        // Create a new question
         const newQuestion = await Question.create(createData);
 
         if (!newQuestion) {
@@ -45,7 +43,8 @@ const getAllQuestions = async (req, res) => {
     if (!classId || !subjectId || !chapterId) {
         return res.globalResponse(StatusCodes.NOT_FOUND, false, 'ClassId Not Found || SubjectId Not Found || ChapterId Not Found');
     }
-
+    
+    console.log(classId , subjectId , chapterId , exerciseId);
     try {
 
         if (exerciseId) {

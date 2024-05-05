@@ -36,9 +36,9 @@ const updateProfile = async (req, res) => {
         }
 
         console.log("updated")
-        console.log("updatedata :   " , updatedata)
-  
-      const updated= await UserAdditionalModel.updateOne({userId},{$set: updatedata});
+        console.log("updatedata :   ", updatedata)
+
+        const updated = await UserAdditionalModel.updateOne({ userId }, { $set: updatedata });
 
         const user = await UserAdditionalModel.findOne({ userId });
 
@@ -59,7 +59,46 @@ const updateProfile = async (req, res) => {
     }
 };
 
+const getAllUsersProfile = async (req, res) => {
+
+    try {
+        const allUsers = await UserModel.find({ role: 'user' });
+
+        if (!allUsers) {
+            return res.globalResponse(StatusCodes.NOT_FOUND, false, 'No Users Found', null);
+
+        }
+        return res.globalResponse(StatusCodes.OK, true, 'Users Found', allUsers);
+
+    } catch (err) {
+        return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Internal Server Error', null);
+
+    }
+
+}
+
+const deleteUser = async (req, res) => {
+
+    const userId = req.params;
+    if (!userId) {
+        return res.globalResponse(StatusCodes.NOT_FOUND, false, 'UserId Not Found', null);
+    }
+
+    try {
+        const user = await UserModelAndDelete(userId);
+        if (!user) {
+            return res.globalResponse(StatusCodes.NOT_FOUND, false, 'Something Went Wrong While Deleting User', null);
+        }
+
+        return res.globalResponse(StatusCodes.OK, true, 'User Deleted Successfully', null);
+    } catch (err) {
+        return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Internal Server Error Delete User', null);
+
+    }
 
 
 
-module.exports = { getProfile, updateProfile }
+}
+
+
+module.exports = { getProfile, updateProfile, getAllUsersProfile, deleteUser }
