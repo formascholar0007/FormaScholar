@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import usericon from "../assets/user.svg";
 import axios from "axios";
-import { FaCircleUser } from "react-icons/fa6";
 
 function UserProfile() {
   const [fullName, setFullName] = useState("");
@@ -105,11 +103,11 @@ function UserProfile() {
                 maxLength={100}
                 rows={3}
                 readOnly={!editable}
-                className={`mt-1 py-2 px-2 text-xl font-semibold leading-8 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 ${
+                className={`pverfl mt-1 py-2 px-2 text-xl font-semibold leading-8 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 ${
                   editable
                     ? "border-2 border-gray-200 rounded-md"
                     : "border-none"
-                }  outline-none`}
+                }  outline-none overflow-hidden`}
               />
             </div>
             <div className="py-6 grid grid-cols-2 sm:grid-cols-3 md:gap-4 gap-2">

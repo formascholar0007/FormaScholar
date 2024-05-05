@@ -1,38 +1,32 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
-import { BiUpload } from "react-icons/bi";
 import { NavLink, useNavigate } from "react-router-dom";
 
 function AdditionalInfo() {
   const navigate = useNavigate();
 
+  const [formData, setFormData] = useState({
+    fullName: "",
+    about: "",
+    phoneNumber: "",
+    gender: "",
+    className: "",
+  });
+
   const [errorMessage, setErrorMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
 
- 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const formData = new FormData();
-    formData.append("fullName", event.target.fullName.value);
-    formData.append("about", event.target.about.value);
-    formData.append("phoneNumber", event.target.phoneNumber.value);
-    formData.append("gender", event.target.gender.value);
-    formData.append("className", event.target.className.value);
-
-    if (
-      !formData.get("fullName") ||
-      !formData.get("gender") ||
-      !formData.get("className")
-    ) {
-      setErrorMessage("Please Enter Required Information");
-      setErrorVisible(true);
-      return;
-    }
-
     try {
-      localStorage.setItem("userFullName", event.target.fullName.value);
-
       const token = JSON.parse(localStorage.getItem("token"));
 
       const response = await fetch(
@@ -41,22 +35,25 @@ function AdditionalInfo() {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
           },
-          body: formData,
+          body: JSON.stringify(formData),
         }
       );
 
       const data = await response.json();
 
-      if (response.ok) {
+      console.log(data);
+
+      if (!data.success) {
+        setErrorMessage(data.message || "Please Enter Complete information");
+        setErrorVisible(true);
+      } else {
         setErrorMessage("");
         navigate("/");
-      } else {
-        setErrorMessage("Please Enter Complete information");
       }
-      setErrorVisible(true);
     } catch (error) {
-      setErrorMessage("An error occurred.Please try again later.");
+      setErrorMessage("An error occurred. Please try again later.");
       setErrorVisible(true);
     }
   };
@@ -84,7 +81,7 @@ function AdditionalInfo() {
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-4">
                 <label
-                  htmlFor="username"
+                  htmlFor="fullName"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Full Name
@@ -97,6 +94,8 @@ function AdditionalInfo() {
                     <input
                       type="text"
                       name="fullName"
+                      value={formData.fullName}
+                      onChange={handleChange}
                       id="fullName"
                       autoComplete="off"
                       className="block flex-1 border-0 bg-transparent lg:py-3 py-2 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 focus-within:ring-[#009c86] outline-none"
@@ -118,17 +117,17 @@ function AdditionalInfo() {
                   <textarea
                     id="about"
                     name="about"
+                    value={formData.about}
+                    onChange={handleChange}
                     maxLength={100}
                     rows={5}
                     className="block w-full rounded-md border-0 px-2 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus-within:ring-[#009c86] outline-none sm:text-sm sm:leading-6"
-                    defaultValue={""}
                   />
                 </div>
                 <p className="mt-3 text-sm leading-6 text-gray-600">
                   Write a few words about yourself.
                 </p>
               </div>
-             
             </div>
           </div>
         </div>
@@ -146,6 +145,8 @@ function AdditionalInfo() {
                   id="phoneNumber"
                   name="phoneNumber"
                   type="number"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
                   autoComplete="off"
                   className="block lg:w-[74%] w-full px-2 rounded-md focus-within:ring-[#009c86] outline-none border-0 lg:py-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#009c86]sm:text-sm sm:leading-6"
                 />
@@ -153,7 +154,7 @@ function AdditionalInfo() {
             </div>
             <div className="sm:col-span-3">
               <label
-                htmlFor="country"
+                htmlFor="gender"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Gender
@@ -162,33 +163,37 @@ function AdditionalInfo() {
                 <select
                   id="gender"
                   name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
                   autoComplete="off"
                   className="block w-full focus-within:ring-[#009c86] outline-none rounded-md border-0 lg:py-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-[#009c86]sm:max-w-xs sm:text-sm sm:leading-6"
                   required
                 >
                   <option value="">Select Gender</option>
-                  <option value="male">male</option>
-                  <option value="female">female</option>
-                  <option value="other">others</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Others</option>
                 </select>
               </div>
             </div>
             <div className="sm:col-span-3">
               <label
-                htmlFor="country"
+                htmlFor="className"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                You're in class *
+                Class
               </label>
               <div className="mt-2">
                 <select
                   id="className"
                   name="className"
+                  value={formData.className}
+                  onChange={handleChange}
                   autoComplete="off"
                   className="block w-full focus-within:ring-[#009c86] outline-none rounded-md border-0 lg:py-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-[#009c86]sm:max-w-xs sm:text-sm sm:leading-6"
                   required
                 >
-                  <option value="">Select class</option>
+                  <option value="">Select Class</option>
                   <option value="9">9</option>
                   <option value="10">10</option>
                   <option value="11">11</option>

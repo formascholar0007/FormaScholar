@@ -83,7 +83,7 @@ const Home = () => {
           "Content-Type": "application/json",
         },
       });
-
+        console.warn(response);
       if (response.data.success) {
         setClassNumber(response.data.data); 
       } else {
