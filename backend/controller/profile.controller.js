@@ -31,12 +31,6 @@ const updateProfile = async (req, res) => {
         const userId = req.decodedToken.userId;
         const updatedata = req.body;
 
-        if (req.file && req.file.path) {
-            updatedata.image = req.file.path;
-        }
-
-        console.log("updated")
-        console.log("updatedata :   ", updatedata)
 
         const updated = await UserAdditionalModel.updateOne({ userId }, { $set: updatedata });
 
@@ -68,7 +62,7 @@ const getAllUsersProfile = async (req, res) => {
             return res.globalResponse(StatusCodes.NOT_FOUND, false, 'No Users Found', null);
 
         }
-       
+
         const usersWithAdditionalInfo = await Promise.all(allUsers.map(async (user) => {
             const additionalInfo = await UserAdditionalModel.findOne({ userId: user._id });
             return { user, additionalInfo };
@@ -86,13 +80,13 @@ const getAllUsersProfile = async (req, res) => {
 
 const deleteUser = async (req, res) => {
 
-    const {userId} = req.params;
+    const { userId } = req.params;
     if (!userId) {
         return res.globalResponse(StatusCodes.NOT_FOUND, false, 'UserId Not Found', null);
     }
 
     try {
-        const userAdditional = await UserAdditionalModel.findOneAndDelete({userId});
+        const userAdditional = await UserAdditionalModel.findOneAndDelete({ userId });
         const user = await UserModel.findByIdAndDelete(userId);
         if (!userAdditional) {
             return res.globalResponse(StatusCodes.NOT_FOUND, false, 'Something Went Wrong While Deleting UserAdditional', null);

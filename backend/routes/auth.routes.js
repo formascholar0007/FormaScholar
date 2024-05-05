@@ -5,7 +5,6 @@ const registerValidateSchema = require('../middleware/registerValidate');
 const registerSchema = require('../validation/registerSchema');
 const loginValidatorSchema = require('../middleware/loginValidator');
 const loginSchema = require('../validation/loginSchema');
-const multer = require('multer');
 const userInfoValidatorSchema = require('../middleware/userInfoValidator');
 const userAdditionalSchemaJoi = require('../validation/userInfoSchema');
 const verifyUserMiddleWare = require('../middleware/verifyUserMiddleWare');
