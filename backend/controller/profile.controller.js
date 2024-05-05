@@ -79,7 +79,7 @@ const getAllUsersProfile = async (req, res) => {
 
 const deleteUser = async (req, res) => {
 
-    const userId = req.params;
+    const {userId} = req.params;
     if (!userId) {
         return res.globalResponse(StatusCodes.NOT_FOUND, false, 'UserId Not Found', null);
     }
