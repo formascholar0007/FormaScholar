@@ -71,7 +71,7 @@ function AdminUserData() {
   }
 
   return (
-    <section className="container  py-16 font-Alice">
+    <section className="container flex flex-col items-center py-16 font-Alice">
       <h1 className="md:text-5xl text-3xl font-bold mx-12 mb-2">
         All User Data
       </h1>

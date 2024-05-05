@@ -11,8 +11,7 @@ function UserProfile() {
   const [about, setAbout] = useState("");
   const [gender, setGender] = useState("");
   const [editable, setEditable] = useState(false);
-  const [file, setFile] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
+  const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
@@ -33,29 +32,15 @@ function UserProfile() {
         setUserClass(userData.className || "");
         setAbout(userData.about || "");
         setGender(userData.gender || "");
+        setAvatar(userData.avatar);
 
-        const imageUrl = userData.image
-          .replace(/\\/g, "/")
-          .replace("public/", "");
-        setImageUrl(imageUrl || null);
+        console.log("Get Data : ", userData);
 
-        console.log(" Addition Image : " ,imageUrl);
       })
       .catch((error) => {
         console.log("Error Fetching user Data : ", error);
       });
   }, []);
-
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setFile({
-        name: file.name,
-        url: URL.createObjectURL(file),
-      });
-      setImageUrl(URL.createObjectURL(file));
-    }
-  };
 
   function handleInput(e) {
     e.preventDefault();
@@ -66,7 +51,6 @@ function UserProfile() {
     formData.append("className", userClass);
     formData.append("about", about);
     formData.append("gender", gender);
-    formData.append("image", imageUrl);
 
     const token = JSON.parse(localStorage.getItem("token"));
 
@@ -85,13 +69,7 @@ function UserProfile() {
         setUserClass(updatedUserData.className || "");
         setAbout(updatedUserData.about || "");
         setGender(updatedUserData.gender || "");
-
-        const imageUrl = updatedUserData.image
-          .replace(/\\/g, "/")
-          .replace("public/", "");
-        setImageUrl(imageUrl || null);
-
-        console.log(imageUrl);
+        
       })
       .catch((error) => {
         console.log("Error updating profile:", error);
@@ -113,62 +91,13 @@ function UserProfile() {
       <form onSubmit={handleInput}>
         <div className="mt-6  border-gray-100">
           <dl>
-            {editable ? (
-              <div className="col-span-full">
-                <label
-                  htmlFor="cover-photo"
-                  className="block text-sm font-medium leading-4 text-gray-900"
-                >
-                  Upload Profile Picutre
-                </label>
-                <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                  <div className="text-center">
-                    <label
-                      htmlFor="image"
-                      className="relative cursor-pointer rounded-md bg-white font-semibold text-[#009c86] focus-within:outline-none focus-within:ring-2 focus-within:ring-[#009c86] focus-within:ring-offset-2 hover:text-[#174943]"
-                    >
-                      <span>
-                        {file ? "Change Profile Picutre" : "Upload a file"}
-                      </span>
-                      <input
-                        id="image"
-                        name="image"
-                        type="file"
-                        className="sr-only focus-within:ring-[#1dae9b] outline-none"
-                        onChange={handleFileUpload}
-                      />
-                    </label>
-
-                    {file && (
-                      <img
-                        src={file.url}
-                        alt={file.name}
-                        className="mt-4 mx-auto rounded-full w-32 h-32 border-2 border-[#1dae9be7] object-cover"
-                      />
-                    )}
-
-                    <p className="flex justify-center mt-2 text-xl ">
-                      {file ? file.name : "PNG, JPG, GIF up to 10MB"}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="py-3 pt-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
-                {file || imageUrl ? (
-                  <img
-                    src={file ? file.url : `http://localhost:3000/${imageUrl}`}
-                    alt="User Profile"
-                    className="object-contain md:h-32 h-24 w-full sm:h-auto sm:w-auto cursor-pointer"
-                  />
-                ) : (
-                  <FaCircleUser
-                    size={125}
-                    className="object-contain md:h-32 h-24 w-full sm:h-auto sm:w-auto cursor-pointer"
-                  />
-                )}
-              </div>
-            )}
+            <div className="py-3 pt-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
+                <img
+                  src={avatar}
+                  alt="User Profile"
+                  className="object-contain md:h-32 h-24 w-full sm:h-auto sm:w-auto cursor-pointer"
+                />
+            </div>
             <div className="py-6 grid grid-cols-2 sm:grid-cols-3 md:gap-4 gap-2">
               <textarea
                 value={about}

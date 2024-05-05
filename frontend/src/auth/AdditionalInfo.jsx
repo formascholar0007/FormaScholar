@@ -4,30 +4,18 @@ import { BiUpload } from "react-icons/bi";
 import { NavLink, useNavigate } from "react-router-dom";
 
 function AdditionalInfo() {
-  const [file, setFile] = useState(null);
-  const [imageUrl, setImageUrl] = useState("");
   const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
 
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setFile({
-        name: file.name,
-        url: URL.createObjectURL(file),
-      });
-      setImageUrl(file);
-    }
-  };
+ 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const formData = new FormData();
     formData.append("fullName", event.target.fullName.value);
     formData.append("about", event.target.about.value);
-    formData.append("image", imageUrl);
     formData.append("phoneNumber", event.target.phoneNumber.value);
     formData.append("gender", event.target.gender.value);
     formData.append("className", event.target.className.value);
@@ -140,46 +128,7 @@ function AdditionalInfo() {
                   Write a few words about yourself.
                 </p>
               </div>
-
-              <div className="col-span-full">
-                <label
-                  htmlFor="cover-photo"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Upload Profile Picutre
-                </label>
-                <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                  <div className="text-center">
-                    <label
-                      htmlFor="image"
-                      className="relative cursor-pointer rounded-md bg-white font-semibold text-[#009c86] focus-within:outline-none focus-within:ring-2 focus-within:ring-[#009c86] focus-within:ring-offset-2 hover:text-[#174943]"
-                    >
-                      <span>
-                        {file ? "Change Profile Picutre" : "Upload a file"}
-                      </span>
-                      <input
-                        id="image"
-                        name="image"
-                        type="file"
-                        className="sr-only focus-within:ring-[#1dae9b] outline-none"
-                        onChange={handleFileUpload}
-                      />
-                    </label>
-
-                    {file && (
-                      <img
-                        src={file.url}
-                        alt={file.name}
-                        className="mt-4 mx-auto rounded-full w-32 h-32 border-2 border-[#1dae9be7] object-cover"
-                      />
-                    )}
-
-                    <p className="flex justify-center mt-2 text-xl ">
-                      {file ? file.name : "PNG, JPG, GIF up to 10MB"}
-                    </p>
-                  </div>
-                </div>
-              </div>
+             
             </div>
           </div>
         </div>
