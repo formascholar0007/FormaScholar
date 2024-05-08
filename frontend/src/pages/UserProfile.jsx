@@ -96,7 +96,7 @@ function UserProfile() {
                   className="object-contain md:h-32 h-24 w-full sm:h-auto sm:w-auto cursor-pointer"
                 />
             </div>
-            <div className="py-6 grid grid-cols-2 sm:grid-cols-3 md:gap-4 gap-2">
+            <div className="py-6 grid grid-cols-2 sm:grid-cols-3 md:gap-4 gap-2 ">
               <textarea
                 value={about}
                 onChange={(e) => setAbout(e.target.value)}
@@ -110,7 +110,7 @@ function UserProfile() {
                 }  outline-none overflow-hidden`}
               />
             </div>
-            <div className="py-6 grid grid-cols-2 sm:grid-cols-3 md:gap-4 gap-2">
+            <div className="py-2 grid grid-cols-2 sm:grid-cols-3 md:gap-4 gap-2">
               <label
                 htmlFor="fullName"
                 className="text-xl font-semibold leading-4 text-gray-900"

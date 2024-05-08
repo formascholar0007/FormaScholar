@@ -31,6 +31,7 @@ const Home = () => {
   const { isLoggedIn } = useAuth();
   const [userFullName, setUserFullName] = useState("Student");
   const [classNumber, setClassNumber] = useState([]);
+  const [subject, setSubject] = useState([]);
 
   const handleImageClick = (selectedImg) => {
     setImageId(selectedImg);
@@ -56,18 +57,6 @@ const Home = () => {
     Physics: physicsicon,
   };
 
-  const subjects = {
-    3: ["Maths", "Science"],
-    9: ["Maths", "Science"],
-    10: ["Maths", "Science", "History"],
-    11: ["Maths", "Physics", "Chemistry"],
-    12: ["Maths", "Physics", "Chemistry", "Bio", "English", "Computer"],
-  };
-
-  const uniqueSubjects = Array.from(
-    new Set([].concat(...Object.values(subjects)))
-  );
-
   function ExploreNow(id) {
     const element = document.querySelector(id);
     if (element) {
@@ -83,11 +72,9 @@ const Home = () => {
           "Content-Type": "application/json",
         },
       });
-        console.warn(response);
       if (response.data.success) {
         setClassNumber(response.data.data); 
       } else {
-        console.log(response.data.message);
         toast.error("Failed to fetch classes. Please try again later.");
       }
     } catch (error) {
@@ -98,6 +85,7 @@ const Home = () => {
 
   useEffect(() => {
     handleGetAllClass();
+
   }, []);
 
   return (
@@ -119,11 +107,12 @@ const Home = () => {
                 together.
               </p>
               <button
-                className="bg-[#009c86] hover:bg-[#17776a] hover:text-black w-[180px] md:w-[220px] text-white md:py-5 p-3 rounded-lg text-2xl transition duration-300 ease-in-out"
+                className="bg-[#009c86] hover:bg-transparent border-transparent hover:border-2 hover:border-[#009c86] hover:text-white w-[180px] md:w-[400px] text-white md:py-5 p-3 rounded-lg text-2xl transition-all duration-300 ease-in-out"
                 onClick={() => ExploreNow("#browseYourClass")}
               >
                 Explore Now
               </button>
+              
             </div>
           ) : (
             <div className="lg:py-12 flex flex-col pt-2">
@@ -190,13 +179,11 @@ const Home = () => {
           Browse Your Subjects
         </h1>
         <div className="flex lg:justify-start justify-center flex-wrap px-8 py-4">
-          {uniqueSubjects.map((subject) => (
             <SubjectCard
-              key={subject}
-              subjectName={subject}
+              key={1}
+              subjectName={"Maths"}
               subjectIcon={subjectIconMap[subject] || scienceicon}
             />
-          ))}
         </div>
       </div>
 

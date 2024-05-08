@@ -26,6 +26,8 @@ import AdminQuestionAnswer from "./Admin/AdminQuestionAnswer";
 import AdminUserData from "./Admin/AdminUserData";
 import UserExercise from "./pages/UserExercise";
 import UserQuestionSolutions from "./pages/UserQuestionSolutions";
+import SpecificClass from "./pages/SpecificClass";
+import ContactUs from "./pages/ContactUs";
 
 function App() {
   // window.addEventListener('beforeunload', (e)=>{
@@ -70,6 +72,8 @@ function App() {
               element={<UserQuestionSolutions />}
             />
             <Route path="/profile" element={<UserProfile />} />
+            <Route path="/specificClass/:subjectName" element={<SpecificClass />} />
+            <Route path="/contactUs" element={<ContactUs />} />
 
             <Route
               path="/adminPanel"

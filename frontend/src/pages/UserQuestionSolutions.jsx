@@ -12,6 +12,7 @@ const UserQuestionSolutions = () => {
   const [questionanswers, setquestionanswers] = useState([]);
   const grade = 10;
 
+
   const getAllChapters = async () => {
     try {
       const response = await axios.get(
@@ -46,10 +47,10 @@ const UserQuestionSolutions = () => {
 
 
   return (
-    <section className=" mx-auto py-12 font-Alice">
-      <h1 className="md:text-5xl text-3xl font-bold text-center mb-2">{`Class ${grade} All Questions and Answer`}</h1>
+    <section className=" mx-auto py-12 md:px-12 font-sans">
+      <h1 className="md:text-4xl text-3xl font-bold text-center mb-2">{`Class ${grade} All Questions and Answer`}</h1>
       <p className="md:text-lg text-sm text-gray-700 text-center mb-4 px-6">
-        {`Select any chapter from the options below to begin learning Class  ${grade}  with`}{" "}
+        {`Select any chapter from the options below to begin learning Class  ${grade}  with`}
         <span className="text-[#009c86] font-bold"> FormaScholar </span>
       </p>
 
@@ -60,14 +61,14 @@ const UserQuestionSolutions = () => {
         <div className="grid grid-cols-1 gap-2 w-full h-full px-8">
           {questionanswers.map((questionanswerItem, index) => (
             <>
-              <div  className="relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] transition-colors duration-300 flex flex-wrap ">
+              <div  className="relative w-full p-4  shadow-md brounded-lg text-lg text-[#009c86] transition-colors duration-300 flex flex-wrap ">
                 <div  className="w-full flex flex-col items-start gap-2">
                   <h1 className="font-bold text-xl">Question {index + 1} :</h1>
-                  <pre className="pl-4 pb-2 text-lg text-start font-bold  whitespace-pre-wrap text-black">
+                  <pre className="pl-4 pb-2 text-lg text-start font-bold  whitespace-pre-wrap text-black  font-sans">
                     {questionanswerItem.question}
                   </pre>
                   <h1 className="font-bold text-xl pt-2">Solution :</h1>
-                  <pre className="pl-4 text-lg text-start whitespace-pre-wrap text-black">
+                  <pre className="pl-4 text-lg text-start whitespace-pre-wrap text-black  font-sans">
                     {questionanswerItem.answer}
                   </pre>
                 </div>
