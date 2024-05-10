@@ -9,6 +9,10 @@ function ContactUs() {
   const [errorVisible, setErrorVisible] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top when the component mounts
+  }, []);
+
+  useEffect(() => {
     const handleUserData = async () => {
       try {
         const token = JSON.parse(localStorage.getItem("token"));

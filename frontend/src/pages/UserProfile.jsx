@@ -12,6 +12,10 @@ function UserProfile() {
   const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top when the component mounts
+  }, []);
+
+  useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
     axios
       .get("http://localhost:3000/api/v1/profile", {

@@ -33,7 +33,6 @@ const Navbar = React.memo(() => {
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
-    if (isLoggedIn) {
       axios
         .get("http://localhost:3000/api/v1/profile", {
           headers: {
@@ -51,10 +50,7 @@ const Navbar = React.memo(() => {
         .finally(() => {
           setLoading(false);
         });
-    } else {
-      setLoading(false);
-    }
-  }, [isLoggedIn]);
+  }, []);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
