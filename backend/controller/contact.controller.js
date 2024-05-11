@@ -1,6 +1,7 @@
-import { StatusCodes } from "http-status-codes";
+const { StatusCodes } = require("http-status-codes");
+const nodemailer = require('nodemailer')
 
-export const createContact = async (req, res) => {
+const createContact = async (req, res) => {
 
     const { email, fullName, message } = req.body;
 
@@ -31,7 +32,7 @@ export const createContact = async (req, res) => {
                 return res.globalResponse(StatusCodes.INTERNAL_SERVER_ERROR, false, 'Error sending email', null);
             } else {
                 console.log('Email sent: ' + info.response);
-                return res.globalResponse(StatusCodes.OK, true, 'Email sent successfully', null);
+                return res.globalResponse(StatusCodes.OK, true, 'Message sent successfully', null);
             }
         });
 
@@ -43,3 +44,7 @@ export const createContact = async (req, res) => {
 
 
 }
+
+module.exports = {
+    createContact,
+  };
