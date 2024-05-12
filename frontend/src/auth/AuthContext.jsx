@@ -5,12 +5,12 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     let storedvalue = localStorage.getItem("isLoggedIn");
-    return storedvalue ? JSON.parse(storedvalue) : "false";
+    return storedvalue ? JSON.parse(storedvalue) : false;
   });
 
   const [isAdmin, setIsAdmin] = useState(() => {
     let storedValue = localStorage.getItem("isAdminLoggedIn");
-    return storedValue ? JSON.parse(storedValue) : "false";
+    return storedValue ? JSON.parse(storedValue) : false;
   });
 
   // const token = localStorage.getItem('token');

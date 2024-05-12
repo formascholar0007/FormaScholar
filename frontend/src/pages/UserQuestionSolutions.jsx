@@ -12,7 +12,6 @@ const UserQuestionSolutions = () => {
   const [questionanswers, setquestionanswers] = useState([]);
   const grade = 10;
 
-
   const getAllChapters = async () => {
     try {
       const response = await axios.get(
@@ -42,27 +41,30 @@ const UserQuestionSolutions = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     getAllChapters();
   }, []);
 
-
   return (
     <section className=" mx-auto py-12 md:px-12 font-sans">
-      <h1 className="md:text-4xl text-3xl font-bold text-center mb-2">{`Class ${grade} All Questions and Answer`}</h1>
-      <p className="md:text-lg text-sm text-gray-700 text-center mb-4 px-6">
-        {`Select any chapter from the options below to begin learning Class  ${grade}  with`}
-        <span className="text-[#009c86] font-bold"> FormaScholar </span>
-      </p>
+      <div className="px-5">
+        <h1 className="md:text-4xl text-3xl font-bold text-center mb-2">{`Class ${grade} All Questions and Answer`}</h1>
+        <p className="md:text-lg text-sm text-gray-700 text-center mb-4 px-6">
+          {`Select any chapter from the options below to begin learning Class  ${grade}  with`}
+          <span className="text-[#009c86] font-bold"> FormaScholar </span>
+        </p>
+      </div>
 
       <main className="flex justify-start flex-col items-center lg:py-14 py-8">
         <div className="max-w-[80%] h-full p-12 mb-2">
           {/* Ad Content top */}
         </div>
-        <div className="grid grid-cols-1 gap-2 w-full h-full px-8">
+        <div className="grid grid-cols-1 gap-2 w-full h-full px-12">
           {questionanswers.map((questionanswerItem, index) => (
             <>
-              <div  className="relative w-full p-4  shadow-md brounded-lg text-lg text-[#009c86] transition-colors duration-300 flex flex-wrap ">
-                <div  className="w-full flex flex-col items-start gap-2">
+              <div  className="relative w-full md:p-4  brounded-lg text-lg text-[#009c86] transition-colors duration-300 flex flex-wrap ">
+                <div className="w-full flex flex-col items-start gap-2">
                   <h1 className="font-bold text-xl">Question {index + 1} :</h1>
                   <pre className="pl-4 pb-2 text-lg text-start font-bold  whitespace-pre-wrap text-black  font-sans">
                     {questionanswerItem.question}

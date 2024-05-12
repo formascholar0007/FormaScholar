@@ -8,5 +8,5 @@ export const Logout = () => {
     handleLogout();
   }, [handleLogout]);
 
-  return <Navigate to={"/loginform"} />;
+  return <Navigate to={"/authUser"} />;
 };

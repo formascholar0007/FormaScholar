@@ -8,6 +8,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const SubjectSyllabus = () => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
+
   const { grade, classId, subjectId } = useParams();
   const [chapters, setChapters] = useState([]);
   const [subjectName, setSubjectName] = useState("");

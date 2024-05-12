@@ -22,7 +22,9 @@ const ImageList = [
 
 const Home = () => {
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to the top when the component mounts
+    
+    window.scrollTo(0, 0);
+    
   }, []);
 
   const [imageId, setImageId] = useState(Homepageimg1);
@@ -73,7 +75,7 @@ const Home = () => {
         },
       });
       if (response.data.success) {
-        setClassNumber(response.data.data); 
+        setClassNumber(response.data.data);
       } else {
         toast.error("Failed to fetch classes. Please try again later.");
       }
@@ -85,7 +87,6 @@ const Home = () => {
 
   useEffect(() => {
     handleGetAllClass();
-
   }, []);
 
   return (
@@ -112,7 +113,6 @@ const Home = () => {
               >
                 Explore Now
               </button>
-              
             </div>
           ) : (
             <div className="lg:py-12 flex flex-col pt-2">
@@ -127,7 +127,7 @@ const Home = () => {
                 potential
               </p>
               <button className="bg-[#009c86] hover:bg-[#17776a] hover:text-black w-[180px] text-white py-3 px-6 rounded-lg text-2xl transition duration-300 ease-in-out">
-                <NavLink to="/registration">Get Started</NavLink>
+                <NavLink to="/authUser">Get Started</NavLink>
               </button>
             </div>
           )}
@@ -179,11 +179,11 @@ const Home = () => {
           Browse Your Subjects
         </h1>
         <div className="flex lg:justify-start justify-center flex-wrap px-8 py-4">
-            <SubjectCard
-              key={1}
-              subjectName={"Maths"}
-              subjectIcon={subjectIconMap[subject] || scienceicon}
-            />
+          <SubjectCard
+            key={1}
+            subjectName={"Maths"}
+            subjectIcon={subjectIconMap[subject] || scienceicon}
+          />
         </div>
       </div>
 

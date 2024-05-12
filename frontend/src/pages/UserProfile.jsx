@@ -3,7 +3,6 @@ import axios from "axios";
 
 function UserProfile() {
   const [fullName, setFullName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [userClass, setUserClass] = useState("");
   const [about, setAbout] = useState("");
@@ -26,10 +25,8 @@ function UserProfile() {
       .then((response) => {
         const userData = response.data.data;
 
-        localStorage.setItem("userFullName", userData.fullName);
 
         setFullName(userData.fullName || "");
-        setPhoneNumber(userData.phoneNumber || "");
         setEmail(userData.email || "");
         setUserClass(userData.className || "");
         setAbout(userData.about || "");
@@ -49,7 +46,6 @@ function UserProfile() {
 
     const formData = new FormData();
     formData.append("fullName", fullName);
-    formData.append("phoneNumber", phoneNumber);
     formData.append("className", userClass);
     formData.append("about", about);
     formData.append("gender", gender);
@@ -67,7 +63,6 @@ function UserProfile() {
         console.log("Profile updated successfully:", response);
 
         const updatedUserData = response.data.data;
-        setPhoneNumber(updatedUserData.phoneNumber || "");
         setUserClass(updatedUserData.className || "");
         setAbout(updatedUserData.about || "");
         setGender(updatedUserData.gender || "");
@@ -107,7 +102,7 @@ function UserProfile() {
                 maxLength={100}
                 rows={3}
                 readOnly={!editable}
-                className={`pverfl mt-1 py-2 px-2 text-xl font-semibold leading-8 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 ${
+                className={`mt-1 py-2 px-2 text-xl font-semibold leading-8 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 ${
                   editable
                     ? "border-2 border-gray-200 rounded-md"
                     : "border-none"
@@ -133,25 +128,7 @@ function UserProfile() {
                 }  outline-none`}
               />
             </div>
-            <div className="py-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
-              <label
-                htmlFor="phoneNumber"
-                className="text-xl font-semibold  leading-4 text-gray-900"
-              >
-                Phone Number
-              </label>
-              <input
-                type="number"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                readOnly={!editable}
-                className={`mt-1 py-2 px-2 text-lg leading-4 text-gray-700 col-span-2 sm:mt-0 sm:col-span-1 ${
-                  editable
-                    ? "border-2 border-gray-200 rounded-md"
-                    : "border-none"
-                }  outline-none`}
-              />
-            </div>
+           
             <div className="py-6 grid grid-cols-1 sm:grid-cols-3 md:gap-4 gap-2">
               <label
                 htmlFor="email"

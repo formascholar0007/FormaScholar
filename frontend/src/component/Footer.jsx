@@ -33,7 +33,7 @@ function Footer() {
               Company
             </h6>
             <p className="mb-2 hover:text-[#33887c]">
-              <NavLink to={""}>Meet Us</NavLink>
+              <NavLink to={"/meetUs"}>Meet Us</NavLink>
             </p>
             <p className="mb-2 hover:text-[#33887c]">
               <NavLink to={"/userProfile"}>Student Profile</NavLink>

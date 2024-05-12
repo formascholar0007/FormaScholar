@@ -8,6 +8,11 @@ import { MdOutlineReadMore } from "react-icons/md";
 
 
 function SpecificClass() {
+ 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   const [SpecificClass, setSpecificClass] = useState([]);
   const {subjectName} = useParams()
 

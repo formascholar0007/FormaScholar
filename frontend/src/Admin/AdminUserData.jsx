@@ -60,6 +60,8 @@ function AdminUserData() {
 
       const response = await data.json();
 
+      console.log(response);
+
       if (response.success) {
         getAlluserData();
       }
@@ -68,7 +70,7 @@ function AdminUserData() {
       setErrorVisible(true);
       setErrorMessage(error.toString());
     }
-  }
+  };
 
   return (
     <section className="container flex flex-col items-center py-16 font-Alice">
@@ -79,54 +81,55 @@ function AdminUserData() {
       {/* {userData.map((userData, index) => ( */}
       <div className="flex flex-col w-[60%] items-center gap-6 px-8 py-6">
         {userData.map((item, index) => (
-          <main key={index} className="relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] transition-colors duration-300 flex flex-wrap justify-between">
+          <main
+            key={index}
+            className="relative w-full p-4 border shadow-md border-[#009c86] rounded-lg text-lg text-[#009c86] transition-colors duration-300 flex flex-wrap justify-between"
+          >
             <div>
+              <div className="w-full flex items-start gap-2">
+                <h1 className="font-bold text-xl">UserName: </h1>
+                <pre className="pl-4 pb-2 text-xl text-start font-bold  whitespace-pre-wrap text-black">
+                  {item.additionalInfo != null
+                    ? item.additionalInfo.fullName
+                    : item.user.userName}
+                </pre>
+              </div>
 
-            <div className="w-full flex items-start gap-2">
-              <h1 className="font-bold text-xl">UserName: </h1>
-              <pre className="pl-4 pb-2 text-xl text-start font-bold  whitespace-pre-wrap text-black">
-                {item.additionalInfo.fullName}
-              </pre>
-            </div>
+              <div className="w-full flex items-start gap-6">
+                <h1 className="font-bold text-x">Email :</h1>
+                <pre className="pl-4 pb-2 text-xl text-start font-bold whitespace-pre-wrap text-black">
+                  {item.user.email}
+                </pre>
+              </div>
 
-            <div className="w-full flex items-start gap-2">
-              <h1 className="font-bold text-xl">Phone: </h1>
-              <pre className="pl-6 pb-2 text-xl text-start font-bold  whitespace-pre-wrap text-black">
-                {item.additionalInfo.phoneNumber}
-              </pre>
-            </div>
+              <div className="w-full flex items-start gap-5">
+                <h1 className="font-bold text-xl">Class :</h1>
+                <pre className="pl-4 pb-2 text-xl text-start font-bold whitespace-pre-wrap text-black">
+                  {item.additionalInfo != null
+                    ? item.additionalInfo.className
+                    : "Not Filled"}
+                </pre>
+              </div>
 
-            <div className="w-full flex items-start gap-6">
-              <h1 className="font-bold text-x">Email :</h1>
-              <pre className="pl-4 pb-2 text-xl text-start font-bold whitespace-pre-wrap text-black">
-                {item.user.email}
-              </pre>
-            </div>
-
-            <div className="w-full flex items-start gap-5">
-              <h1 className="font-bold text-xl">Class :</h1>
-              <pre className="pl-4 pb-2 text-xl text-start font-bold whitespace-pre-wrap text-black">
-                {item.additionalInfo.className}
-              </pre>
-            </div>
-
-            <div className="w-full flex items-start">
-              <h1 className="font-bold text-xl">Gender :</h1>
-              <pre className="pl-4 text-xl text-start font-bold whitespace-pre-wrap text-black">
-                {item.additionalInfo.gender}
-              </pre>
-            </div>
+              <div className="w-full flex items-start">
+                <h1 className="font-bold text-xl">Gender :</h1>
+                <pre className="pl-4 text-xl text-start font-bold whitespace-pre-wrap text-black">
+                  {item.additionalInfo != null
+                    ? item.additionalInfo.gender
+                    : "Not Filled"}
+                </pre>
+              </div>
             </div>
 
             <button
-                className="transition duration-300  ease-in-out transform hover:scale-105"
-                onClick={() => handleDelete(item.user._id)}
-              >
-                <MdOutlineDeleteSweep
-                  size={40}
-                  className="text-[#009c86]  hover:text-[#142a27] cursor-pointer"
-                />
-              </button>
+              className="transition duration-300  ease-in-out transform hover:scale-105"
+              onClick={() => handleDelete(item.user._id)}
+            >
+              <MdOutlineDeleteSweep
+                size={40}
+                className="text-[#009c86]  hover:text-[#142a27] cursor-pointer"
+              />
+            </button>
           </main>
         ))}
       </div>

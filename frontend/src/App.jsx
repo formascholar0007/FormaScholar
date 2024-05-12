@@ -28,29 +28,26 @@ import UserExercise from "./pages/UserExercise";
 import UserQuestionSolutions from "./pages/UserQuestionSolutions";
 import SpecificClass from "./pages/SpecificClass";
 import ContactUs from "./pages/ContactUs";
+import MeetUs from "./pages/MeetUs";
+import AuthUser from "./pages/AuthUser";
+import { ToastContainer } from "react-toastify";
 
 function App() {
-  // window.addEventListener('beforeunload', (e)=>{
-  //   let message = "Are you sure want to leave?";
-  //   e.returnValue = message;
-  // });
-
-  const [isAdmim, setIsAdmin] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   return (
     <>
       <AuthProvider>
         <Router>
-          {!isAdmim && <Navbar />}
-
-          {/* If the left operand (!isAdminPanel in this case) is falsy, it
-          returns the left operand. // If the left operand is truthy, it returns
-          the right operand (<Navbar /> in this case).  */}
+          {/* {!isAdmin && !['/loginform', '/registration'].includes(window.location.pathname) && <Navbar />} Render Navbar everywhere except on login and register pages for non-admin users */}
+          {!isAdmin && <Navbar />}
           <Routes>
-            <Route path="/" exact="true" element={<Home />} />
+            <Route path="/" exact element={<Home />} />
             <Route path="/registration" element={<Registrationform />} />
-            <Route path="/loginform" element={<LoginForm />} />
-            <Route path="/logout" element={<Logout />} />
+            <Route path="/loginform" element={<LoginForm setIsLoggedIn={setIsLoggedIn} />} />
+
+            <Route path="/logout" element={<Logout setIsLoggedIn={setIsLoggedIn} />} />
             <Route path="/additionalInfo" element={<AdditionalInfo />} />
             <Route path="/forgetPassword" element={<ForgetPassword />} />
             <Route path="*" element={<PageNotFound />} />
@@ -59,6 +56,7 @@ function App() {
               element={<ResetPassword />}
             />
             <Route path="/userProfile" element={<UserProfile />} />
+            <Route path="/authUser" element={<AuthUser />} />
             <Route
               path="/subjectSyllabus/:grade/:classId/:subjectId"
               element={<SubjectSyllabus />}
@@ -72,14 +70,17 @@ function App() {
               element={<UserQuestionSolutions />}
             />
             <Route path="/profile" element={<UserProfile />} />
-            <Route path="/specificClass/:subjectName" element={<SpecificClass />} />
+            <Route
+              path="/specificClass/:subjectName"
+              element={<SpecificClass />}
+            />
             <Route path="/contactUs" element={<ContactUs />} />
+            <Route path="/meetUs" element={<MeetUs />} />
 
             <Route
               path="/adminPanel"
               element={<AdminPanel setIsAdmin={setIsAdmin} />}
             >
-              
               <Route index element={<DashHome />} />
 
               <Route path="/adminPanel/className" element={<ClassName />} />
@@ -111,7 +112,9 @@ function App() {
             </Route>
           </Routes>
 
-          {!isAdmim && <Footer />}
+          <ToastContainer />
+
+          {!isAdmin &&  <Footer />} {/* Render Footer everywhere except on login and register pages for non-admin users */}
         </Router>
       </AuthProvider>
     </>

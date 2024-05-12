@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { CiMail } from "react-icons/ci";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function ContactUs() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [errorVisible, setErrorVisible] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top when the component mounts
@@ -16,51 +18,96 @@ function ContactUs() {
     const handleUserData = async () => {
       try {
         const token = JSON.parse(localStorage.getItem("token"));
-        if (!token) {
-          setErrorMessage("Token is not Valid!");
-          setErrorVisible(true);
+        if (!token ) {
+          toast.error("You are not logged in!");
+          return;
         }
 
-        const response = await axios.get(
-          "http://localhost:3000/api/v1/profile",
-          {
-            headers: { Authorization: `bearer ${token}` },
-          }
-        );
+        const response = await axios.get("http://localhost:3000/api/v1/profile", {
+          headers: { Authorization: `bearer ${token}` },
+        });
 
         if (response.status === 400) {
-          setErrorMessage(response.data.message);
-          setErrorVisible(true);
+          toast.error(response.data.message);
         } else {
           const responseData = response.data.data;
           setFullName(responseData.fullName);
           setEmail(responseData.email);
-          setErrorVisible(false);
         }
       } catch (error) {
         console.log(error);
-        setErrorMessage("An error occurred. Please try again later.");
-        setErrorVisible(true);
+        if (error.response) {
+          toast.error(`Server error: ${error.response.data.message}`);
+        } else if (error.request) {
+          toast.error("Network error. Please check your internet connection.");
+        } else {
+          toast.error("An error occurred. Please try again later.");
+        }
       }
     };
 
     handleUserData();
   }, []);
 
-  const handleCloseError = () => {
-    setErrorVisible(false);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add logic to handle form submission (e.g., send message)
+
+    try {
+      if (!email || !fullName || !message) {
+        toast.error("Please fill out all fields.");
+        return;
+      }
+
+      const token = JSON.parse(localStorage.getItem("token"));
+      if (token) {
+        const response = await axios.post("http://localhost:3000/api/v1/contact", {
+          email,
+          fullName,
+          message,
+        }, {
+          headers: {
+            Authorization: `bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.status === 200) {
+          toast.success("Message sent successfully!");
+          setMessage("");
+        } else {
+          toast.error(response.data.message || "An error occurred.");
+        }
+      } else {
+        const response = await axios.post("http://localhost:3000/api/v1/contact", {
+          email,
+          fullName,
+          message,
+        });
+
+        if (response.status === 200) {
+          toast.success("Message sent successfully!");
+          setMessage("");
+        } else {
+          toast.error(response.data.message || "An error occurred.");
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      if (error.response) {
+        toast.error(`Server error: ${error.response.data.message}`);
+      } else if (error.request) {
+        toast.error("Network error. Please check your internet connection.");
+      } else {
+        toast.error("An error occurred. Please try again later.");
+      }
+    }
   };
 
   return (
     <section className="font-Alice">
       <div className="md:px-16 px-6 py-12 mx-auto">
         <div>
-          <p className="font-medium text-[#49dbc8] ">Contact us</p>
+          <p className="font-medium text-[#339d8f] ">Contact us</p>
 
           <h1 className="mt-2 text-2xl font-semibold text-gray-800 md:text-3xl">
             Chat with us, we're here to help!
@@ -98,7 +145,7 @@ function ContactUs() {
                   <label className="block mb-2 text-sm text-black ">Name</label>
                   <input
                     type="text"
-                    placeholder="forma-Zack"
+                    placeholder="John"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     className="block w-full px-5 py-2.5 mt-2 text-gray-700 bg-white border border-gray-200 rounded-lg dark:border-gray-700 focus:border-[#339d8f]  focus:ring-[#339d8f] focus:outline-none focus:ring focus:ring-opacity-40"
@@ -112,7 +159,7 @@ function ContactUs() {
                 </label>
                 <input
                   type="email"
-                  placeholder="forma@example.com"
+                  placeholder="john@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="block w-full px-5 py-2.5 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg   dark:border-gray-700 focus:border-[#339d8f]  focus:ring-[#339d8f] focus:outline-none focus:ring focus:ring-opacity-40"
@@ -126,6 +173,8 @@ function ContactUs() {
                 <textarea
                   className="block w-full h-32 px-5 py-2.5 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg md:h-56  dark:border-gray-700 focus:border-[#339d8f]  focus:ring-[#339d8f] focus:outline-none focus:ring focus:ring-opacity-40"
                   placeholder="Message"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                 ></textarea>
               </div>
 
@@ -138,7 +187,7 @@ function ContactUs() {
             </form>
           </div>
         </div>
-        <div
+        {/* <div
           className={`h-1 transition-all ${errorVisible ? "" : "opacity-0"}`}
         >
           {errorMessage && (
@@ -164,7 +213,7 @@ function ContactUs() {
               </span>
             </div>
           )}
-        </div>
+        </div> */}
       </div>
     </section>
   );
