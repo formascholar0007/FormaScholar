@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="bg-gradient-to-t from-gray-900 to-gray-900 text-center text-surface/75 dark:bg-neutral-700 dark:text-white/75 lg:text-left font-Alice">
+    <footer className="bg-gradient-to-t  text-center text-surface/75 dark:bg-gray-800 dark:text-white/75 lg:text-left font-Alice">
       <div className="flex items-center justify-center border-b-2 border-neutral-200 p-6 dark:border-white/10 lg:justify-between">
         <div className="me-12 flex items-center">
           <span className="me-2 w-full">
@@ -28,7 +28,7 @@ function Footer() {
 
       <div className="mx-10 py-8 text-center md:text-left">
         <div className="grid-1 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <div className="md:w-40 w-full mb-6">
+          <div className="md:w-44 w-full mb-6">
             <h6 className="mb-2 flex justify-center font-semibold uppercase md:justify-start text-xl">
               Company
             </h6>
@@ -39,48 +39,52 @@ function Footer() {
               <NavLink to={"/userProfile"}>Student Profile</NavLink>
             </p>
             <p className="mb-2 hover:text-[#33887c]">
-              <NavLink to="#">About Us </NavLink>
+              <NavLink to="/aboutUs">About Us </NavLink>
             </p>
 
             <p className="mb-2 hover:text-[#33887c]">
               <NavLink to="/contactUs">Contact Us </NavLink>
             </p>
           </div>
-          <div className="md:w-40 w-full">
+          <div className="md:w-80 w-full">
             <h6 className="mb-2 flex justify-center font-semibold uppercase md:justify-start text-xl">
               Useful links
             </h6>
             <p className="mb-2 hover:text-[#33887c]">
-              <NavLink to={""}>Meet Us</NavLink>
+              <NavLink to={""}>Class 8 Maths NCRT Solutions</NavLink>
             </p>
             <p className="mb-2 hover:text-[#33887c]">
-              <NavLink to={"/userProfile"}>Student Profile</NavLink>
+              <NavLink to={"/"}>Class 9 Maths NCRT Solutions</NavLink>
             </p>
             <p className="mb-2 hover:text-[#33887c]">
-              <NavLink to="#">About Us </NavLink>
+              <NavLink to="#">Class 10 Maths NCRT Solutions</NavLink>
             </p>
-
             <p className="mb-2 hover:text-[#33887c]">
-              <NavLink to="/contactUs">Contact Us </NavLink>
+              <NavLink to="/">Class 11 Maths NCRT Solutions</NavLink>
+            </p>
+            <p className="mb-2 hover:text-[#33887c]">
+              <NavLink to="/">Class 12 Maths NCRT Solutions</NavLink>
             </p>
           </div>
 
-          <div className="md:w-40 w-full">
+          <div className="md:w-64 w-full">
             <h6 className="mb-2 flex justify-center font-semibold uppercase md:justify-start text-xl">
               Useful links
             </h6>
             <p className="mb-2 hover:text-[#33887c]">
-              <NavLink to={""}>Meet Us</NavLink>
+              <NavLink to={""}>Class 8 Science NCRT Solutions</NavLink>
             </p>
             <p className="mb-2 hover:text-[#33887c]">
-              <NavLink to={"/userProfile"}>Student Profile</NavLink>
+              <NavLink to={"/"}>Class 9 Science NCRT Solutions</NavLink>
             </p>
             <p className="mb-2 hover:text-[#33887c]">
-              <NavLink to="#">About Us </NavLink>
+              <NavLink to="#">Class 10 Science NCRT Solutions</NavLink>
             </p>
-
             <p className="mb-2 hover:text-[#33887c]">
-              <NavLink to="/contactUs">Contact Us </NavLink>
+              <NavLink to="/">Class 11 Science NCRT Solutions</NavLink>
+            </p>
+            <p className="mb-2 hover:text-[#33887c]">
+              <NavLink to="/">Class 12 Science NCRT Solutions</NavLink>
             </p>
           </div>
           {/* Contact section */}

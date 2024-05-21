@@ -31,6 +31,7 @@ import ContactUs from "./pages/ContactUs";
 import MeetUs from "./pages/MeetUs";
 import AuthUser from "./pages/AuthUser";
 import { ToastContainer } from "react-toastify";
+import AboutUs from "./pages/AboutUs";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -76,6 +77,7 @@ function App() {
             />
             <Route path="/contactUs" element={<ContactUs />} />
             <Route path="/meetUs" element={<MeetUs />} />
+            <Route path="/aboutUs" element={<AboutUs />} />
 
             <Route
               path="/adminPanel"
