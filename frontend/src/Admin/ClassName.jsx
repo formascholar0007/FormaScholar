@@ -24,7 +24,7 @@ function ClassName() {
 
   const getAllClasses = async () => {
     try {
-      const data = await fetch("http://localhost:3000/api/v1/class/", {
+      const data = await fetch("https://formascholar.onrender.com/api/v1/class/", {
         method: "GET",
         headers: {
           Authorization: `bearer ${JSON.parse(
@@ -61,7 +61,7 @@ function ClassName() {
     }
 
     try {
-      const data = await fetch("http://localhost:3000/api/v1/class/", {
+      const data = await fetch("https://formascholar.onrender.com/api/v1/class/", {
         method: "POST",
         headers: {
           Authorization: `bearer ${JSON.parse(
@@ -90,7 +90,7 @@ function ClassName() {
 
   const handleEdit = async (id) => {
     try {
-      const data = await fetch(`http://localhost:3000/api/v1/class/${id}` , {
+      const data = await fetch(`https://formascholar.onrender.com/api/v1/class/${id}` , {
         method: "PUT",
         headers: {
           Authorization: `bearer ${JSON.parse(
@@ -115,7 +115,7 @@ function ClassName() {
 
   const handleDelete = async (id) => {
     try {
-      const data = await fetch(`http://localhost:3000/api/v1/class/${id}`, {
+      const data = await fetch(`https://formascholar.onrender.com/api/v1/class/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `bearer ${JSON.parse(

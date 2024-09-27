@@ -24,7 +24,7 @@ function AdminChapters() {
   const getAllchapters = async () => {
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/chapter/${classId}/${subjectid}`,
+        `https://formascholar.onrender.com/api/v1/chapter/${classId}/${subjectid}`,
         {
           method: "GET",
           headers: {
@@ -52,7 +52,7 @@ function AdminChapters() {
 
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/chapter/${classId}/${subjectid}`,
+        `https://formascholar.onrender.com/api/v1/chapter/${classId}/${subjectid}`,
         {
           method: "POST",
           headers: {
@@ -87,7 +87,7 @@ function AdminChapters() {
   const handleEdit = async (chapterId) => {
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/chapter/${chapterId}`,
+        `https://formascholar.onrender.com/api/v1/chapter/${chapterId}`,
         {
           method: "PUT",
           headers: {
@@ -114,7 +114,7 @@ function AdminChapters() {
   const handleDelete = async (chapterId) => {
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/chapter/${chapterId}`,
+        `https://formascholar.onrender.com/api/v1/chapter/${chapterId}`,
         {
           method: "DELETE",
           headers: {

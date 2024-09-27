@@ -15,7 +15,7 @@ const UserQuestionSolutions = () => {
   const getAllChapters = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/question/${classId}/${subjectId}/${chapterId}/${exerciseId}`,
+        `https://formascholar.onrender.com/api/v1/question/${classId}/${subjectId}/${chapterId}/${exerciseId}`,
         {
           headers: {
             Authorization: `bearer ${JSON.parse(

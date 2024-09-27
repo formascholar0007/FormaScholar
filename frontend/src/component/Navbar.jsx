@@ -33,7 +33,7 @@ const Navbar = React.memo(() => {
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
     axios
-      .get("http://localhost:3000/api/v1/profile", {
+      .get("https://formascholar.onrender.com/api/v1/profile", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

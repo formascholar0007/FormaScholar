@@ -15,7 +15,7 @@ function AdminUserData() {
   const getAlluserData = async () => {
     try {
       const data = await fetch(
-        "http://localhost:3000/api/v1/profile/getAllUsers",
+        "https://formascholar.onrender.com/api/v1/profile/getAllUsers",
         {
           method: "GET",
           headers: {
@@ -46,7 +46,7 @@ function AdminUserData() {
   const handleDelete = async (userId) => {
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/profile/deleteUser/${userId}`,
+        `https://formascholar.onrender.com/api/v1/profile/deleteUser/${userId}`,
         {
           method: "DELETE",
           headers: {

@@ -23,7 +23,7 @@ function ContactUs() {
           return;
         }
 
-        const response = await axios.get("http://localhost:3000/api/v1/profile", {
+        const response = await axios.get("https://formascholar.onrender.com/api/v1/profile", {
           headers: { Authorization: `bearer ${token}` },
         });
 
@@ -60,7 +60,7 @@ function ContactUs() {
 
       const token = JSON.parse(localStorage.getItem("token"));
       if (token) {
-        const response = await axios.post("http://localhost:3000/api/v1/contact", {
+        const response = await axios.post("https://formascholar.onrender.com/api/v1/contact", {
           email,
           fullName,
           message,
@@ -78,7 +78,7 @@ function ContactUs() {
           toast.error(response.data.message || "An error occurred.");
         }
       } else {
-        const response = await axios.post("http://localhost:3000/api/v1/contact", {
+        const response = await axios.post("https://formascholar.onrender.com/api/v1/contact", {
           email,
           fullName,
           message,

@@ -22,7 +22,7 @@ function ForgetPassword() {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/auth/forgotPassword",
+        "https://formascholar.onrender.com/api/v1/auth/forgotPassword",
         {
           method: "POST",
           headers: {

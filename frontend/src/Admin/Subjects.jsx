@@ -29,7 +29,7 @@ function Subjects() {
   const getAllsubjects = async () => {
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/subject/${classId}`,
+        `https://formascholar.onrender.com/api/v1/subject/${classId}`,
         {
           method: "GET",
           headers: {
@@ -57,7 +57,7 @@ function Subjects() {
 
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/subject/${classId}`,
+        `https://formascholar.onrender.com/api/v1/subject/${classId}`,
         {
           method: "POST",
           headers: {
@@ -88,7 +88,7 @@ function Subjects() {
 
   const handleEdit = async (id) => {
     try {
-      const data = await fetch(`http://localhost:3000/api/v1/subject/${id}`, {
+      const data = await fetch(`https://formascholar.onrender.com/api/v1/subject/${id}`, {
         method: "PUT",
         headers: {
           Authorization: `bearer ${JSON.parse(
@@ -111,7 +111,7 @@ function Subjects() {
 
   const handleDelete = async (id) => {
     try {
-      const data = await fetch(`http://localhost:3000/api/v1/subject/${id}`, {
+      const data = await fetch(`https://formascholar.onrender.com/api/v1/subject/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `bearer ${JSON.parse(

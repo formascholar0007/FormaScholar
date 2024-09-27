@@ -24,7 +24,7 @@ function AdminExercise() {
   const getAllexercise = async () => {
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/exercise/${classId}/${subjectid}/${chapterId}`,
+        `https://formascholar.onrender.com/api/v1/exercise/${classId}/${subjectid}/${chapterId}`,
         {
           method: "GET",
           headers: {
@@ -52,7 +52,7 @@ function AdminExercise() {
 
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/exercise/${classId}/${subjectid}/${chapterId}`,
+        `https://formascholar.onrender.com/api/v1/exercise/${classId}/${subjectid}/${chapterId}`,
         {
           method: "POST",
           headers: {
@@ -87,7 +87,7 @@ function AdminExercise() {
   const handleEdit = async ( exerciseId ) => {
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/exercise/${exerciseId}`,
+        `https://formascholar.onrender.com/api/v1/exercise/${exerciseId}`,
         {
           method: "PUT",
           headers: {
@@ -115,7 +115,7 @@ function AdminExercise() {
 
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/exercise/${exerciseId}`,
+        `https://formascholar.onrender.com/api/v1/exercise/${exerciseId}`,
         {
           method: "DELETE",
           headers: {

@@ -45,7 +45,7 @@ function Registrationform() {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/auth/register",
+        "https://formascholar.onrender.com/api/v1/auth/register",
         {
           method: "POST",
           headers: {

@@ -29,7 +29,7 @@ function AdditionalInfo() {
       localStorage.setItem("userFullName", formData.fullName);
 
       const response = await fetch(
-        "http://localhost:3000/api/v1/auth/additionalInfo",
+        "https://formascholar.onrender.com/api/v1/auth/additionalInfo",
         {
           method: "POST",
           headers: {

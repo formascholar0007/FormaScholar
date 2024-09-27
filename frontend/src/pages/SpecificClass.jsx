@@ -18,7 +18,7 @@ function SpecificClass() {
 
   const handleSpecificClass = async () => {
     try {
-      const data = await axios.get("http://localhost:3000/api/v1/class/", {
+      const data = await axios.get("https://formascholar.onrender.com/api/v1/class/", {
         headers: {
           Authorization: `bearer ${JSON.parse(localStorage.getItem("token"))}`,
           "Content-Type": "application/json",

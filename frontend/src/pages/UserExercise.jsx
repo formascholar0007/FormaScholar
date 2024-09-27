@@ -16,7 +16,7 @@ function UserExercise() {
   const getAllChapters = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/exercise/${classId}/${subjectId}/${chapterId}`,
+        `https://formascholar.onrender.com/api/v1/exercise/${classId}/${subjectId}/${chapterId}`,
         {
           headers: {
             Authorization: `bearer ${JSON.parse(

@@ -29,7 +29,7 @@ function Adminquestionanswers() {
   const getAllquestionanswers = async () => {
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/question/${classId}/${subjectid}/${chapterId}/${exerciseId}`,
+        `https://formascholar.onrender.com/api/v1/question/${classId}/${subjectid}/${chapterId}/${exerciseId}`,
         {
           method: "GET",
           headers: {
@@ -57,7 +57,7 @@ function Adminquestionanswers() {
 
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/question/${classId}/${subjectid}/${chapterId}/${exerciseId}`,
+        `https://formascholar.onrender.com/api/v1/question/${classId}/${subjectid}/${chapterId}/${exerciseId}`,
         {
           method: "POST",
           headers: {
@@ -100,7 +100,7 @@ function Adminquestionanswers() {
   const handleEdit = async (questionanswerId) => {
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/question/${questionanswerId}`,
+        `https://formascholar.onrender.com/api/v1/question/${questionanswerId}`,
         {
           method: "PUT",
           headers: {
@@ -131,7 +131,7 @@ function Adminquestionanswers() {
   const handleDelete = async (questionanswerId) => {
     try {
       const data = await fetch(
-        `http://localhost:3000/api/v1/question/${questionanswerId}`,
+        `https://formascholar.onrender.com/api/v1/question/${questionanswerId}`,
         {
           method: "DELETE",
           headers: {

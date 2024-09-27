@@ -21,7 +21,7 @@ function ResetPassword() {
     }
 
     axios
-      .post(`http://localhost:3000/api/v1/auth/resetPassword/${userId}/${token}`, {
+      .post(`https://formascholar.onrender.com/api/v1/auth/resetPassword/${userId}/${token}`, {
         password,
       })
       .then((res) => {
