@@ -79,7 +79,7 @@ const Navbar = React.memo(() => {
       <NavLink to="/">
         <img
           className="h-10 w-auto" // Adjust the height here (e.g., h-10, h-8, etc.)
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+          src="https://cdn-icons-png.flaticon.com/512/3429/3429149.png"
           alt="FormaScholar"
         />
       </NavLink>

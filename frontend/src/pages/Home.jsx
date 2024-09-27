@@ -44,7 +44,7 @@ const Home = () => {
 
     const interval = setTimeout(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % ImageList.length);
-    }, 6000);
+    }, 4000);
 
     return () => clearTimeout(interval);
   }, [currentIndex]);
